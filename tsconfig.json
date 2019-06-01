@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "es2015",
+    "moduleResolution": "node",
+    "target": "es6",
+    "noImplicitAny": false,
+    "lib": ["es2017", "dom"],
+    "baseUrl": "./",
+    "paths": {
+      "ts/*": ["src/ts/*"],
+      "ts": ["src/ts"],
+      "local_module/*": ["src/local_module/*"],
+      "local_module": ["src/local_module"]
+    },
+    "skipLibCheck": true // ビルド高速化（型定義内の型チェック無効化）
+  }
+}
