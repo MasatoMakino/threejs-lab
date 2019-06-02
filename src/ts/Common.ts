@@ -38,13 +38,15 @@ export class Common {
   public static initRenderer(
     W: number,
     H: number,
+    color:number = 0x000000,
     id: string = "webgl-canvas"
   ) {
+
     const renderer = new WebGLRenderer({
       canvas: document.getElementById(id) as HTMLCanvasElement,
       antialias: true
     });
-    renderer.setClearColor(new Color(0x000000));
+    renderer.setClearColor(new Color(color));
     renderer.setSize(W, H);
     renderer.setPixelRatio(window.devicePixelRatio);
     return renderer;

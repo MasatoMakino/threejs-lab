@@ -10,7 +10,6 @@ import {
   Mesh,
   Vector3,
   Vector4,
-  FrontSide,
   Color,
   Plane,
   Matrix4,
@@ -21,102 +20,13 @@ import {
   UniformsUtils,
   UniformsLib,
   ShaderMaterial,
-  Side,
   Geometry,
-  BufferGeometry,
-  Texture
+  BufferGeometry
 } from "three";
 import { Math as THREEMath } from "three";
 import { WaterVertexShader } from "ts/water/vert";
 import { WaterFragmentShader } from "ts/water/frag";
-import { Light } from "three";
-import { TextureLoader } from "three";
-import { RepeatWrapping } from "three";
-
-/**
- * 水面オブジェクトの初期化オプション
- */
-export interface WaterOptions {
-  /**
-   * 水面反射テクスチャのサイズ
-   */
-  textureWidth?: number;
-  textureHeight?: number;
-  clipBias?: number;
-  alpha?: number;
-  time?: number;
-  /**
-   * 水面の法線マップ
-   */
-  normalSampler?: Texture | string;
-  /**
-   * 太陽光の角度
-   */
-  sunDirection?: Vector3;
-  /**
-   * 太陽光の色
-   */
-  sunColor?: Color | number;
-  waterColor?: Color | number;
-  eye?: Vector3;
-  /**
-   * 水面反射の歪みサイズ。大きいほど法線マップにしたがって歪む。
-   */
-  distortionScale?: number;
-  side?: Side;
-  fog?: boolean;
-}
-
-export class WaterOptionsUtil {
-  public static initOption(options: WaterOptions): WaterOptions {
-    options = options || {};
-
-    options.textureWidth =
-      options.textureWidth !== undefined ? options.textureWidth : 512;
-    options.textureHeight =
-      options.textureHeight !== undefined ? options.textureHeight : 512;
-
-    options.clipBias = options.clipBias !== undefined ? options.clipBias : 0.0;
-    options.alpha = options.alpha !== undefined ? options.alpha : 1.0;
-    options.time = options.time !== undefined ? options.time : 0.0;
-
-    if (options.normalSampler == null) {
-      options.normalSampler = null;
-    } else if (typeof options.normalSampler === "string") {
-      options.normalSampler = new TextureLoader().load(
-        options.normalSampler,
-        function(texture) {
-          texture.wrapS = texture.wrapT = RepeatWrapping;
-        }
-      );
-    }
-
-    options.sunDirection =
-      options.sunDirection !== undefined
-        ? options.sunDirection
-        : new Vector3(0.70707, 0.70707, 0.0);
-    options.sunColor = new Color(
-      options.sunColor !== undefined ? options.sunColor : 0xffffff
-    );
-    options.waterColor = new Color(
-      options.waterColor !== undefined ? options.waterColor : 0x7f7f7f
-    );
-    options.eye =
-      options.eye !== undefined ? options.eye : new Vector3(0, 0, 0);
-    options.distortionScale =
-      options.distortionScale !== undefined ? options.distortionScale : 20.0;
-    options.side = options.side !== undefined ? options.side : FrontSide;
-    options.fog = options.fog !== undefined ? options.fog : false;
-    return options;
-  }
-
-  public static initSun(options: WaterOptions, light: Light): WaterOptions {
-    options.sunDirection = light.position.clone().normalize();
-    options.sunColor = light.color.clone();
-
-    return options;
-  }
-}
+import { WaterOptions, WaterOptionsUtil } from "ts/water/WaterOptions";
 
 export class Water extends Mesh {
   private mirrorPlane = new Plane();
