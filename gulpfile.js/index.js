@@ -12,16 +12,22 @@ exports.bundleDevelopment = bundleDevelopment;
 
 const copyGlob = "./src/html/*.html";
 const copy = () => {
-  return src("./src/html/*.html").pipe(dest("./dist"));
+  return src(copyGlob).pipe(dest("./dist"));
+};
+
+const copyTexturesGlob = "./src/textures/**/*";
+const copyTextures = () => {
+  return src(copyTexturesGlob, { base: "./src" }).pipe(dest("./dist"));
 };
 
 const watchTasks = cb => {
   watchBundle();
   watch(copyGlob, copy);
+  watch(copyTexturesGlob, copyTextures);
   cb();
 };
 exports.watchTasks = watchTasks;
 
 exports.start_dev = series(watchTasks, server);
 
-exports.build = parallel(bundleDevelopment, copy);
+exports.build = parallel(bundleDevelopment, copy, copyTextures);
