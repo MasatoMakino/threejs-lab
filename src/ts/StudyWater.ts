@@ -3,7 +3,7 @@ import { Scene, PlaneBufferGeometry, Mesh } from "three";
 import { Water } from "ts/water/Water";
 import { DirectionalLight } from "three";
 import { WaterOptions, WaterOptionsUtil } from "ts/water/WaterOptions";
-import {DirectionalLightHelper} from "three";
+import { DirectionalLightHelper } from "three";
 
 export class StudyWater {
   public static readonly W = 640;
@@ -26,8 +26,8 @@ export class StudyWater {
     const light = new DirectionalLight(0xffffff, 1.0);
     light.position.set(80.707, 80.707, 0);
     scene.add(light);
-    const helper = new DirectionalLightHelper( light, 15 );
-    scene.add( helper );
+    const helper = new DirectionalLightHelper(light, 15);
+    scene.add(helper);
 
     const waterGeometry = new PlaneBufferGeometry(10000, 10000);
 

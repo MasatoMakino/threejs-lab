@@ -42,7 +42,6 @@ export class Water extends Mesh {
   private target = new Vector3();
   private q = new Vector4();
 
-  private textureMatrix = new Matrix4();
   private mirrorCamera = new PerspectiveCamera();
 
   private options: WaterOptions;
@@ -109,16 +108,16 @@ export class Water extends Mesh {
       fog: options.fog
     });
 
-    material.uniforms["mirrorSampler"].value = this.renderTarget.texture;
-    material.uniforms["textureMatrix"].value = this.textureMatrix;
-    material.uniforms["alpha"].value = options.alpha;
-    material.uniforms["time"].value = options.time;
-    material.uniforms["normalSampler"].value = options.normalSampler;
-    material.uniforms["sunColor"].value = options.sunColor;
-    material.uniforms["waterColor"].value = options.waterColor;
-    material.uniforms["sunDirection"].value = options.sunDirection;
-    material.uniforms["distortionScale"].value = options.distortionScale;
-    material.uniforms["eye"].value = options.eye;
+    material.uniforms.mirrorSampler.value = this.renderTarget.texture;
+    material.uniforms.textureMatrix.value = this.textureMatrix;
+    material.uniforms.alpha.value = options.alpha;
+    material.uniforms.time.value = options.time;
+    material.uniforms.normalSampler.value = options.normalSampler;
+    material.uniforms.sunColor.value = options.sunColor;
+    material.uniforms.waterColor.value = options.waterColor;
+    material.uniforms.sunDirection.value = options.sunDirection;
+    material.uniforms.distortionScale.value = options.distortionScale;
+    material.uniforms.eye.value = options.eye;
 
     return material;
   }
@@ -182,6 +181,7 @@ export class Water extends Mesh {
     this.mirrorCamera.projectionMatrix.copy(camera.projectionMatrix);
   }
 
+  private textureMatrix = new Matrix4();
   private updateTextureMatrix() {
     // Update the texture matrix
     this.textureMatrix.set(
@@ -269,6 +269,6 @@ export class Water extends Mesh {
     renderer.setRenderTarget(currentRenderTarget);
 
     //TODO onBeforeRenderではなく、requestAnimationFrameで処理する。
-    (<ShaderMaterial>this.material).uniforms["time"].value += 1.0 / 60.0;
+    (<ShaderMaterial>this.material).uniforms.time.value += 1.0 / 60.0;
   }
 }
