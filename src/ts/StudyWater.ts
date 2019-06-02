@@ -15,7 +15,7 @@ export class StudyWater {
     const scene = Common.initScene();
     Common.initLight(scene);
     const camera = Common.initCamera(scene, StudyWater.W, StudyWater.H);
-    const renderer = Common.initRenderer(StudyWater.W, StudyWater.H, 0xf0f0f0);
+    const renderer = Common.initRenderer(StudyWater.W, StudyWater.H, 0x999999);
     const control = Common.initControl(camera);
     Common.initHelper(scene);
     this.initObject(scene);
@@ -23,8 +23,8 @@ export class StudyWater {
   }
 
   private initObject(scene: Scene): void {
-    const light = new DirectionalLight(0xfff0ff, 1.0);
-    light.position.set(17.707, 17.707, 8.0);
+    const light = new DirectionalLight(0xffffff, 1.0);
+    light.position.set(80.707, 80.707, 0);
     scene.add(light);
     const helper = new DirectionalLightHelper( light, 15 );
     scene.add( helper );
