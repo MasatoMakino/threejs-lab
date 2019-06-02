@@ -38,10 +38,9 @@ export class Common {
   public static initRenderer(
     W: number,
     H: number,
-    color:number = 0x000000,
+    color: number = 0x000000,
     id: string = "webgl-canvas"
   ) {
-
     const renderer = new WebGLRenderer({
       canvas: document.getElementById(id) as HTMLCanvasElement,
       antialias: true

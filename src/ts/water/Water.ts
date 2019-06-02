@@ -27,6 +27,7 @@ import { Math as THREEMath } from "three";
 import { WaterVertexShader } from "ts/water/vert";
 import { WaterFragmentShader } from "ts/water/frag";
 import { WaterOptions, WaterOptionsUtil } from "ts/water/WaterOptions";
+import { Light } from "three";
 
 export class Water extends Mesh {
   private mirrorPlane = new Plane();
@@ -84,7 +85,7 @@ export class Water extends Mesh {
       UniformsLib["fog"],
       UniformsLib["lights"],
       {
-        normalSampler: { value: options.normalSampler },
+        normalSampler: { value: null },
         mirrorSampler: { value: null },
         alpha: { value: 1.0 },
         time: { value: 0.0 },
@@ -120,6 +121,22 @@ export class Water extends Mesh {
     material.uniforms["eye"].value = options.eye;
 
     return material;
+  }
+
+  /**
+   * 受け取ったライトを元に反射光の状態を更新する。
+   * @param light
+   */
+  public updateSun(light: Light): void {
+    this.options.sunDirection = light.position.clone().normalize();
+    this.options.sunColor = light.color.clone();
+
+    (<ShaderMaterial>this.material).uniforms[
+      "sunDirection"
+    ].value = this.options.sunDirection;
+    (<ShaderMaterial>this.material).uniforms[
+      "sunColor"
+    ].value = this.options.sunColor;
   }
 
   private onBeforeRenderHandler = (renderer, scene, camera) => {
