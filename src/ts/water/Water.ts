@@ -23,27 +23,99 @@ import {
   ShaderMaterial,
   Side,
   Geometry,
+  BufferGeometry,
   Texture
 } from "three";
 import { Math as THREEMath } from "three";
 import { WaterVertexShader } from "ts/water/vert";
 import { WaterFragmentShader } from "ts/water/frag";
-import { BufferGeometry } from "three";
+import { Light } from "three";
+import { TextureLoader } from "three";
+import { RepeatWrapping } from "three";
 
-export interface Options {
+/**
+ * 水面オブジェクトの初期化オプション
+ */
+export interface WaterOptions {
+  /**
+   * 水面反射テクスチャのサイズ
+   */
   textureWidth?: number;
   textureHeight?: number;
   clipBias?: number;
   alpha?: number;
   time?: number;
-  normalSampler?: Texture;
+  /**
+   * 水面の法線マップ
+   */
+  normalSampler?: Texture | string;
+  /**
+   * 太陽光の角度
+   */
   sunDirection?: Vector3;
+  /**
+   * 太陽光の色
+   */
   sunColor?: Color | number;
   waterColor?: Color | number;
   eye?: Vector3;
+  /**
+   * 水面反射の歪みサイズ。大きいほど法線マップにしたがって歪む。
+   */
   distortionScale?: number;
   side?: Side;
   fog?: boolean;
+}
+
+export class WaterOptionsUtil {
+  public static initOption(options: WaterOptions): WaterOptions {
+    options = options || {};
+
+    options.textureWidth =
+      options.textureWidth !== undefined ? options.textureWidth : 512;
+    options.textureHeight =
+      options.textureHeight !== undefined ? options.textureHeight : 512;
+
+    options.clipBias = options.clipBias !== undefined ? options.clipBias : 0.0;
+    options.alpha = options.alpha !== undefined ? options.alpha : 1.0;
+    options.time = options.time !== undefined ? options.time : 0.0;
+
+    if (options.normalSampler == null) {
+      options.normalSampler = null;
+    } else if (typeof options.normalSampler === "string") {
+      options.normalSampler = new TextureLoader().load(
+        options.normalSampler,
+        function(texture) {
+          texture.wrapS = texture.wrapT = RepeatWrapping;
+        }
+      );
+    }
+
+    options.sunDirection =
+      options.sunDirection !== undefined
+        ? options.sunDirection
+        : new Vector3(0.70707, 0.70707, 0.0);
+    options.sunColor = new Color(
+      options.sunColor !== undefined ? options.sunColor : 0xffffff
+    );
+    options.waterColor = new Color(
+      options.waterColor !== undefined ? options.waterColor : 0x7f7f7f
+    );
+    options.eye =
+      options.eye !== undefined ? options.eye : new Vector3(0, 0, 0);
+    options.distortionScale =
+      options.distortionScale !== undefined ? options.distortionScale : 20.0;
+    options.side = options.side !== undefined ? options.side : FrontSide;
+    options.fog = options.fog !== undefined ? options.fog : false;
+    return options;
+  }
+
+  public static initSun(options: WaterOptions, light: Light): WaterOptions {
+    options.sunDirection = light.position.clone().normalize();
+    options.sunColor = light.color.clone();
+
+    return options;
+  }
 }
 
 export class Water extends Mesh {
@@ -62,50 +134,18 @@ export class Water extends Mesh {
   private textureMatrix = new Matrix4();
   private mirrorCamera = new PerspectiveCamera();
 
-  private options: Options;
+  private options: WaterOptions;
 
   private renderTarget: WebGLRenderTarget;
 
-  constructor(geometry: Geometry | BufferGeometry, options: Options) {
+  constructor(geometry: Geometry | BufferGeometry, options: WaterOptions) {
     super(geometry);
-    this.options = this.initOption(options);
+    this.options = WaterOptionsUtil.initOption(options);
     this.initRenderTarget(this.options);
     const mat = this.initShader(this.options);
     this.material = mat;
 
     this.onBeforeRender = this.onBeforeRenderHandler;
-  }
-
-  private initOption(options: Options) {
-    options = options || {};
-
-    options.textureWidth =
-      options.textureWidth !== undefined ? options.textureWidth : 512;
-    options.textureHeight =
-      options.textureHeight !== undefined ? options.textureHeight : 512;
-
-    options.clipBias = options.clipBias !== undefined ? options.clipBias : 0.0;
-    options.alpha = options.alpha !== undefined ? options.alpha : 1.0;
-    options.time = options.time !== undefined ? options.time : 0.0;
-    options.normalSampler =
-      options.normalSampler !== undefined ? options.normalSampler : null;
-    options.sunDirection =
-      options.sunDirection !== undefined
-        ? options.sunDirection
-        : new Vector3(0.70707, 0.70707, 0.0);
-    options.sunColor = new Color(
-      options.sunColor !== undefined ? options.sunColor : 0xffffff
-    );
-    options.waterColor = new Color(
-      options.waterColor !== undefined ? options.waterColor : 0x7f7f7f
-    );
-    options.eye =
-      options.eye !== undefined ? options.eye : new Vector3(0, 0, 0);
-    options.distortionScale =
-      options.distortionScale !== undefined ? options.distortionScale : 20.0;
-    options.side = options.side !== undefined ? options.side : FrontSide;
-    options.fog = options.fog !== undefined ? options.fog : false;
-    return options;
   }
 
   private initRenderTarget(options): void {
@@ -130,32 +170,28 @@ export class Water extends Mesh {
   }
 
   private initShader(options): ShaderMaterial {
-    const mirrorShader = {
-      uniforms: UniformsUtils.merge([
-        UniformsLib["fog"],
-        UniformsLib["lights"],
-        {
-          normalSampler: { value: null },
-          mirrorSampler: { value: null },
-          alpha: { value: 1.0 },
-          time: { value: 0.0 },
-          size: { value: 1.0 },
-          distortionScale: { value: 20.0 },
-          textureMatrix: { value: new Matrix4() },
-          sunColor: { value: new Color(0x7f7f7f) },
-          sunDirection: { value: new Vector3(0.70707, 0.70707, 0) },
-          eye: { value: new Vector3() },
-          waterColor: { value: new Color(0x555555) }
-        }
-      ]),
-      vertexShader: WaterVertexShader.get(),
-      fragmentShader: WaterFragmentShader.get()
-    };
+    const uniforms = UniformsUtils.merge([
+      UniformsLib["fog"],
+      UniformsLib["lights"],
+      {
+        normalSampler: { value: options.normalSampler },
+        mirrorSampler: { value: null },
+        alpha: { value: 1.0 },
+        time: { value: 0.0 },
+        size: { value: 1.0 },
+        distortionScale: { value: 20.0 },
+        textureMatrix: { value: new Matrix4() },
+        sunColor: { value: new Color(0x7f7f7f) },
+        sunDirection: { value: new Vector3(0.70707, 0.70707, 0) },
+        eye: { value: new Vector3() },
+        waterColor: { value: new Color(0x555555) }
+      }
+    ]);
 
     const material = new ShaderMaterial({
-      fragmentShader: mirrorShader.fragmentShader,
-      vertexShader: mirrorShader.vertexShader,
-      uniforms: UniformsUtils.clone(mirrorShader.uniforms),
+      fragmentShader: WaterFragmentShader.get(),
+      vertexShader: WaterVertexShader.get(),
+      uniforms: uniforms,
       transparent: true,
       lights: true,
       side: options.side,
@@ -243,7 +279,7 @@ export class Water extends Mesh {
     this.textureMatrix.multiply(this.mirrorCamera.matrixWorldInverse);
   }
 
-  private updateMirrorPlane(camera, options: Options) {
+  private updateMirrorPlane(camera, options: WaterOptions) {
     // Now update projection matrix with new clip plane, implementing code from: http://www.terathon.com/code/oblique.html
     // Paper explaining this technique: http://www.terathon.com/lengyel/Lengyel-Oblique.pdf
     this.mirrorPlane.setFromNormalAndCoplanarPoint(
@@ -305,6 +341,7 @@ export class Water extends Mesh {
 
     renderer.setRenderTarget(currentRenderTarget);
 
+    //TODO onBeforeRenderではなく、requestAnimationFrameで処理する。
     (<ShaderMaterial>this.material).uniforms["time"].value += 1.0 / 60.0;
   }
 }

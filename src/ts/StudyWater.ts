@@ -7,6 +7,9 @@ import {
   RepeatWrapping
 } from "three";
 import { Water } from "ts/water/Water";
+import { DirectionalLight } from "three";
+import { WaterOptions } from "ts/water/Water";
+import { WaterOptionsUtil } from "ts/water/Water";
 
 export class StudyWater {
   public static readonly W = 640;
@@ -26,24 +29,22 @@ export class StudyWater {
   }
 
   private initObject(scene: Scene): void {
+    const light = new DirectionalLight(0xfff0ff, 0.8);
+    scene.add(light);
+
     const waterGeometry = new PlaneBufferGeometry(10000, 10000);
 
-    this.water = new Water(waterGeometry, {
+    const option: WaterOptions = {
       // textureWidth: 512,
       // textureHeight: 512,
-      normalSampler: new TextureLoader().load(
-        "textures/waternormals.jpg",
-        function(texture) {
-          texture.wrapS = texture.wrapT = RepeatWrapping;
-        }
-      ),
+      normalSampler: "textures/waternormals.jpg",
       alpha: 1.0,
-      // sunDirection: light.position.clone().normalize(),
-      sunColor: 0xffffff,
       waterColor: 0x001e0f,
       distortionScale: 3.7,
       fog: scene.fog !== undefined
-    });
+    };
+    WaterOptionsUtil.initSun(option, light);
+    this.water = new Water(waterGeometry, option);
 
     this.water.rotation.x = -Math.PI / 2;
 
