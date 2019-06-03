@@ -54,7 +54,7 @@ export class Water extends Mesh {
     const mat = this.initShader(this.options);
     this.material = mat;
 
-    this.rotation.x = -Math.PI /2;
+    this.rotation.x = -Math.PI / 2;
 
     this.onBeforeRender = this.onBeforeRenderHandler;
     this.requestID = requestAnimationFrame(this.onRequestAnimationFrame);
@@ -132,8 +132,12 @@ export class Water extends Mesh {
     this.options.sunDirection = light.position.clone().normalize();
     this.options.sunColor = light.color.clone();
 
-    (<ShaderMaterial>this.material).uniforms.sunDirection.value = this.options.sunDirection;
-    (<ShaderMaterial>this.material).uniforms.sunColor.value = this.options.sunColor;
+    (<ShaderMaterial>(
+      this.material
+    )).uniforms.sunDirection.value = this.options.sunDirection;
+    (<ShaderMaterial>(
+      this.material
+    )).uniforms.sunColor.value = this.options.sunColor;
   }
 
   private onBeforeRenderHandler = (renderer, scene, camera) => {
@@ -237,7 +241,7 @@ export class Water extends Mesh {
     projectionMatrix.elements[14] = this.clipPlane.w;
   }
 
-  private q:Vector4 = new Vector4();
+  private q: Vector4 = new Vector4();
   private static updateQ(q, projectionMatrix, clipPlane): void {
     q.x =
       (Math.sign(clipPlane.x) + projectionMatrix.elements[8]) /
