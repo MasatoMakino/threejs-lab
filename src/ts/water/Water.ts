@@ -15,6 +15,7 @@ import {
   Matrix4,
   PerspectiveCamera,
   LinearFilter,
+  Light,
   RGBFormat,
   WebGLRenderTarget,
   UniformsUtils,
@@ -27,22 +28,20 @@ import { Math as THREEMath } from "three";
 import { WaterVertexShader } from "ts/water/vert";
 import { WaterFragmentShader } from "ts/water/frag";
 import { WaterOptions, WaterOptionsUtil } from "ts/water/WaterOptions";
-import { Light } from "three";
 
 export class Water extends Mesh {
-  private mirrorPlane = new Plane();
-  private normal = new Vector3();
-  private mirrorWorldPosition = new Vector3();
-  private cameraWorldPosition = new Vector3();
-  private rotationMatrix = new Matrix4();
-  private lookAtPosition = new Vector3(0, 0, -1);
-  private clipPlane = new Vector4();
+  private mirrorPlane: Plane = new Plane();
+  private normal: Vector3 = new Vector3();
+  private mirrorWorldPosition: Vector3 = new Vector3();
+  private cameraWorldPosition: Vector3 = new Vector3();
+  private rotationMatrix: Matrix4 = new Matrix4();
+  private lookAtPosition: Vector3 = new Vector3(0, 0, -1);
+  private clipPlane: Vector4 = new Vector4();
 
-  private view = new Vector3();
-  private target = new Vector3();
-  private q = new Vector4();
+  private view: Vector3 = new Vector3();
+  private target: Vector3 = new Vector3();
 
-  private mirrorCamera = new PerspectiveCamera();
+  private mirrorCamera: PerspectiveCamera = new PerspectiveCamera();
 
   private options: WaterOptions;
 
@@ -55,7 +54,10 @@ export class Water extends Mesh {
     const mat = this.initShader(this.options);
     this.material = mat;
 
+    this.rotation.x = -Math.PI /2;
+
     this.onBeforeRender = this.onBeforeRenderHandler;
+    this.requestID = requestAnimationFrame(this.onRequestAnimationFrame);
   }
 
   private initRenderTarget(options): void {
@@ -130,12 +132,8 @@ export class Water extends Mesh {
     this.options.sunDirection = light.position.clone().normalize();
     this.options.sunColor = light.color.clone();
 
-    (<ShaderMaterial>this.material).uniforms[
-      "sunDirection"
-    ].value = this.options.sunDirection;
-    (<ShaderMaterial>this.material).uniforms[
-      "sunColor"
-    ].value = this.options.sunColor;
+    (<ShaderMaterial>this.material).uniforms.sunDirection.value = this.options.sunDirection;
+    (<ShaderMaterial>this.material).uniforms.sunColor.value = this.options.sunColor;
   }
 
   private onBeforeRenderHandler = (renderer, scene, camera) => {
@@ -166,10 +164,13 @@ export class Water extends Mesh {
     this.updateMirrorCamera(camera);
     this.updateTextureMatrix();
     this.updateMirrorPlane(camera, this.options);
+
+    this.options.eye.setFromMatrixPosition(camera.matrixWorld);
+
     this.render(renderer, scene);
   };
 
-  private updateMirrorCamera(camera) {
+  private updateMirrorCamera(camera: PerspectiveCamera): void {
     this.mirrorCamera.position.copy(this.view);
     this.mirrorCamera.up.set(0, 1, 0);
     this.mirrorCamera.up.applyMatrix4(this.rotationMatrix);
@@ -181,7 +182,7 @@ export class Water extends Mesh {
     this.mirrorCamera.projectionMatrix.copy(camera.projectionMatrix);
   }
 
-  private textureMatrix = new Matrix4();
+  private textureMatrix: Matrix4 = new Matrix4();
   private updateTextureMatrix() {
     // Update the texture matrix
     this.textureMatrix.set(
@@ -222,17 +223,9 @@ export class Water extends Mesh {
       this.mirrorPlane.constant
     );
 
-    var projectionMatrix = this.mirrorCamera.projectionMatrix;
+    const projectionMatrix = this.mirrorCamera.projectionMatrix;
 
-    this.q.x =
-      (Math.sign(this.clipPlane.x) + projectionMatrix.elements[8]) /
-      projectionMatrix.elements[0];
-    this.q.y =
-      (Math.sign(this.clipPlane.y) + projectionMatrix.elements[9]) /
-      projectionMatrix.elements[5];
-    this.q.z = -1.0;
-    this.q.w =
-      (1.0 + projectionMatrix.elements[10]) / projectionMatrix.elements[14];
+    Water.updateQ(this.q, projectionMatrix, this.clipPlane);
 
     // Calculate the scaled plane vector
     this.clipPlane.multiplyScalar(2.0 / this.clipPlane.dot(this.q));
@@ -242,15 +235,25 @@ export class Water extends Mesh {
     projectionMatrix.elements[6] = this.clipPlane.y;
     projectionMatrix.elements[10] = this.clipPlane.z + 1.0 - options.clipBias;
     projectionMatrix.elements[14] = this.clipPlane.w;
+  }
 
-    options.eye.setFromMatrixPosition(camera.matrixWorld);
+  private q:Vector4 = new Vector4();
+  private static updateQ(q, projectionMatrix, clipPlane): void {
+    q.x =
+      (Math.sign(clipPlane.x) + projectionMatrix.elements[8]) /
+      projectionMatrix.elements[0];
+    q.y =
+      (Math.sign(clipPlane.y) + projectionMatrix.elements[9]) /
+      projectionMatrix.elements[5];
+    q.z = -1.0;
+    q.w = (1.0 + projectionMatrix.elements[10]) / projectionMatrix.elements[14];
   }
 
   private render(renderer, scene) {
-    var currentRenderTarget = renderer.getRenderTarget();
-
-    var currentVrEnabled = renderer.vr.enabled;
-    var currentShadowAutoUpdate = renderer.shadowMap.autoUpdate;
+    /** 設定を一助保存 **/
+    const currentRenderTarget = renderer.getRenderTarget();
+    const currentVrEnabled = renderer.vr.enabled;
+    const currentShadowAutoUpdate = renderer.shadowMap.autoUpdate;
 
     this.visible = false;
 
@@ -263,12 +266,27 @@ export class Water extends Mesh {
 
     this.visible = true;
 
+    /** 設定を元に戻す **/
     renderer.vr.enabled = currentVrEnabled;
     renderer.shadowMap.autoUpdate = currentShadowAutoUpdate;
-
     renderer.setRenderTarget(currentRenderTarget);
-
-    //TODO onBeforeRenderではなく、requestAnimationFrameで処理する。
-    (<ShaderMaterial>this.material).uniforms.time.value += 1.0 / 60.0;
   }
+
+  private currentTimeStamp;
+  private requestID;
+  /**
+   * uniformsのtime変数を加算する。
+   * requestAnimationFrameから呼び出される。
+   *
+   * @param timestamp
+   */
+  private onRequestAnimationFrame = (timestamp: number) => {
+    if (!this.currentTimeStamp) this.currentTimeStamp = timestamp;
+    const delta = timestamp - this.currentTimeStamp;
+
+    (<ShaderMaterial>this.material).uniforms.time.value += delta / 3000;
+
+    this.requestID = requestAnimationFrame(this.onRequestAnimationFrame);
+    this.currentTimeStamp = timestamp;
+  };
 }

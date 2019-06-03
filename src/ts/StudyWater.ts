@@ -9,7 +9,7 @@ export class StudyWater {
   public static readonly W = 640;
   public static readonly H = 480;
 
-  public water: Mesh;
+  public water: Water;
 
   constructor() {
     const scene = Common.initScene();
@@ -41,8 +41,7 @@ export class StudyWater {
     WaterOptionsUtil.updateSun(option, light);
     console.log(option);
     this.water = new Water(waterGeometry, option);
-
-    this.water.rotation.x = -Math.PI / 2;
+    // this.water.updateSun( light );
 
     scene.add(this.water);
   }
