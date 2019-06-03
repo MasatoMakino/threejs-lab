@@ -2,16 +2,14 @@ import { Common } from "ts/Common";
 import { Scene } from "three";
 import { ShaderMaterial } from "three";
 import { Mesh } from "three";
-import { Color } from "three";
 import { BoxGeometry } from "three";
-// @ts-ignore
-import vertexSource from "ts/contour/shader.vert";
-// @ts-ignore
-import fragmentSource from "ts/contour/shader.frag";
+import {ContourVertexShader } from "ts/contour/vert.ts";
+import { ContourFragmentShader } from "ts/contour/frag.ts";
 import { TextureLoader } from "three";
 import { DoubleSide } from "three";
 import { UniformsUtils } from "three";
 import { UniformsLib } from "three";
+import { Fog } from "three";
 
 export class StudySimple {
   public static readonly W = 640;
@@ -19,6 +17,8 @@ export class StudySimple {
 
   constructor() {
     const scene = Common.initScene();
+    scene.fog = new Fog(0x000000, 80, 120);
+
     Common.initLight(scene);
     const camera = Common.initCamera(scene, StudySimple.W, StudySimple.H);
     const renderer = Common.initRenderer(StudySimple.W, StudySimple.H);
@@ -38,21 +38,22 @@ export class StudySimple {
 
     const uniforms = UniformsUtils.merge([
       UniformsLib["fog"],
-      UniformsLib["lights"],
+      // UniformsLib["lights"],
       {
         bottom: { type: "float", value: bottom },
         top: { type: "float", value: top },
-        texture: { type: "sampler2D", value: texture },
+        texture: { type: "sampler2D", value: texture }
       }
     ]);
 
-
     const mat = new ShaderMaterial({
       uniforms: uniforms,
-      vertexShader: vertexSource,
-      fragmentShader: fragmentSource,
+      vertexShader: ContourVertexShader.get(),
+      fragmentShader: ContourFragmentShader.get(),
       side: DoubleSide,
-      transparent: true
+      transparent: true,
+      // lights:true,
+      fog: scene.fog !== undefined
     });
 
     mat.uniforms.bottom.value = bottom;
