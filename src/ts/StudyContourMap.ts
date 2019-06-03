@@ -9,7 +9,9 @@ import vertexSource from "ts/contour/shader.vert";
 // @ts-ignore
 import fragmentSource from "ts/contour/shader.frag";
 import { TextureLoader } from "three";
-import {DoubleSide} from "three";
+import { DoubleSide } from "three";
+import { UniformsUtils } from "three";
+import { UniformsLib } from "three";
 
 export class StudySimple {
   public static readonly W = 640;
@@ -34,22 +36,29 @@ export class StudySimple {
 
     const geo = new BoxGeometry(size, size, size);
 
-    const uniforms = {
-      bottom: { type: "float", value: bottom },
-      top: { type: "float", value: top },
-      texture: { type: "sampler2D", value: texture },
-      colorB: { type: "vec3", value: new Color(0x00ff00) },
-      colorA: { type: "vec3", value: new Color(0xff00ff) }
-    };
+    const uniforms = UniformsUtils.merge([
+      UniformsLib["fog"],
+      UniformsLib["lights"],
+      {
+        bottom: { type: "float", value: bottom },
+        top: { type: "float", value: top },
+        texture: { type: "sampler2D", value: texture },
+      }
+    ]);
+
 
     const mat = new ShaderMaterial({
       uniforms: uniforms,
       vertexShader: vertexSource,
       fragmentShader: fragmentSource,
-      side:DoubleSide,
-      transparent:true
-
+      side: DoubleSide,
+      transparent: true
     });
+
+    mat.uniforms.bottom.value = bottom;
+    mat.uniforms.top.value = top;
+    mat.uniforms.texture.value = texture;
+
     const mesh = new Mesh(geo, mat);
 
     scene.add(mesh);
