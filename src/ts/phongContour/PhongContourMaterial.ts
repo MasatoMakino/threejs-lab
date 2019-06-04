@@ -22,7 +22,6 @@ import PhongContourFragmentShader from "./PhongContour.frag";
 // @ts-ignore
 import PhongContourVertexShader from "./PhongContour.vert";
 
-
 export class PhongContourMaterial extends ShaderMaterial {
   get opacity(): number {
     return this._opacity;
@@ -40,7 +39,7 @@ export class PhongContourMaterial extends ShaderMaterial {
   get map(): Texture {
     return this._map;
   }
-  public loadMap(url: string, geo:Geometry|BufferGeometry) {
+  public loadMap(url: string, geo: Geometry | BufferGeometry) {
     this._map = new TextureLoader().load(url, texture => {
       if (this.uniforms && this.uniforms.map) {
         this.uniforms.map.value = texture;
@@ -52,6 +51,17 @@ export class PhongContourMaterial extends ShaderMaterial {
     this.uniforms.bottom.value = geo.boundingBox.min.y;
   }
   private _map: Texture;
+
+  get emissive(): Color {
+    return this._emissive;
+  }
+  set emissive(value: Color) {
+    this._emissive = value;
+    if (this.uniforms && this.uniforms.emissive) {
+      this.uniforms.emissive.value = value;
+    }
+  }
+  private _emissive: Color;
 
   constructor(parameters?: ShaderMaterialParameters) {
     super(parameters);
@@ -73,8 +83,8 @@ export class PhongContourMaterial extends ShaderMaterial {
         emissive: { value: new Color(0x000000) },
         specular: { value: new Color(0x111111) },
         shininess: { value: 30 },
-        top:{value:1.0},
-        bottom:{value:-1.0}
+        top: { value: 1.0 },
+        bottom: { value: -1.0 }
       }
     ]);
 
@@ -82,19 +92,18 @@ export class PhongContourMaterial extends ShaderMaterial {
     this.fragmentShader = PhongContourFragmentShader;
 
     this.opacity = this._opacity;
-    this.lights = true;
+    this.lights = true; //FIXME シェーダーがエラーを起こすのでlights設定は強制でON
 
-    if( parameters.transparent == null ){
+    if (parameters.transparent == null) {
       this.transparent = true;
-    }else{
+    } else {
       this.transparent = parameters.transparent;
     }
 
-    if( parameters.side == null ){
+    if (parameters.side == null) {
       this.side = DoubleSide;
-    }else{
+    } else {
       this.side = parameters.side;
     }
-
   }
 }

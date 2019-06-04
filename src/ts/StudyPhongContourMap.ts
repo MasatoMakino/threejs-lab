@@ -13,6 +13,7 @@ import { Fog } from "three";
 import { PointLight } from "three";
 import { PointLightHelper } from "three";
 import { PhongContourMaterial } from "ts/phongContour/PhongContourMaterial";
+import {Color} from "three";
 
 export class StudyContourMap {
   public static readonly W = 640;
@@ -45,11 +46,11 @@ export class StudyContourMap {
     const geo = new BoxGeometry(size, size, size);
 
     const mat = new PhongContourMaterial({
-      // opacity:0.5,
-      fog: scene.fog !== undefined,
+      opacity:0.5,
+      fog: scene.fog !== undefined
     });
     mat.loadMap("./textures/contour.png",geo);
-
+    mat.emissive = new Color(0xffff00);
 
     const mesh = new Mesh(geo, mat);
 

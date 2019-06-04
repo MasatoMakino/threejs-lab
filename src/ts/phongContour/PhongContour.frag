@@ -55,6 +55,7 @@ void main() {
       texelColor = mapTexelToLinear( texelColor );
       diffuseColor *= texelColor;
     #endif
+
     #include <color_fragment>
     #include <alphamap_fragment>
     #include <alphatest_fragment>
