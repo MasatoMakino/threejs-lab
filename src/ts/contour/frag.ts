@@ -17,8 +17,6 @@ export class ContourFragmentShader {
       if ( color.a < 0.3 ) discard;
       gl_FragColor = color;
 
-
-      
       ${ShaderChunk["fog_fragment"]}
     }
     `;

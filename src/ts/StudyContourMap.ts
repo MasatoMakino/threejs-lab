@@ -10,18 +10,19 @@ import { DoubleSide } from "three";
 import { UniformsUtils } from "three";
 import { UniformsLib } from "three";
 import { Fog } from "three";
+import {PointLight} from "three";
+import {PointLightHelper} from "three";
 
-export class StudySimple {
+export class StudyContourMap {
   public static readonly W = 640;
   public static readonly H = 480;
 
   constructor() {
     const scene = Common.initScene();
     scene.fog = new Fog(0x000000, 80, 120);
-
     Common.initLight(scene);
-    const camera = Common.initCamera(scene, StudySimple.W, StudySimple.H);
-    const renderer = Common.initRenderer(StudySimple.W, StudySimple.H);
+    const camera = Common.initCamera(scene, StudyContourMap.W, StudyContourMap.H);
+    const renderer = Common.initRenderer(StudyContourMap.W, StudyContourMap.H);
     const control = Common.initControl(camera);
     Common.initHelper(scene);
     this.initObject(scene);
@@ -29,6 +30,13 @@ export class StudySimple {
   }
 
   private initObject(scene: Scene): void {
+
+
+    const spot = new PointLight( 0xFF00FF, 5, 0 , 2 );
+    scene.add( spot );
+    const helper = new PointLightHelper( spot );
+    scene.add( helper );
+
     const size = 20.0;
     const bottom = -10.0;
     const top = 10.0;
@@ -38,7 +46,7 @@ export class StudySimple {
 
     const uniforms = UniformsUtils.merge([
       UniformsLib["fog"],
-      // UniformsLib["lights"],
+      UniformsLib["lights"],
       {
         bottom: { type: "float", value: bottom },
         top: { type: "float", value: top },
@@ -46,13 +54,15 @@ export class StudySimple {
       }
     ]);
 
+    console.log( uniforms );
+
     const mat = new ShaderMaterial({
       uniforms: uniforms,
       vertexShader: ContourVertexShader.get(),
       fragmentShader: ContourFragmentShader.get(),
       side: DoubleSide,
       transparent: true,
-      // lights:true,
+      lights:true,
       fog: scene.fog !== undefined
     });
 
@@ -67,5 +77,5 @@ export class StudySimple {
 }
 
 window.onload = () => {
-  const study = new StudySimple();
+  const study = new StudyContourMap();
 };
