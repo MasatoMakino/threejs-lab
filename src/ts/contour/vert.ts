@@ -1,4 +1,4 @@
-import {ShaderChunk} from "three";
+import { ShaderChunk } from "three";
 
 export class ContourVertexShader {
   public static get() {

@@ -3,15 +3,15 @@ import { Scene } from "three";
 import { ShaderMaterial } from "three";
 import { Mesh } from "three";
 import { BoxGeometry } from "three";
-import {ContourVertexShader } from "ts/contour/vert.ts";
+import { ContourVertexShader } from "ts/contour/vert.ts";
 import { ContourFragmentShader } from "ts/contour/frag.ts";
 import { TextureLoader } from "three";
 import { DoubleSide } from "three";
 import { UniformsUtils } from "three";
 import { UniformsLib } from "three";
 import { Fog } from "three";
-import {PointLight} from "three";
-import {PointLightHelper} from "three";
+import { PointLight } from "three";
+import { PointLightHelper } from "three";
 
 export class StudyContourMap {
   public static readonly W = 640;
@@ -21,7 +21,11 @@ export class StudyContourMap {
     const scene = Common.initScene();
     scene.fog = new Fog(0x000000, 80, 120);
     Common.initLight(scene);
-    const camera = Common.initCamera(scene, StudyContourMap.W, StudyContourMap.H);
+    const camera = Common.initCamera(
+      scene,
+      StudyContourMap.W,
+      StudyContourMap.H
+    );
     const renderer = Common.initRenderer(StudyContourMap.W, StudyContourMap.H);
     const control = Common.initControl(camera);
     Common.initHelper(scene);
@@ -30,17 +34,20 @@ export class StudyContourMap {
   }
 
   private initObject(scene: Scene): void {
-
-
-    const spot = new PointLight( 0xFF00FF, 5, 0 , 2 );
-    scene.add( spot );
-    const helper = new PointLightHelper( spot );
-    scene.add( helper );
+    const spot = new PointLight(0xff00ff, 5, 0, 2);
+    scene.add(spot);
+    const helper = new PointLightHelper(spot);
+    scene.add(helper);
 
     const size = 20.0;
     const bottom = -10.0;
     const top = 10.0;
-    const texture = new TextureLoader().load("./textures/contour.png");
+    const texture = new TextureLoader().load(
+      "./textures/contour.png",
+      texture => {
+        mat.uniforms.texture.value = texture;
+      }
+    );
 
     const geo = new BoxGeometry(size, size, size);
 
@@ -54,21 +61,15 @@ export class StudyContourMap {
       }
     ]);
 
-    console.log( uniforms );
-
     const mat = new ShaderMaterial({
       uniforms: uniforms,
       vertexShader: ContourVertexShader.get(),
       fragmentShader: ContourFragmentShader.get(),
       side: DoubleSide,
       transparent: true,
-      lights:true,
+      lights: true,
       fog: scene.fog !== undefined
     });
-
-    mat.uniforms.bottom.value = bottom;
-    mat.uniforms.top.value = top;
-    mat.uniforms.texture.value = texture;
 
     const mesh = new Mesh(geo, mat);
 
