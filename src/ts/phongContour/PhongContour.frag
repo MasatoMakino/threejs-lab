@@ -10,6 +10,9 @@ uniform vec3 emissive;
 uniform vec3 specular;
 uniform float shininess;
 uniform float opacity;
+uniform float bottom;
+uniform float top;
+varying vec3 meshPosition;
 
 #include <common>
 #include <packing>
@@ -43,7 +46,15 @@ void main() {
     ReflectedLight reflectedLight = ReflectedLight( vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ) );
     vec3 totalEmissiveRadiance = emissive;
     #include <logdepthbuf_fragment>
-    #include <map_fragment>
+
+    /** #include <map_fragment> **/
+    #ifdef USE_MAP
+      float mapY = meshPosition.y / (top - bottom)+0.5 ;
+      vec4 texelColor = texture2D( map, vec2(0.5, mapY) );
+      if ( texelColor.a < 0.3 ) discard;
+      texelColor = mapTexelToLinear( texelColor );
+      diffuseColor *= texelColor;
+    #endif
     #include <color_fragment>
     #include <alphamap_fragment>
     #include <alphatest_fragment>

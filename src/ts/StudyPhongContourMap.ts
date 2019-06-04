@@ -42,18 +42,13 @@ export class StudyContourMap {
     scene.add(helper);
 
     const size = 20.0;
-    const bottom = -10.0;
-    const top = 10.0;
-
     const geo = new BoxGeometry(size, size, size);
 
     const mat = new PhongContourMaterial({
-      
       // opacity:0.5,
-      lights: true,
       fog: scene.fog !== undefined,
     });
-    mat.loadMap("./textures/contour.png");
+    mat.loadMap("./textures/contour.png",geo);
 
 
     const mesh = new Mesh(geo, mat);

@@ -8,16 +8,20 @@ import {
   ShaderMaterial,
   UniformsLib,
   Color,
-  ShaderChunk,
   UniformsUtils,
-  ShaderMaterialParameters
+  ShaderMaterialParameters,
+  Texture,
+  TextureLoader,
+  DoubleSide,
+  Geometry,
+  BufferGeometry
 } from "three";
 
 // @ts-ignore
 import PhongContourFragmentShader from "./PhongContour.frag";
-import { Texture } from "three";
-import { TextureLoader } from "three";
-import {DoubleSide} from "three";
+// @ts-ignore
+import PhongContourVertexShader from "./PhongContour.vert";
+
 
 export class PhongContourMaterial extends ShaderMaterial {
   get opacity(): number {
@@ -36,12 +40,16 @@ export class PhongContourMaterial extends ShaderMaterial {
   get map(): Texture {
     return this._map;
   }
-  public loadMap(url: string) {
+  public loadMap(url: string, geo:Geometry|BufferGeometry) {
     this._map = new TextureLoader().load(url, texture => {
       if (this.uniforms && this.uniforms.map) {
         this.uniforms.map.value = texture;
       }
     });
+
+    geo.computeBoundingBox();
+    this.uniforms.top.value = geo.boundingBox.max.y;
+    this.uniforms.bottom.value = geo.boundingBox.min.y;
   }
   private _map: Texture;
 
@@ -64,14 +72,17 @@ export class PhongContourMaterial extends ShaderMaterial {
       {
         emissive: { value: new Color(0x000000) },
         specular: { value: new Color(0x111111) },
-        shininess: { value: 30 }
+        shininess: { value: 30 },
+        top:{value:1.0},
+        bottom:{value:-1.0}
       }
     ]);
 
-    this.vertexShader = ShaderChunk.meshphong_vert;
+    this.vertexShader = PhongContourVertexShader;
     this.fragmentShader = PhongContourFragmentShader;
 
     this.opacity = this._opacity;
+    this.lights = true;
 
     if( parameters.transparent == null ){
       this.transparent = true;
