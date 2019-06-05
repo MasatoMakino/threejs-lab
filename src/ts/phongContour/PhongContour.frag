@@ -49,9 +49,8 @@ void main() {
 
     /** #include <map_fragment> **/
     #ifdef USE_MAP
-      float mapY = meshPosition.y / (top - bottom)+0.5 ;
+      float mapY = ( meshPosition.y - bottom ) / ( top - bottom );
       vec4 texelColor = texture2D( map, vec2(0.5, mapY) );
-      if ( texelColor.a < 0.3 ) discard;
       texelColor = mapTexelToLinear( texelColor );
       diffuseColor *= texelColor;
     #endif
