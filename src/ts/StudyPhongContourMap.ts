@@ -5,7 +5,8 @@ import {
   PointLight,
   PointLightHelper,
   Color,
-  TorusGeometry
+  TorusGeometry,
+  AdditiveBlending
 } from "three";
 import { Common } from "ts/Common";
 import { PhongContourMaterial } from "ts/phongContour/PhongContourMaterial";
@@ -37,15 +38,15 @@ export class StudyContourMap {
     const helper = new PointLightHelper(spot);
     scene.add(helper);
 
-    const geo = new TorusGeometry(10, 4, 16, 32);
+    const geo = new TorusGeometry(10, 4, 32, 32);
     // geo.rotateX(Math.PI/4);
 
     const mat = new PhongContourMaterial({
-      // alphaTest:0.1,
-      // opacity: 0.5,
+      opacity: 0.75,
       fog: scene.fog !== undefined
     });
-    mat.loadMap("./textures/contour.png", geo);
+    mat.loadMap("./textures/contour_glow.png", geo);
+    mat.startGlow();
     // mat.emissive = new Color(0xffff00);
 
     const mesh = new Mesh(geo, mat);

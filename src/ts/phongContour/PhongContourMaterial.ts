@@ -21,6 +21,7 @@ import {
 import PhongContourFragmentShader from "./PhongContour.frag";
 // @ts-ignore
 import PhongContourVertexShader from "./PhongContour.vert";
+import { AdditiveBlending } from "three";
 
 export class PhongContourMaterial extends ShaderMaterial {
   get opacity(): number {
@@ -91,6 +92,10 @@ export class PhongContourMaterial extends ShaderMaterial {
     this.vertexShader = PhongContourVertexShader;
     this.fragmentShader = PhongContourFragmentShader;
 
+    this.initDefaultSetting(parameters);
+  }
+
+  private initDefaultSetting(parameters?: ShaderMaterialParameters): void {
     this.opacity = this._opacity;
     this.lights = true; //FIXME シェーダーがエラーを起こすのでlights設定は強制でON
 
@@ -109,5 +114,15 @@ export class PhongContourMaterial extends ShaderMaterial {
     } else {
       this.side = parameters.side;
     }
+  }
+
+  /**
+   * 発光状態のために、マテリアルの設定をまとめて変更する。
+   * {@link https://stackoverflow.com/questions/37647853/three-js-depthwrite-vs-depthtest-for-transparent-canvas-texture-map-on-three-p}
+   */
+  public startGlow(): void {
+    this.alphaTest = 0.0;
+    this.depthWrite = false;
+    this.blending = AdditiveBlending;
   }
 }
