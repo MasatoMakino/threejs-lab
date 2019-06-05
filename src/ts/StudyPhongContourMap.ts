@@ -1,19 +1,14 @@
+import {
+  Scene,
+  Mesh,
+  Fog,
+  PointLight,
+  PointLightHelper,
+  Color,
+  TorusGeometry
+} from "three";
 import { Common } from "ts/Common";
-import { Scene } from "three";
-import { ShaderMaterial } from "three";
-import { Mesh } from "three";
-import { BoxGeometry } from "three";
-import { ContourVertexShader } from "ts/contour/vert.ts";
-import { ContourFragmentShader } from "ts/contour/frag.ts";
-import { TextureLoader } from "three";
-import { DoubleSide } from "three";
-import { UniformsUtils } from "three";
-import { UniformsLib } from "three";
-import { Fog } from "three";
-import { PointLight } from "three";
-import { PointLightHelper } from "three";
 import { PhongContourMaterial } from "ts/phongContour/PhongContourMaterial";
-import {Color} from "three";
 
 export class StudyContourMap {
   public static readonly W = 640;
@@ -37,19 +32,19 @@ export class StudyContourMap {
 
   private initObject(scene: Scene): void {
     const spot = new PointLight(0xffffff, 1, 0, 2);
-    spot.position.set( 10, 20,30);
+    spot.position.set(10, 20, 30);
     scene.add(spot);
     const helper = new PointLightHelper(spot);
     scene.add(helper);
 
-    const size = 20.0;
-    const geo = new BoxGeometry(size, size, size);
+    const geo = new TorusGeometry(10, 4, 16, 32);
+    // geo.rotateX(Math.PI/4);
 
     const mat = new PhongContourMaterial({
-      opacity:0.5,
+      opacity: 0.5,
       fog: scene.fog !== undefined
     });
-    mat.loadMap("./textures/contour.png",geo);
+    mat.loadMap("./textures/contour.png", geo);
     mat.emissive = new Color(0xffff00);
 
     const mesh = new Mesh(geo, mat);
