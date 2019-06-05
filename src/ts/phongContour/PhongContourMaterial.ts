@@ -100,7 +100,7 @@ export class PhongContourMaterial extends ShaderMaterial {
       this.transparent = parameters.transparent;
     }
 
-    if( this.transparent && parameters.alphaTest == null ){
+    if (this.transparent && parameters.alphaTest == null) {
       this.alphaTest = 0.5;
     }
 
