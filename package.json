@@ -12,6 +12,7 @@
     "gulp": "^4.0.2",
     "gulptask-dev-server": "https://github.com/MasatoMakino/gulptask-dev-server.git",
     "gulptask-webpack": "https://github.com/MasatoMakino/gulptask-webpack.git",
+    "husky": "^2.3.0",
     "prettier": "^1.17.1",
     "three": "^0.104.0",
     "ts-loader": "^6.0.1",
