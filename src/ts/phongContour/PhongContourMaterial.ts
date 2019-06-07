@@ -1,13 +1,9 @@
 /**
- *
- *
- * https://github.com/mrdoob/three.js/blob/76c64b23d422dcfb36a28353f45b1effa1f68c5a/src/renderers/shaders/ShaderLib.js#L53
+ * テクスチャを等高線状にマップするマテリアル。
+ * マッピング以外の昨日はMeshPhongMaterialに準じる。
  */
 
 import {
-  ShaderMaterial,
-  UniformsLib,
-  Color,
   UniformsUtils,
   ShaderMaterialParameters,
   Texture,
@@ -16,27 +12,14 @@ import {
   Geometry,
   BufferGeometry
 } from "three";
+import { CustomPhongMaterial } from "ts/customPhongMaterial/CustomPhongMaterial";
 
 // @ts-ignore
 import PhongContourFragmentShader from "./PhongContour.frag";
 // @ts-ignore
-import PhongContourVertexShader from "./PhongContour.vert";
-import { AdditiveBlending } from "three";
+import PhongContourVertexShader from "ts/customPhongMaterial/Shader.vert";
 
-export class PhongContourMaterial extends ShaderMaterial {
-  get opacity(): number {
-    return this._opacity;
-  }
-  set opacity(value: number) {
-    if (value === undefined) return;
-
-    this._opacity = value;
-    if (this.uniforms && this.uniforms.opacity) {
-      this.uniforms.opacity.value = value;
-    }
-  }
-  private _opacity: number;
-
+export class PhongContourMaterial extends CustomPhongMaterial {
   get map(): Texture {
     return this._map;
   }
@@ -53,51 +36,22 @@ export class PhongContourMaterial extends ShaderMaterial {
   }
   private _map: Texture;
 
-  get emissive(): Color {
-    return this._emissive;
-  }
-  set emissive(value: Color) {
-    this._emissive = value;
-    if (this.uniforms && this.uniforms.emissive) {
-      this.uniforms.emissive.value = value;
-    }
-  }
-  private _emissive: Color;
-
   constructor(parameters?: ShaderMaterialParameters) {
-    super(parameters);
+    super(PhongContourVertexShader, PhongContourFragmentShader, parameters);
+  }
 
+  protected initUniforms(): void {
     this.uniforms = UniformsUtils.merge([
-      UniformsLib.common,
-      UniformsLib.specularmap,
-      UniformsLib.envmap,
-      UniformsLib.aomap,
-      UniformsLib.lightmap,
-      UniformsLib.emissivemap,
-      UniformsLib.bumpmap,
-      UniformsLib.normalmap,
-      UniformsLib.displacementmap,
-      UniformsLib.gradientmap,
-      UniformsLib.fog,
-      UniformsLib.lights,
+      CustomPhongMaterial.getBasicUniforms(),
       {
-        emissive: { value: new Color(0x000000) },
-        specular: { value: new Color(0x111111) },
-        shininess: { value: 30 },
         top: { value: 1.0 },
         bottom: { value: -1.0 }
       }
     ]);
-
-    this.vertexShader = PhongContourVertexShader;
-    this.fragmentShader = PhongContourFragmentShader;
-
-    this.initDefaultSetting(parameters);
   }
 
-  private initDefaultSetting(parameters?: ShaderMaterialParameters): void {
-    this.opacity = this._opacity;
-    this.lights = true; //FIXME シェーダーがエラーを起こすのでlights設定は強制でON
+  protected initDefaultSetting(parameters?: ShaderMaterialParameters): void {
+    super.initDefaultSetting(parameters);
 
     if (parameters.transparent == null) {
       this.transparent = true;
@@ -114,15 +68,5 @@ export class PhongContourMaterial extends ShaderMaterial {
     } else {
       this.side = parameters.side;
     }
-  }
-
-  /**
-   * 発光状態のために、マテリアルの設定をまとめて変更する。
-   * {@link https://stackoverflow.com/questions/37647853/three-js-depthwrite-vs-depthtest-for-transparent-canvas-texture-map-on-three-p}
-   */
-  public startGlow(): void {
-    this.alphaTest = 0.0;
-    this.depthWrite = false;
-    this.blending = AdditiveBlending;
   }
 }
