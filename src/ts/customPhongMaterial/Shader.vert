@@ -6,6 +6,7 @@
 
 varying vec3 vViewPosition;
 varying vec3 meshPosition;
+varying vec2 uvPosition;
 
 #ifndef FLAT_SHADED
 
@@ -28,6 +29,7 @@ varying vec3 vNormal;
 
 void main() {
     meshPosition = position;
+    uvPosition = uv;
 
     #include <uv_vertex>
     #include <uv2_vertex>
