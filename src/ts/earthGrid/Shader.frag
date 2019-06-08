@@ -1,6 +1,6 @@
 /**
- * ref
- * https://github.com/mrdoob/three.js/blob/dev/src/renderers/shaders/ShaderLib/meshphong_frag.glsl.js
+ * 地球儀用グリッド線シェーダー
+ * {@link http://glslsandbox.com/e#55098.11}
  */
 
 #define PHONG

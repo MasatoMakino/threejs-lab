@@ -1,6 +1,5 @@
 /**
- * ref
- * https://github.com/mrdoob/three.js/blob/dev/src/renderers/shaders/ShaderLib/meshphong_frag.glsl.js
+ * 等高線状にテクスチャをマッピングするシェーダー
  */
 
 #define PHONG
