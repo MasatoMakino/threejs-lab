@@ -39,11 +39,12 @@ export class Common {
     W: number,
     H: number,
     color: number = 0x000000,
-    id: string = "webgl-canvas"
+    id: string = "webgl-canvas",
+    antialias:boolean = true
   ) {
     const renderer = new WebGLRenderer({
       canvas: document.getElementById(id) as HTMLCanvasElement,
-      antialias: true
+      antialias: antialias
     });
     renderer.setClearColor(new Color(color));
     renderer.setSize(W, H);
