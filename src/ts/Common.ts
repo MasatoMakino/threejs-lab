@@ -40,7 +40,7 @@ export class Common {
     H: number,
     color: number = 0x000000,
     id: string = "webgl-canvas",
-    antialias:boolean = true
+    antialias: boolean = true
   ) {
     const renderer = new WebGLRenderer({
       canvas: document.getElementById(id) as HTMLCanvasElement,

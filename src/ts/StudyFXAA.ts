@@ -12,7 +12,6 @@ import { Common } from "ts/Common";
 import { EarthGridMaterial } from "ts/earthGrid/EarthGridMaterial";
 import { SphereGeometry } from "three";
 
-
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass";
 import * as FXAAShaderModule from "three/examples/jsm/shaders/FXAAShader";
@@ -130,13 +129,17 @@ export class StudyFXAA {
 window.onload = () => {
   const study = new StudyFXAA();
 
-  document.addEventListener('keydown', (event) => {
-    const keyName = event.key;
+  document.addEventListener(
+    "keydown",
+    event => {
+      const keyName = event.key;
 
-    console.log( keyName );
-    if (keyName === ' ') {
-      StudyFXAA.switchAA();
-      return;
-    }
-  }, false);
+      console.log(keyName);
+      if (keyName === " ") {
+        StudyFXAA.switchAA();
+        return;
+      }
+    },
+    false
+  );
 };
