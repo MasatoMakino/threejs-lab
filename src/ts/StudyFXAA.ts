@@ -1,31 +1,14 @@
-import {
-  Scene,
-  Mesh,
-  Fog,
-  PointLight,
-  PointLightHelper,
-  Color,
-  TorusGeometry,
-  AdditiveBlending
-} from "three";
+import { Scene, Mesh, Fog, PointLight, PointLightHelper, Color } from "three";
 import { Common } from "ts/Common";
 import { EarthGridMaterial } from "ts/earthGrid/EarthGridMaterial";
 import { SphereGeometry } from "three";
-
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
-import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass";
-import * as FXAAShaderModule from "three/examples/jsm/shaders/FXAAShader";
-import { ShaderMaterial } from "three";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
-import { Vector2 } from "three";
-import * as CopyShaderModule from "three/examples/jsm/shaders/CopyShader";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { WebGLRenderer } from "three";
-import { Camera } from "three";
+import { FXAARenderer } from "ts/fxaa/FXAARenderer";
 
 export class StudyFXAA {
   public static readonly W = 640;
   public static readonly H = 480;
+
+  private fxaaRenderer: FXAARenderer;
 
   constructor() {
     const scene = Common.initScene();
@@ -42,8 +25,12 @@ export class StudyFXAA {
     const control = Common.initControl(camera);
     Common.initHelper(scene);
     this.initObject(scene);
-    const composer = this.initFXAA(scene, camera, renderer);
-    StudyFXAA.render(control, renderer, scene, camera, composer);
+
+    this.fxaaRenderer = new FXAARenderer(scene, camera, renderer);
+    this.fxaaRenderer.onBeforeRequestAnimationFrame = () => {
+      control.update();
+    };
+    this.fxaaRenderer.start();
   }
 
   private initObject(scene: Scene): void {
@@ -66,64 +53,19 @@ export class StudyFXAA {
     scene.add(mesh);
   }
 
-  private initFXAA(scene, camera, renderer): EffectComposer {
-    console.log("fxaa");
-    const renderPass = new RenderPass(
-      scene,
-      camera,
-      undefined,
-      undefined,
-      undefined
-    );
-
-    const shader = FXAAShaderModule["FXAAShader"];
-    const fxaaPass = new ShaderPass(shader);
-
-    //init fxaaPass size
-    const pixelRatio = renderer.getPixelRatio();
-    const size = renderer.getSize(new Vector2());
-    const uniforms = (fxaaPass.material as ShaderMaterial).uniforms;
-    uniforms.resolution.value.x = 1 / (size.width * pixelRatio);
-    uniforms.resolution.value.y = 1 / (size.height * pixelRatio);
-
-    //composer1
-    const composer1 = new EffectComposer(renderer);
-    composer1.addPass(renderPass);
-    composer1.addPass(fxaaPass);
-
-    // const copyShader = CopyShaderModule["CopyShader"];
-    // const copyPass = new ShaderPass(copyShader);
-    // const composer2 = new EffectComposer(renderer);
-    // composer2.addPass(renderPass);
-    // composer2.addPass(copyPass);
-
-    return composer1;
+  public switchAA(): void {
+    this.fxaaRenderer.isActive = !this.fxaaRenderer.isActive;
   }
 
-  public static isAA = true;
-
-  public static render(
-    control: OrbitControls,
-    renderer: WebGLRenderer,
-    scene: Scene,
-    camera: Camera,
-    composer: EffectComposer
-  ) {
-    const rendering = () => {
-      control.update();
-      if (this.isAA) {
-        composer.render(undefined);
-      } else {
-        renderer.render(scene, camera);
-      }
-      requestAnimationFrame(rendering);
-    };
-    rendering();
+  public sizeUp(): void {
+    const size = this.fxaaRenderer.getSize();
+    this.fxaaRenderer.updateSize(size.width + 4, size.height + 4);
   }
 
-  public static switchAA = () => {
-    StudyFXAA.isAA = !StudyFXAA.isAA;
-  };
+  public sizeDown(): void {
+    const size = this.fxaaRenderer.getSize();
+    this.fxaaRenderer.updateSize(size.width - 4, size.height - 4);
+  }
 }
 
 window.onload = () => {
@@ -134,10 +76,16 @@ window.onload = () => {
     event => {
       const keyName = event.key;
 
-      console.log(keyName);
-      if (keyName === " ") {
-        StudyFXAA.switchAA();
-        return;
+      switch (keyName) {
+        case " ":
+          study.switchAA();
+          break;
+        case "q":
+          study.sizeUp();
+          break;
+        case "a":
+          study.sizeDown();
+          break;
       }
     },
     false
