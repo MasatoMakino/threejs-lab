@@ -1,6 +1,6 @@
 /**
  * 地球儀用グリッド線シェーダー
- * {@link http://glslsandbox.com/e#55098.11}
+ * {@link http://glslsandbox.com/e#55098}
  */
 
 #define PHONG
