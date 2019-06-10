@@ -8,6 +8,7 @@
   "private": true,
   "dependencies": {},
   "devDependencies": {
+    "dat.gui": "^0.7.6",
     "glob": "^7.1.4",
     "gulp": "^4.0.2",
     "gulptask-dev-server": "https://github.com/MasatoMakino/gulptask-dev-server.git",
