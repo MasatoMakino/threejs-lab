@@ -136,27 +136,30 @@ export class StudyDepthTestAndDepthWrite {
     innerFolder.add(this.inner.position, "x", 0, 8);
     innerFolder.open();
 
+    const renderOrderFolder = gui.addFolder("Render Order");
     const orders = {
       inner: 0.0,
       outer: 0.0,
       satellite: 0.0
     };
-    const renderOrderFolder = gui.addFolder("Render Order");
+    const min = -3;
+    const max = 3;
+    const step = 1;
     renderOrderFolder
-      .add(orders, "inner", -3, 3)
-      .step(1)
+      .add(orders, "inner", min, max)
+      .step(step)
       .onChange(val => {
         this.inner.renderOrder = val;
       });
     renderOrderFolder
-      .add(orders, "outer", -3, 3)
-      .step(1)
+      .add(orders, "outer", min, max)
+      .step(step)
       .onChange(val => {
         this.outer.renderOrder = val;
       });
     renderOrderFolder
-      .add(orders, "satellite", -3, 3)
-      .step(1)
+      .add(orders, "satellite", min, max)
+      .step(step)
       .onChange(val => {
         this.satellite.renderOrder = val;
       });
