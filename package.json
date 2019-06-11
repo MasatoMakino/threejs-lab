@@ -1,8 +1,8 @@
 {
-  "name": "threejs-glsl-studies",
+  "name": "threejs-lab",
   "version": "0.1.0",
   "main": "index.js",
-  "repository": "https://MasatoMakino@github.com/MasatoMakino/threejs-glsl-studies.git",
+  "repository": "https://MasatoMakino@github.com/MasatoMakino/threejs-lab.git",
   "author": "MasatoMakino <unagiinu.g@gmail.com>",
   "license": "UNLICENSED",
   "private": true,

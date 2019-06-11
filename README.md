@@ -1,2 +1,2 @@
-# threejs-glsl-studies
-Custom shader studies for three.js.
+# threejs-lab
+Studies for three.js.
