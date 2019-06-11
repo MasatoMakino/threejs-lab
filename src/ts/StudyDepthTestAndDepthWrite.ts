@@ -31,7 +31,7 @@ export class StudyDepthTestAndDepthWrite {
       StudyDepthTestAndDepthWrite.W,
       StudyDepthTestAndDepthWrite.H
     );
-    const control = Common.initControl(camera);
+    const control = Common.initControl(camera, renderer);
     Common.initHelper(this.scene);
     this.initObject(this.scene);
     Common.render(control, renderer, this.scene, camera);

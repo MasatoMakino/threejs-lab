@@ -29,8 +29,12 @@ export class Common {
     return camera;
   }
 
-  public static initControl(camera): OrbitControls {
-    const control = new OrbitControls(camera);
+  public static initControl(camera, render?: WebGLRenderer): OrbitControls {
+    let domElement;
+    if (render) {
+      domElement = render.domElement;
+    }
+    const control = new OrbitControls(camera, domElement);
     control.update();
     return control;
   }
