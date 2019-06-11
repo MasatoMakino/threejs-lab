@@ -4,8 +4,7 @@
   "main": "index.js",
   "repository": "https://MasatoMakino@github.com/MasatoMakino/threejs-lab.git",
   "author": "MasatoMakino <unagiinu.g@gmail.com>",
-  "license": "UNLICENSED",
-  "private": true,
+  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
     "dat.gui": "^0.7.6",

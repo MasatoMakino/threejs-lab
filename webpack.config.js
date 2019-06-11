@@ -19,7 +19,7 @@ glob
 module.exports = {
   entry: entries,
   output: {
-    path: `${__dirname}/dist/js`,
+    path: `${__dirname}/docs/`,
     filename: "[name].js",
     chunkFilename: "[name].bundle.js",
     publicPath: "/"

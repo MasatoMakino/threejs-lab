@@ -12,12 +12,12 @@ exports.bundleDevelopment = bundleDevelopment;
 
 const copyGlob = "./src/html/*.html";
 const copy = () => {
-  return src(copyGlob).pipe(dest("./dist"));
+  return src(copyGlob).pipe(dest("./docs"));
 };
 
 const copyTexturesGlob = "./src/textures/**/*";
 const copyTextures = () => {
-  return src(copyTexturesGlob, { base: "./src" }).pipe(dest("./dist"));
+  return src(copyTexturesGlob, { base: "./src" }).pipe(dest("./docs"));
 };
 
 const watchTasks = cb => {
