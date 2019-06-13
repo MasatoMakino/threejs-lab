@@ -46,12 +46,30 @@ export class StudyDepthTestAndDepthWrite {
     const helper = new PointLightHelper(spot);
     scene.add(helper);
 
-    const self = StudyDepthTestAndDepthWrite;
-
-    this.outer = self.initSphere(15, 0xff00ff, scene);
-    this.inner = self.initSphere(10, 0xffff00, scene);
-
+    this.swapSphere(false);
     this.switchSatelliteShift(false);
+  }
+
+  /**
+   * 中央の球体2つのシーンへの登録順のみを入れ替える。
+   * @param isSwap
+   */
+  public swapSphere(isSwap: boolean): void {
+    if (this.inner) {
+      this.inner.parent.remove(this.inner);
+      this.outer.parent.remove(this.outer);
+      this.inner = null;
+      this.outer = null;
+    }
+
+    const self = StudyDepthTestAndDepthWrite;
+    if (!isSwap) {
+      this.outer = self.initSphere(15, 0xff00ff, this.scene);
+      this.inner = self.initSphere(10, 0xffff00, this.scene);
+    } else {
+      this.inner = self.initSphere(10, 0xffff00, this.scene);
+      this.outer = self.initSphere(15, 0xff00ff, this.scene);
+    }
   }
 
   private static initSphere(r: number, color: number, scene: Scene): Mesh {
@@ -133,7 +151,12 @@ export class StudyDepthTestAndDepthWrite {
     depthFolder.open();
 
     const innerFolder = gui.addFolder("Inner Sphere");
-    innerFolder.add(this.inner.position, "x", 0, 8);
+    const innerParam = {
+      x: 0.0
+    };
+    innerFolder.add(innerParam, "x", 0, 20).onChange(val => {
+      this.inner.position.x = val;
+    });
     innerFolder.open();
 
     const renderOrderFolder = gui.addFolder("Render Order");
@@ -164,6 +187,17 @@ export class StudyDepthTestAndDepthWrite {
         this.satellite.renderOrder = val;
       });
     renderOrderFolder.open();
+
+    const sceneFolder = gui.addFolder("Scene");
+    const sceneParam = {
+      SwapSphere: false
+    };
+    sceneFolder.add(sceneParam, "SwapSphere").onChange(val => {
+      this.swapSphere(val);
+      this.inner.position.x = innerParam.x;
+    });
+
+    sceneFolder.open();
   }
 }
 
