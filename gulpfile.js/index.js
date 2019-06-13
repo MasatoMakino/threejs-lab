@@ -2,7 +2,7 @@
 
 const { series, parallel, src, dest, watch } = require("gulp");
 
-const server = require("gulptask-dev-server")("./dist");
+const server = require("gulptask-dev-server")("./docs");
 exports.server = server;
 
 const { bundleDevelopment, watchBundle } = require("gulptask-webpack")(
