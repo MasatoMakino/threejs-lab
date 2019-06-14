@@ -15,6 +15,7 @@
     "husky": "^2.4.0",
     "prettier": "^1.17.1",
     "pretty-quick": "^1.11.0",
+    "stats.js": "https://github.com/mrdoob/stats.js.git",
     "three": "^0.105.2",
     "ts-loader": "^6.0.2",
     "typescript": "^3.5.1",
