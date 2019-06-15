@@ -1,16 +1,12 @@
-import { PerspectiveCamera, WebGLRenderer, Scene, Vector2 } from "three";
+import { PerspectiveCamera, WebGLRenderer, Scene } from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 import { FXAAShaderPass } from "ts/fxaa/FXAAShaderPass";
+import { PostProcessRenderer } from "ts/postprocess/PostProcessRenderer";
 
-export class FXAARenderer {
-  private composer: EffectComposer;
-  private renderer: WebGLRenderer;
-  private scene: Scene;
-  private camera: PerspectiveCamera;
-  private id: number;
+export class FXAARenderer extends PostProcessRenderer {
+  protected composer: EffectComposer;
   private fxaaPass: FXAAShaderPass;
-  private lastUpdateTimestamp: number;
   public isActive: boolean = true;
 
   constructor(
@@ -18,12 +14,9 @@ export class FXAARenderer {
     camera: PerspectiveCamera,
     renderer: WebGLRenderer
   ) {
-    this.renderer = renderer;
-    this.scene = scene;
-    this.camera = camera;
+    super(scene, camera, renderer);
     this.fxaaPass = new FXAAShaderPass(renderer);
     this.composer = this.initComposer(this.fxaaPass, scene, camera, renderer);
-    console.log(renderer.domElement);
   }
 
   /**
@@ -38,14 +31,7 @@ export class FXAARenderer {
     camera: PerspectiveCamera,
     renderer: WebGLRenderer
   ): EffectComposer {
-    const renderPass = new RenderPass(
-      scene,
-      camera,
-      undefined,
-      undefined,
-      undefined
-    );
-
+    const renderPass = this.getRenderPass();
     const composer = new EffectComposer(renderer);
     composer.addPass(renderPass);
     composer.addPass(fxaaPass);
@@ -53,59 +39,16 @@ export class FXAARenderer {
   }
 
   public updateSize(w: number, h: number): void {
-    this.camera.aspect = w / h;
-    this.camera.updateProjectionMatrix();
-
-    this.renderer.setPixelRatio(window.devicePixelRatio);
-    this.renderer.setSize(w, h);
+    super.updateSize(w, h);
     this.composer.setSize(w, h);
     this.fxaaPass.updateSize();
   }
 
-  public getSize(): Vector2 {
-    return this.renderer.getSize(new Vector2());
-  }
-
-  /**
-   * レンダリングを開始する。
-   */
-  public start(): void {
-    if (this.id != null) return;
-    this.id = requestAnimationFrame(this.onRequestAnimationFrame);
-  }
-
-  /**
-   * レンダリングを停止する。
-   */
-  public stop(): void {
-    if (this.id == null) return;
-    cancelAnimationFrame(this.id);
-    this.lastUpdateTimestamp = null;
-  }
-
-  /**
-   * requestAnimationFrameハンドラ
-   * @param timestamp
-   */
-  private onRequestAnimationFrame = (timestamp?: number) => {
-    if (this.lastUpdateTimestamp == null) {
-      this.lastUpdateTimestamp = timestamp;
-    }
-
-    const delta = timestamp - this.lastUpdateTimestamp;
-
-    if (this.onBeforeRequestAnimationFrame) {
-      this.onBeforeRequestAnimationFrame(timestamp);
-    }
+  protected render(delta): void {
     if (this.composer && this.isActive) {
       this.composer.render(delta);
     } else {
       this.renderer.render(this.scene, this.camera);
     }
-
-    this.lastUpdateTimestamp = timestamp;
-    this.id = requestAnimationFrame(this.onRequestAnimationFrame);
-  };
-
-  public onBeforeRequestAnimationFrame: (timestamp?: number) => void;
+  }
 }
