@@ -1,14 +1,7 @@
-import {
-  PerspectiveCamera,
-  WebGLRenderer,
-  Scene,
-  Vector2,
-  ShaderMaterial
-} from "three";
+import { PerspectiveCamera, WebGLRenderer, Scene, Vector2 } from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
-import * as FXAAShaderModule from "three/examples/jsm/shaders/FXAAShader";
-import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass";
+import { FXAAShaderPass } from "ts/fxaa/FXAAShaderPass";
 
 export class FXAARenderer {
   private composer: EffectComposer;
@@ -16,7 +9,7 @@ export class FXAARenderer {
   private scene: Scene;
   private camera: PerspectiveCamera;
   private id: number;
-  private fxaaPass: ShaderPass;
+  private fxaaPass: FXAAShaderPass;
   private lastUpdateTimestamp: number;
   public isActive: boolean = true;
 
@@ -28,22 +21,9 @@ export class FXAARenderer {
     this.renderer = renderer;
     this.scene = scene;
     this.camera = camera;
-    this.fxaaPass = this.initFXAAPass(renderer);
+    this.fxaaPass = new FXAAShaderPass(renderer);
     this.composer = this.initComposer(this.fxaaPass, scene, camera, renderer);
     console.log(renderer.domElement);
-  }
-
-  private initFXAAPass(renderer: WebGLRenderer): ShaderPass {
-    const shader = FXAAShaderModule["FXAAShader"];
-    const fxaaPass = new ShaderPass(shader);
-
-    const pixelRatio = renderer.getPixelRatio();
-    const size = renderer.getSize(new Vector2());
-    const uniforms = (fxaaPass.material as ShaderMaterial).uniforms;
-    uniforms.resolution.value.x = 1 / (size.width * pixelRatio);
-    uniforms.resolution.value.y = 1 / (size.height * pixelRatio);
-
-    return fxaaPass;
   }
 
   /**
@@ -53,7 +33,7 @@ export class FXAARenderer {
    * @param renderer
    */
   private initComposer(
-    fxaaPass: ShaderPass,
+    fxaaPass: FXAAShaderPass,
     scene: Scene,
     camera: PerspectiveCamera,
     renderer: WebGLRenderer
@@ -79,11 +59,7 @@ export class FXAARenderer {
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(w, h);
     this.composer.setSize(w, h);
-
-    const pixelRatio = this.renderer.getPixelRatio();
-    const uniforms = (this.fxaaPass.material as ShaderMaterial).uniforms;
-    uniforms.resolution.value.x = 1 / (w * pixelRatio);
-    uniforms.resolution.value.y = 1 / (h * pixelRatio);
+    this.fxaaPass.updateSize();
   }
 
   public getSize(): Vector2 {
