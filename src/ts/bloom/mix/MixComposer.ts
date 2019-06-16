@@ -5,6 +5,8 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 import { FXAAShaderPass } from "ts/fxaa/FXAAShaderPass";
 
 export class MixComposer extends EffectComposer {
+  private fxaaPass: FXAAShaderPass;
+
   constructor(
     renderer: WebGLRenderer,
     renderPass: RenderPass,
@@ -13,6 +15,12 @@ export class MixComposer extends EffectComposer {
     super(renderer);
     this.addPass(renderPass);
     this.addPass(new MixShaderPass(targetComposer));
-    this.addPass(new FXAAShaderPass(renderer));
+    this.fxaaPass = new FXAAShaderPass(renderer);
+    this.addPass(this.fxaaPass);
+  }
+
+  setSize(width: number, height: number): void {
+    super.setSize(width, height);
+    this.fxaaPass.updateSize();
   }
 }

@@ -46,7 +46,7 @@ export class StudyBloom {
     const helper = new PointLightHelper(spot, 2, 0);
     scene.add(helper);
 
-    const geo = new SphereGeometry(10, 64, 64);
+    const geo = new SphereGeometry(10, 32, 32);
     const mat = new MeshLambertMaterial({
       fog: scene.fog !== undefined
     });
@@ -59,8 +59,35 @@ export class StudyBloom {
     nonBloom.position.set(30, 0, 0);
     scene.add(nonBloom);
   }
+
+  public sizeUp(): void {
+    const size = this.bloomRenderer.getSize();
+    this.bloomRenderer.updateSize(size.width + 4, size.height + 4);
+  }
+
+  public sizeDown(): void {
+    const size = this.bloomRenderer.getSize();
+    this.bloomRenderer.updateSize(size.width - 4, size.height - 4);
+  }
 }
 
 window.onload = () => {
   const study = new StudyBloom();
+
+  document.addEventListener(
+    "keydown",
+    event => {
+      const keyName = event.key;
+
+      switch (keyName) {
+        case "q":
+          study.sizeUp();
+          break;
+        case "a":
+          study.sizeDown();
+          break;
+      }
+    },
+    false
+  );
 };
