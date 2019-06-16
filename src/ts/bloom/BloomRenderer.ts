@@ -49,21 +49,25 @@ export class BloomRenderer extends PostProcessRenderer {
     if (obj.isMesh == null || obj.isMesh === false) return;
     if (this.layers.test(obj.layers)) return;
 
-    if (obj.userData.materialStrage == null) {
-      obj.userData.materialStrage = new MaterialStorage();
+    if (obj.userData.materialStorage == null) {
+      obj.userData.materialStorage = new MaterialStorage();
     }
-    const storage: MaterialStorage = obj.userData.materialStrage;
+    const storage: MaterialStorage = obj.userData.materialStorage;
     storage.updateMaterial(obj.material);
     obj.material = storage.darken;
   };
 
   private restoreMaterial = (obj: any) => {
-    if (obj.userData.materialStrage) {
-      obj.material = obj.userData.materialStrage.original;
+    if (obj.userData.materialStorage) {
+      obj.material = obj.userData.materialStorage.original;
     }
   };
 }
 
+/**
+ * Bloom設定に応じて、オリジナルのマテリアルを格納するためのオブジェクト。
+ * Object3D.userData.materialStorageに格納される。
+ */
 class MaterialStorage {
   original?: Material;
   darken?: Material;
