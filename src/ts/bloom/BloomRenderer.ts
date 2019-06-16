@@ -2,6 +2,8 @@ import { Scene, PerspectiveCamera, WebGLRenderer, Layers } from "three";
 import { BloomComposer } from "ts/bloom/BloomComposer";
 import { MixComposer } from "ts/bloom/mix/MixComposer";
 import { PostProcessRenderer } from "ts/postprocess/PostProcessRenderer";
+import { Material } from "three";
+import { getAndCacheOutputJSFileName } from "ts-loader/dist/types/utils";
 
 export class BloomRenderer extends PostProcessRenderer {
   public bloom: BloomComposer;
@@ -10,7 +12,6 @@ export class BloomRenderer extends PostProcessRenderer {
   private layers: Layers;
   public static readonly ENTIRE: number = 0;
   public static readonly BLOOM: number = 30;
-  private materials: Object = {};
 
   constructor(
     scene: Scene,
@@ -28,7 +29,6 @@ export class BloomRenderer extends PostProcessRenderer {
   }
 
   protected render(delta): void {
-    //TODO render()
     this.scene.traverse(this.darkenNonBloomed);
     this.bloom.render(delta);
     this.scene.traverse(this.restoreMaterial);
@@ -36,55 +36,48 @@ export class BloomRenderer extends PostProcessRenderer {
   }
 
   private darkenNonBloomed = (obj: any) => {
-    if (obj.isMesh && !this.layers.test(obj.layers)) {
-      const matDictionary = (this.materials[obj.uuid] = new MaterialStorage());
+    if (obj.isMesh == null || obj.isMesh === false) return;
+    if (this.layers.test(obj.layers)) return;
 
-      const targetMaterial = obj.material;
-      if (targetMaterial.color != null) {
-        matDictionary.colorValue = targetMaterial.color.getHex();
-        targetMaterial.color.setHex(0);
-      }
-      if (targetMaterial.shininess != null) {
-        matDictionary.shininess = targetMaterial.shininess;
-        targetMaterial.shininess = 0;
-      }
-      if (targetMaterial.specular != null) {
-        matDictionary.specularValue = targetMaterial.specular.getHex();
-        targetMaterial.specular.setHex(0);
-      }
-      if (targetMaterial.emissive != null) {
-        matDictionary.emissiveValue = targetMaterial.emissive.getHex();
-        targetMaterial.emissive.setHex(0);
-      }
+    if (obj.userData.materialStrage == null) {
+      obj.userData.materialStrage = new MaterialStorage();
     }
+    const storage: MaterialStorage = obj.userData.materialStrage;
+    storage.updateMaterial(obj.material);
+    obj.material = storage.darken;
   };
 
   private restoreMaterial = (obj: any) => {
-    if (this.materials[obj.uuid] != null) {
-      const matDictionary = this.materials[obj.uuid];
-      const targetMaterial = obj.material;
-
-      if (matDictionary.colorValue != null) {
-        obj.material.color.setHex(matDictionary.colorValue);
-      }
-      if (matDictionary.shininess != null) {
-        targetMaterial.shininess = matDictionary.shininess;
-      }
-      if (matDictionary.specularValue != null) {
-        targetMaterial.specular.setHex(matDictionary.specularValue);
-      }
-      if (matDictionary.emissiveValue != null) {
-        targetMaterial.emissive.setHex(matDictionary.emissiveValue);
-      }
-
-      delete this.materials[obj.uuid];
+    if (obj.userData.materialStrage) {
+      obj.material = obj.userData.materialStrage.original;
     }
   };
 }
 
 class MaterialStorage {
-  colorValue?: number;
-  shininess?: number;
-  specularValue?: number;
-  emissiveValue?: number;
+  original?: Material;
+  darken?: Material;
+
+  public updateMaterial(original: Material) {
+    this.original = original;
+
+    if (this.darken == null) {
+      this.darken = this.original.clone();
+    } else {
+      this.darken.copy(this.original);
+    }
+
+    if (this.darken["color"] != null) {
+      this.darken["color"].setHex(0);
+    }
+    if (this.darken["shininess"] != null) {
+      this.darken["shininess"] = 0;
+    }
+    if (this.darken["specular"] != null) {
+      this.darken["specular"].setHex(0);
+    }
+    if (this.darken["emissive"] != null) {
+      this.darken["emissive"].setHex(0);
+    }
+  }
 }

@@ -43,7 +43,7 @@ export class StudyBloom {
     const spot = new PointLight(0xffffff, 3, 0, 2);
     spot.position.set(0, 0, 0);
     scene.add(spot);
-    const helper = new PointLightHelper(spot, 2);
+    const helper = new PointLightHelper(spot, 2, 0);
     scene.add(helper);
 
     const geo = new SphereGeometry(10, 64, 64);
@@ -55,7 +55,7 @@ export class StudyBloom {
     mesh.layers.enable(BloomRenderer.BLOOM);
     scene.add(mesh);
 
-    const nonBloom = new Mesh(geo, mat.clone());
+    const nonBloom = new Mesh(geo, mat);
     nonBloom.position.set(30, 0, 0);
     scene.add(nonBloom);
   }
