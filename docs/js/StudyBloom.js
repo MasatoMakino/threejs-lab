@@ -211,7 +211,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"MixComposer\", function() { return MixComposer; });\n/* harmony import */ var three_examples_jsm_postprocessing_EffectComposer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three/examples/jsm/postprocessing/EffectComposer */ \"./node_modules/three/examples/jsm/postprocessing/EffectComposer.js\");\n/* harmony import */ var ts_bloom_mix_MixShaderPass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ts/bloom/mix/MixShaderPass */ \"./src/ts/bloom/mix/MixShaderPass.ts\");\n\n\nclass MixComposer extends three_examples_jsm_postprocessing_EffectComposer__WEBPACK_IMPORTED_MODULE_0__[\"EffectComposer\"] {\n    constructor(renderer, renderPass, targetComposer) {\n        super(renderer);\n        this.addPass(renderPass);\n        this.addPass(new ts_bloom_mix_MixShaderPass__WEBPACK_IMPORTED_MODULE_1__[\"MixShaderPass\"](targetComposer));\n        //TODO : add FXAA Shader Pass\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/bloom/mix/MixComposer.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"MixComposer\", function() { return MixComposer; });\n/* harmony import */ var three_examples_jsm_postprocessing_EffectComposer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three/examples/jsm/postprocessing/EffectComposer */ \"./node_modules/three/examples/jsm/postprocessing/EffectComposer.js\");\n/* harmony import */ var ts_bloom_mix_MixShaderPass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ts/bloom/mix/MixShaderPass */ \"./src/ts/bloom/mix/MixShaderPass.ts\");\n/* harmony import */ var ts_fxaa_FXAAShaderPass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ts/fxaa/FXAAShaderPass */ \"./src/ts/fxaa/FXAAShaderPass.ts\");\n\n\n\nclass MixComposer extends three_examples_jsm_postprocessing_EffectComposer__WEBPACK_IMPORTED_MODULE_0__[\"EffectComposer\"] {\n    constructor(renderer, renderPass, targetComposer) {\n        super(renderer);\n        this.addPass(renderPass);\n        this.addPass(new ts_bloom_mix_MixShaderPass__WEBPACK_IMPORTED_MODULE_1__[\"MixShaderPass\"](targetComposer));\n        this.addPass(new ts_fxaa_FXAAShaderPass__WEBPACK_IMPORTED_MODULE_2__[\"FXAAShaderPass\"](renderer));\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/bloom/mix/MixComposer.ts?");
 
 /***/ }),
 
@@ -246,6 +246,18 @@ eval("module.exports = \"uniform sampler2D baseTexture;\\nuniform sampler2D bloo
 /***/ (function(module, exports) {
 
 eval("module.exports = \"varying vec2 vUv;\\nvoid main() {\\n    vUv = uv;\\n    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\\n}\"\n\n//# sourceURL=webpack:///./src/ts/bloom/mix/mix.vert?");
+
+/***/ }),
+
+/***/ "./src/ts/fxaa/FXAAShaderPass.ts":
+/*!***************************************!*\
+  !*** ./src/ts/fxaa/FXAAShaderPass.ts ***!
+  \***************************************/
+/*! exports provided: FXAAShaderPass */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"FXAAShaderPass\", function() { return FXAAShaderPass; });\n/* harmony import */ var three_examples_jsm_postprocessing_ShaderPass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three/examples/jsm/postprocessing/ShaderPass */ \"./node_modules/three/examples/jsm/postprocessing/ShaderPass.js\");\n/* harmony import */ var three_examples_jsm_shaders_FXAAShader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three/examples/jsm/shaders/FXAAShader */ \"./node_modules/three/examples/jsm/shaders/FXAAShader.js\");\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n\n\n\n/**\n * FXAAShaderを組み込み済みのShaderPass\n */\nclass FXAAShaderPass extends three_examples_jsm_postprocessing_ShaderPass__WEBPACK_IMPORTED_MODULE_0__[\"ShaderPass\"] {\n    /**\n     * コンストラクタ\n     * @param renderer\n     */\n    constructor(renderer) {\n        super(three_examples_jsm_shaders_FXAAShader__WEBPACK_IMPORTED_MODULE_1__[\"FXAAShader\"]);\n        this.renderer = renderer;\n        this.updateSize();\n    }\n    /**\n     * レンダリングサイズを更新する。\n     * サイズはコンストラクタで指定されたWebGLRendererに追従する。\n     */\n    updateSize() {\n        const size = this.renderer.getSize(new three__WEBPACK_IMPORTED_MODULE_2__[\"Vector2\"]());\n        const pixelRatio = this.renderer.getPixelRatio();\n        const uniforms = this.material.uniforms;\n        uniforms.resolution.value.x = 1 / (size.width * pixelRatio);\n        uniforms.resolution.value.y = 1 / (size.height * pixelRatio);\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/fxaa/FXAAShaderPass.ts?");
 
 /***/ }),
 

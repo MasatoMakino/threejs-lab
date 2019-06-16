@@ -1,9 +1,13 @@
-import { Scene, PerspectiveCamera, WebGLRenderer, Layers } from "three";
+import {
+  Scene,
+  PerspectiveCamera,
+  WebGLRenderer,
+  Layers,
+  Material
+} from "three";
 import { BloomComposer } from "ts/bloom/BloomComposer";
 import { MixComposer } from "ts/bloom/mix/MixComposer";
 import { PostProcessRenderer } from "ts/postprocess/PostProcessRenderer";
-import { Material } from "three";
-import { getAndCacheOutputJSFileName } from "ts-loader/dist/types/utils";
 
 export class BloomRenderer extends PostProcessRenderer {
   public bloom: BloomComposer;

@@ -15,6 +15,7 @@ export class BloomComposer extends EffectComposer {
 
     // @ts-ignore
     this.renderToScreen = false;
+
     this.addPass(renderPass);
     this.addPass(this.bloomPass);
   }
