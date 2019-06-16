@@ -41,9 +41,9 @@ export class StudyBloom {
 
   private initObject(scene: Scene): void {
     const spot = new PointLight(0xffffff, 3, 0, 2);
-    spot.position.set(10, 20, 30);
+    spot.position.set(0, 0, 0);
     scene.add(spot);
-    const helper = new PointLightHelper(spot);
+    const helper = new PointLightHelper(spot, 2);
     scene.add(helper);
 
     const geo = new SphereGeometry(10, 64, 64);
@@ -52,7 +52,12 @@ export class StudyBloom {
     });
     mat.color = new Color(0xff6666);
     const mesh = new Mesh(geo, mat);
+    mesh.layers.enable(BloomRenderer.BLOOM);
     scene.add(mesh);
+
+    const nonBloom = new Mesh(geo, mat.clone());
+    nonBloom.position.set(30, 0, 0);
+    scene.add(nonBloom);
   }
 }
 
