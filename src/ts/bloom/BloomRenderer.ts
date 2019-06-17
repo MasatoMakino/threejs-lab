@@ -119,7 +119,7 @@ class MaterialStorage {
   public updateMaterial(original: Material) {
     this.original = original;
 
-    if (this.darken == null) {
+    if (this.darken == null || this.darken.type !== this.original.type) {
       this.darken = this.original.clone();
     } else {
       this.darken.copy(this.original);
