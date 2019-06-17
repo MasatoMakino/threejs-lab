@@ -5,22 +5,20 @@ import {
   PointLight,
   PointLightHelper,
   Color,
-  TorusGeometry,
-  AdditiveBlending
+  SphereGeometry,
+  MeshLambertMaterial
 } from "three";
 import { Common } from "ts/Common";
-import { EarthGridMaterial } from "ts/earthGrid/EarthGridMaterial";
-import { SphereGeometry } from "three";
-import { DoubleSide } from "three";
-import { MeshLambertMaterial } from "three";
-import { FXAARenderer } from "ts/fxaa/FXAARenderer";
 import { BloomRenderer } from "ts/bloom/BloomRenderer";
+import * as dat from "dat.gui";
 
 export class StudyBloom {
   public static readonly W = 640;
   public static readonly H = 480;
 
   public bloomRenderer: BloomRenderer;
+  private center: Mesh;
+  private satellite: Mesh;
 
   constructor() {
     const scene = Common.initScene();
@@ -36,7 +34,10 @@ export class StudyBloom {
     this.bloomRenderer.onBeforeRequestAnimationFrame = () => {
       control.update();
     };
+    this.bloomRenderer.threshold = 0.4;
     this.bloomRenderer.start();
+
+    this.initGUI();
   }
 
   private initObject(scene: Scene): void {
@@ -51,13 +52,51 @@ export class StudyBloom {
       fog: scene.fog !== undefined
     });
     mat.color = new Color(0xff6666);
-    const mesh = new Mesh(geo, mat);
-    mesh.layers.enable(BloomRenderer.BLOOM);
-    scene.add(mesh);
+    this.center = new Mesh(geo, mat);
+    this.center.layers.enable(BloomRenderer.BLOOM);
+    scene.add(this.center);
 
-    const nonBloom = new Mesh(geo, mat);
-    nonBloom.position.set(30, 0, 0);
-    scene.add(nonBloom);
+    this.satellite = new Mesh(geo, mat);
+    this.satellite.position.set(30, 0, 0);
+    scene.add(this.satellite);
+  }
+
+  public initGUI(): void {
+    const gui = new dat.GUI();
+    this.initGULBloom(gui);
+    this.initRenderGUI(gui);
+  }
+
+  private initGULBloom(gui): void {
+    const prop = {
+      bloomCenter: true,
+      bloomSatellite: false
+    };
+    const switchBloom = (target: Mesh, isBloom: boolean) => {
+      if (isBloom) {
+        target.layers.enable(BloomRenderer.BLOOM);
+      } else {
+        target.layers.disable(BloomRenderer.BLOOM);
+      }
+    };
+
+    const bloomFolder = gui.addFolder("bloom");
+    bloomFolder.add(prop, "bloomCenter").onChange(val => {
+      switchBloom(this.center, val);
+    });
+    bloomFolder.add(prop, "bloomSatellite").onChange(val => {
+      switchBloom(this.satellite, val);
+    });
+    bloomFolder.open();
+    // bloomFolder.add(this.center.material, "color");
+  }
+
+  private initRenderGUI(gui): void {
+    const folder = gui.addFolder("renderer");
+    folder.add(this.bloomRenderer, "threshold", 0.0, 1.0);
+    folder.add(this.bloomRenderer, "strength", 0.0, 4.0);
+    folder.add(this.bloomRenderer, "radius", 0.0, 1.0);
+    folder.open();
   }
 
   public sizeUp(): void {
