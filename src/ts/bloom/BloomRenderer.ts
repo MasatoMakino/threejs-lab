@@ -45,9 +45,12 @@ export class BloomRenderer extends PostProcessRenderer {
     this.mix.render(delta);
   }
 
+  /**
+   * bloomをマスクするオブジェクトの表示を切り替える。
+   * @param obj
+   */
   private darkenNonBloomed = (obj: any) => {
-    if (obj.isMesh == null || obj.isMesh === false) return;
-    if (this.layers.test(obj.layers)) return;
+    if (!this.isDarken(obj)) return;
 
     if (obj.userData.materialStorage == null) {
       obj.userData.materialStorage = new MaterialStorage();
@@ -57,11 +60,52 @@ export class BloomRenderer extends PostProcessRenderer {
     obj.material = storage.darken;
   };
 
+  /**
+   * bloomマスクを元のマテリアルに戻す。
+   * @param obj
+   */
   private restoreMaterial = (obj: any) => {
-    if (obj.userData.materialStorage) {
-      obj.material = obj.userData.materialStorage.original;
-    }
+    if (!this.isDarken(obj)) return;
+    obj.material = obj.userData.materialStorage.original;
   };
+
+  /**
+   * そのオブジェクトがbloomマスクの対象か否かを判定する。
+   * @param obj
+   */
+  private isDarken(obj: any): boolean {
+    if (obj.isMesh == null && obj.isLine == null) return false;
+    if (this.layers.test(obj.layers)) return false;
+    return true;
+  }
+
+  /*
+   * BloomPassのプロパティを隠蔽するため、アクセサをBloomRenderer側に用意。
+   */
+  set threshold(value: number) {
+    this.bloom.bloomPass.threshold = value;
+  }
+  get threshold(): number {
+    return this.bloom.bloomPass.threshold;
+  }
+  set strength(value: number) {
+    this.bloom.bloomPass.strength = value;
+  }
+  get strength(): number {
+    return this.bloom.bloomPass.strength;
+  }
+  set radius(value: number) {
+    if (value > 1.0) {
+      console.warn(
+        "Bloomの半径が1を超えています。1以上ではメッシュにアウトラインが発生します。",
+        value
+      );
+    }
+    this.bloom.bloomPass.radius = value;
+  }
+  get radius(): number {
+    return this.bloom.bloomPass.radius;
+  }
 }
 
 /**
