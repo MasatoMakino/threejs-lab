@@ -11,7 +11,7 @@ export class BloomComposer extends EffectComposer {
     super(renderer);
 
     const size = renderer.getSize(new Vector2());
-    this.bloomPass = new UnrealBloomPass(size, 1.0, 0.6, 0.2);
+    this.bloomPass = new UnrealBloomPass(size, 1.5, 0.4, 0.4);
 
     // @ts-ignore
     this.renderToScreen = false;
