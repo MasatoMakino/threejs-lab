@@ -56,14 +56,19 @@ export class StudyBloom {
     this.center.layers.enable(BloomRenderer.BLOOM);
     scene.add(this.center);
 
-    this.satellite = new Mesh(geo, mat);
+    this.satellite = new Mesh(geo, mat.clone());
     this.satellite.position.set(30, 0, 0);
     scene.add(this.satellite);
+
+    const satellite02 = new Mesh(geo, mat);
+    satellite02.position.set(-30, 0, 0);
+    scene.add(satellite02);
   }
 
   public initGUI(): void {
     const gui = new dat.GUI();
     this.initGULBloom(gui);
+    this.initGUISatellite(gui);
     this.initRenderGUI(gui);
   }
 
@@ -80,15 +85,21 @@ export class StudyBloom {
       }
     };
 
-    const bloomFolder = gui.addFolder("bloom");
-    bloomFolder.add(prop, "bloomCenter").onChange(val => {
+    const folder = gui.addFolder("bloom");
+    folder.add(prop, "bloomCenter").onChange(val => {
       switchBloom(this.center, val);
     });
-    bloomFolder.add(prop, "bloomSatellite").onChange(val => {
+    folder.add(prop, "bloomSatellite").onChange(val => {
       switchBloom(this.satellite, val);
     });
-    bloomFolder.open();
-    // bloomFolder.add(this.center.material, "color");
+    folder.open();
+  }
+
+  private initGUISatellite(gui): void {
+    const folder = gui.addFolder("Satellite");
+    folder.add(this.satellite.material, "transparent");
+    folder.add(this.satellite.material, "opacity", 0.0, 1.0);
+    folder.open();
   }
 
   private initRenderGUI(gui): void {
