@@ -9,6 +9,11 @@ import { BloomComposer } from "ts/bloom/BloomComposer";
 import { MixComposer } from "ts/bloom/mix/MixComposer";
 import { PostProcessRenderer } from "ts/postprocess/PostProcessRenderer";
 
+/**
+ * Bloomレンダリングを行うクラス。
+ * Bloomのオフスクリーンレンダリング、通常レンダリングとの合成、FXAAアンチエイリアスを連続して行う。
+ * {@link https://github.com/mrdoob/three.js/blob/master/examples/webgl_postprocessing_unreal_bloom_selective.html reference}
+ */
 export class BloomRenderer extends PostProcessRenderer {
   public bloom: BloomComposer;
   private mix: MixComposer;
