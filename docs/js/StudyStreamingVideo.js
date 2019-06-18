@@ -57,7 +57,7 @@
 /******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 	// Promise = chunk loading, 0 = chunk loaded
 /******/ 	var installedChunks = {
-/******/ 		"StudyContourMap": 0
+/******/ 		"StudyStreamingVideo": 0
 /******/ 	};
 /******/
 /******/ 	var deferredModules = [];
@@ -148,7 +148,7 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push(["./src/ts/StudyContourMap.ts","vendor"]);
+/******/ 	deferredModules.push(["./src/ts/StudyStreamingVideo.ts","vendor"]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
@@ -167,39 +167,15 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
-/***/ "./src/ts/StudyContourMap.ts":
-/*!***********************************!*\
-  !*** ./src/ts/StudyContourMap.ts ***!
-  \***********************************/
-/*! exports provided: StudyContourMap */
+/***/ "./src/ts/StudyStreamingVideo.ts":
+/*!***************************************!*\
+  !*** ./src/ts/StudyStreamingVideo.ts ***!
+  \***************************************/
+/*! exports provided: StudyStreamingVideo */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"StudyContourMap\", function() { return StudyContourMap; });\n/* harmony import */ var ts_Common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ts/Common */ \"./src/ts/Common.ts\");\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var ts_contour_vert_ts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ts/contour/vert.ts */ \"./src/ts/contour/vert.ts\");\n/* harmony import */ var ts_contour_frag_ts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ts/contour/frag.ts */ \"./src/ts/contour/frag.ts\");\n\n\n\n\n\n\n\n\n\n\n\n\n\nclass StudyContourMap {\n    constructor() {\n        const scene = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initScene();\n        scene.fog = new three__WEBPACK_IMPORTED_MODULE_1__[\"Fog\"](0x000000, 80, 120);\n        ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initLight(scene);\n        const camera = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initCamera(scene, StudyContourMap.W, StudyContourMap.H);\n        const renderer = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initRenderer(StudyContourMap.W, StudyContourMap.H);\n        const control = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initControl(camera);\n        ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initHelper(scene);\n        this.initObject(scene);\n        ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].render(control, renderer, scene, camera);\n    }\n    initObject(scene) {\n        const spot = new three__WEBPACK_IMPORTED_MODULE_1__[\"PointLight\"](0xff00ff, 5, 0, 2);\n        scene.add(spot);\n        const helper = new three__WEBPACK_IMPORTED_MODULE_1__[\"PointLightHelper\"](spot);\n        scene.add(helper);\n        const size = 20.0;\n        const bottom = -10.0;\n        const top = 10.0;\n        const texture = new three__WEBPACK_IMPORTED_MODULE_1__[\"TextureLoader\"]().load(\"./textures/contour.png\", texture => {\n            mat.uniforms.texture.value = texture;\n        });\n        const geo = new three__WEBPACK_IMPORTED_MODULE_1__[\"BoxGeometry\"](size, size, size);\n        const uniforms = three__WEBPACK_IMPORTED_MODULE_1__[\"UniformsUtils\"].merge([\n            three__WEBPACK_IMPORTED_MODULE_1__[\"UniformsLib\"][\"fog\"],\n            three__WEBPACK_IMPORTED_MODULE_1__[\"UniformsLib\"][\"lights\"],\n            {\n                bottom: { type: \"float\", value: bottom },\n                top: { type: \"float\", value: top },\n                texture: { type: \"sampler2D\", value: texture }\n            }\n        ]);\n        const mat = new three__WEBPACK_IMPORTED_MODULE_1__[\"ShaderMaterial\"]({\n            uniforms: uniforms,\n            vertexShader: ts_contour_vert_ts__WEBPACK_IMPORTED_MODULE_2__[\"ContourVertexShader\"].get(),\n            fragmentShader: ts_contour_frag_ts__WEBPACK_IMPORTED_MODULE_3__[\"ContourFragmentShader\"].get(),\n            side: three__WEBPACK_IMPORTED_MODULE_1__[\"DoubleSide\"],\n            transparent: true,\n            lights: true,\n            fog: scene.fog !== undefined\n        });\n        const mesh = new three__WEBPACK_IMPORTED_MODULE_1__[\"Mesh\"](geo, mat);\n        scene.add(mesh);\n    }\n}\nStudyContourMap.W = 640;\nStudyContourMap.H = 480;\nwindow.onload = () => {\n    const study = new StudyContourMap();\n};\n\n\n//# sourceURL=webpack:///./src/ts/StudyContourMap.ts?");
-
-/***/ }),
-
-/***/ "./src/ts/contour/frag.ts":
-/*!********************************!*\
-  !*** ./src/ts/contour/frag.ts ***!
-  \********************************/
-/*! exports provided: ContourFragmentShader */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"ContourFragmentShader\", function() { return ContourFragmentShader; });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n\nclass ContourFragmentShader {\n    static get() {\n        return `\n    uniform float bottom;\n    uniform float top;\n    uniform sampler2D texture;\n    varying vec3 vUv;\n    \n    ${three__WEBPACK_IMPORTED_MODULE_0__[\"ShaderChunk\"][\"common\"]}\n    ${three__WEBPACK_IMPORTED_MODULE_0__[\"ShaderChunk\"][\"fog_pars_fragment\"]}\n    \n    void main() {\n      float y = vUv.y / (top - bottom) + 0.5;\n      vec4 color = texture2D( texture, vec2(0.5, y) );\n      if ( color.a < 0.3 ) discard;\n      gl_FragColor = color;\n\n      ${three__WEBPACK_IMPORTED_MODULE_0__[\"ShaderChunk\"][\"fog_fragment\"]}\n    }\n    `;\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/contour/frag.ts?");
-
-/***/ }),
-
-/***/ "./src/ts/contour/vert.ts":
-/*!********************************!*\
-  !*** ./src/ts/contour/vert.ts ***!
-  \********************************/
-/*! exports provided: ContourVertexShader */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"ContourVertexShader\", function() { return ContourVertexShader; });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n\nclass ContourVertexShader {\n    static get() {\n        return `\n\t  varying vec3 vUv;\n\t  ${three__WEBPACK_IMPORTED_MODULE_0__[\"ShaderChunk\"][\"fog_pars_vertex\"]}\n\t        \n\t  void main() {\n\t\tvUv = position;\n\t\tvec4 worldPosition = modelMatrix * vec4( position, 1.0 );\n\t\tvec4 mvPosition =  viewMatrix * worldPosition;\n\t\tgl_Position = projectionMatrix * mvPosition;\n\t\t\n\t\t${three__WEBPACK_IMPORTED_MODULE_0__[\"ShaderChunk\"][\"fog_vertex\"]}\n\t  }\n\t`;\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/contour/vert.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"StudyStreamingVideo\", function() { return StudyStreamingVideo; });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var ts_Common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ts/Common */ \"./src/ts/Common.ts\");\n/* harmony import */ var hls_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! hls.js */ \"./node_modules/hls.js/dist/hls.js\");\n/* harmony import */ var hls_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(hls_js__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\n\n\n\nclass StudyStreamingVideo {\n    constructor() {\n        const scene = ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initScene();\n        scene.fog = new three__WEBPACK_IMPORTED_MODULE_0__[\"Fog\"](0x000000, 80, 160);\n        ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initLight(scene);\n        const camera = ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initCamera(scene, StudyStreamingVideo.W, StudyStreamingVideo.H);\n        const renderer = ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initRenderer(StudyStreamingVideo.W, StudyStreamingVideo.H);\n        const control = ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initControl(camera, renderer);\n        ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initHelper(scene);\n        const video = this.initVideo();\n        const videoMap = this.initObject(scene, video);\n        ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].render(control, renderer, scene, camera);\n    }\n    initVideo() {\n        const video = document.createElement(\"video\");\n        //limit video size\n        video.width = 320;\n        hls_js__WEBPACK_IMPORTED_MODULE_2__[\"DefaultConfig\"].capLevelToPlayerSize = true;\n        // video.loop = true;\n        video.muted = true;\n        video.setAttribute(\"playsinline\", \"\");\n        const src = \"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8\";\n        if (hls_js__WEBPACK_IMPORTED_MODULE_2__[\"isSupported\"]()) {\n            const hls = new hls_js__WEBPACK_IMPORTED_MODULE_2__();\n            hls.loadSource(src);\n            hls.attachMedia(video);\n            hls.on(hls_js__WEBPACK_IMPORTED_MODULE_2__[\"Events\"].MANIFEST_PARSED, function () {\n                video.play();\n            });\n        }\n        else if (video.canPlayType(\"application/vnd.apple.mpegurl\")) {\n            video.src = src;\n            video.addEventListener(\"loadedmetadata\", () => {\n                video.play();\n                // message.textContent = video.toString();\n            });\n        }\n        // const message = document.createElement(\"div\");\n        // message.textContent = Hls.isSupported().toString();\n        // document.body.appendChild(message);\n        // message.addEventListener(\"click\", () => {\n        //   video.play();\n        // });\n        document.body.appendChild(video);\n        return video;\n    }\n    initObject(scene, video) {\n        const spot = new three__WEBPACK_IMPORTED_MODULE_0__[\"PointLight\"](0xffffff, 3, 0, 2);\n        spot.position.set(10, 20, 30);\n        scene.add(spot);\n        const helper = new three__WEBPACK_IMPORTED_MODULE_0__[\"PointLightHelper\"](spot);\n        scene.add(helper);\n        const geo = new three__WEBPACK_IMPORTED_MODULE_0__[\"PlaneBufferGeometry\"](64, 36);\n        const mat = new three__WEBPACK_IMPORTED_MODULE_0__[\"MeshBasicMaterial\"]({\n            map: new three__WEBPACK_IMPORTED_MODULE_0__[\"VideoTexture\"](video),\n            fog: scene.fog !== undefined\n        });\n        const mesh = new three__WEBPACK_IMPORTED_MODULE_0__[\"Mesh\"](geo, mat);\n        mat.map.needsUpdate = true;\n        scene.add(mesh);\n        return mat.map;\n    }\n}\nStudyStreamingVideo.W = 640;\nStudyStreamingVideo.H = 480;\nwindow.onload = () => {\n    const study = new StudyStreamingVideo();\n};\n\n\n//# sourceURL=webpack:///./src/ts/StudyStreamingVideo.ts?");
 
 /***/ })
 
