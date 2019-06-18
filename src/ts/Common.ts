@@ -65,9 +65,13 @@ export class Common {
     control: OrbitControls,
     renderer: WebGLRenderer,
     scene: Scene,
-    camera: Camera
+    camera: Camera,
+    onBeforeRender?: () => void
   ) {
     const rendering = () => {
+      if (onBeforeRender) {
+        onBeforeRender();
+      }
       control.update();
       renderer.render(scene, camera);
       requestAnimationFrame(rendering);

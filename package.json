@@ -7,11 +7,13 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "@types/hls.js": "^0.12.4",
     "dat.gui": "^0.7.6",
     "glob": "^7.1.4",
     "gulp": "^4.0.2",
     "gulptask-dev-server": "https://github.com/MasatoMakino/gulptask-dev-server.git",
     "gulptask-webpack": "https://github.com/MasatoMakino/gulptask-webpack.git",
+    "hls.js": "^0.12.4",
     "husky": "^2.4.0",
     "prettier": "^1.17.1",
     "pretty-quick": "^1.11.0",
