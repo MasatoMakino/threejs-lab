@@ -19,7 +19,12 @@ import { VideoTexture } from "three";
 import { MeshBasicMaterial } from "three";
 import { Texture } from "three";
 
-export class StudyStreamingVideo {
+/**
+ * HLS形式のストリーミングビデオをVideoテクスチャにするサンプル。
+ * hls.jsを導入することでChrome, Desktop Safariでは動作する。
+ * ※ iOS Safariでは動作なしない。
+ */
+export class StudyStreamingVideoHLS {
   public static readonly W = 640;
   public static readonly H = 480;
 
@@ -29,12 +34,12 @@ export class StudyStreamingVideo {
     Common.initLight(scene);
     const camera = Common.initCamera(
       scene,
-      StudyStreamingVideo.W,
-      StudyStreamingVideo.H
+      StudyStreamingVideoHLS.W,
+      StudyStreamingVideoHLS.H
     );
     const renderer = Common.initRenderer(
-      StudyStreamingVideo.W,
-      StudyStreamingVideo.H
+      StudyStreamingVideoHLS.W,
+      StudyStreamingVideoHLS.H
     );
     const control = Common.initControl(camera, renderer);
     Common.initHelper(scene);
@@ -67,18 +72,8 @@ export class StudyStreamingVideo {
       video.src = src;
       video.addEventListener("loadedmetadata", () => {
         video.play();
-        // message.textContent = video.toString();
       });
     }
-
-    // const message = document.createElement("div");
-    // message.textContent = Hls.isSupported().toString();
-    // document.body.appendChild(message);
-    // message.addEventListener("click", () => {
-    //   video.play();
-    // });
-
-    document.body.appendChild(video);
 
     return video;
   }
@@ -104,5 +99,5 @@ export class StudyStreamingVideo {
 }
 
 window.onload = () => {
-  const study = new StudyStreamingVideo();
+  const study = new StudyStreamingVideoHLS();
 };
