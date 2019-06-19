@@ -3,16 +3,9 @@ import {
   Mesh,
   Fog,
   PointLight,
-  PointLightHelper,
-  Color,
-  TorusGeometry,
-  AdditiveBlending
+  PointLightHelper
 } from "three";
 import { Common } from "ts/Common";
-import { EarthGridMaterial } from "ts/earthGrid/EarthGridMaterial";
-import { SphereGeometry } from "three";
-import { DoubleSide } from "three";
-import { MeshLambertMaterial } from "three";
 import * as Hls from "hls.js";
 import { PlaneBufferGeometry } from "three";
 import { VideoTexture } from "three";
@@ -44,7 +37,7 @@ export class StudyStreamingVideoHLS {
     const control = Common.initControl(camera, renderer);
     Common.initHelper(scene);
     const video = this.initVideo();
-    const videoMap = this.initObject(scene, video);
+    this.initObject(scene, video);
     Common.render(control, renderer, scene, camera);
   }
 
