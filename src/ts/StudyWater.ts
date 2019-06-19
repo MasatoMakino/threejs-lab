@@ -1,20 +1,24 @@
 import { Common } from "ts/Common";
-import { Scene, PlaneBufferGeometry, Mesh } from "three";
-import { Water } from "ts/water/Water";
-import { DirectionalLight } from "three";
-import { WaterOptions, WaterOptionsUtil } from "ts/water/WaterOptions";
-import { DirectionalLightHelper } from "three";
+import {
+  Scene,
+  PlaneBufferGeometry,
+  DirectionalLight,
+  DirectionalLightHelper
+} from "three";
+import { WaterOptions } from "three/examples/jsm/objects/Water";
+import { WaterMesh } from "ts/water/WaterMesh";
 
 export class StudyWater {
   public static readonly W = 640;
   public static readonly H = 480;
 
-  public water: Water;
+  public water: WaterMesh;
 
   constructor() {
     const scene = Common.initScene();
     Common.initLight(scene);
     const camera = Common.initCamera(scene, StudyWater.W, StudyWater.H);
+    camera.position.set(0, 20, 100);
     const renderer = Common.initRenderer(StudyWater.W, StudyWater.H, 0x999999);
     const control = Common.initControl(camera);
     Common.initHelper(scene);
@@ -32,16 +36,15 @@ export class StudyWater {
     const waterGeometry = new PlaneBufferGeometry(10000, 10000);
 
     const option: WaterOptions = {
-      normalSampler: "textures/waternormals.jpg",
-      alpha: 1.0,
-      waterColor: 0x001e0f,
-      distortionScale: 3.7,
+      waterNormals: WaterMesh.loadNormalSampler("textures/waternormals.jpg"),
+      // alpha: 1.0,
+      // waterColor: 0x001e0f,
+      // distortionScale: 3.7,
       fog: scene.fog !== undefined
     };
-    WaterOptionsUtil.updateSun(option, light);
-    console.log(option);
-    this.water = new Water(waterGeometry, option);
-    // this.water.updateSun( light );
+    WaterMesh.updateSunOption(option, light);
+
+    this.water = new WaterMesh(waterGeometry, option);
 
     scene.add(this.water);
   }
