@@ -1,10 +1,4 @@
-import {
-  Scene,
-  Mesh,
-  Fog,
-  PointLight,
-  PointLightHelper
-} from "three";
+import { Scene, Mesh, Fog, PointLight, PointLightHelper } from "three";
 import { Common } from "ts/Common";
 import * as Hls from "hls.js";
 import { PlaneBufferGeometry } from "three";
