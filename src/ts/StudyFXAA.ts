@@ -46,7 +46,6 @@ export class StudyFXAA {
       fog: scene.fog !== undefined
     });
     mat.color = new Color(0xff6666);
-    mat.lineWeight = 0.005;
 
     const mesh = new Mesh(geo, mat);
 

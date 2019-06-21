@@ -17,7 +17,7 @@ uniform float opacity;
 uniform vec3 color;
 uniform vec3 glowColor;
 
-uniform float lineWeight;
+uniform float lineLimit;
 uniform float division;
 uniform float glowPow;
 uniform float glowStrength;
@@ -46,15 +46,14 @@ uniform float glowStrength;
 #include <logdepthbuf_pars_fragment>
 #include <clipping_planes_pars_fragment>
 
-float stepLine( float alpha, float width, float gridNum ){
-    float  step = width * gridNum * 0.5;
-    if( alpha > 1.0 - step || alpha < step ){
-        return 1.0;
-    }
-    return 0.0;
+float stepLine( float alpha, float width ){
+    float glow = cos( alpha * PI * 2.0 );
+    float blur = (1.0-width)*0.5;
+    glow = smoothstep( width, width+blur, glow );
+    return glow;
 }
 
-float getGlow( float modVal, float width, float gridNum,  float glowPow ){
+float getGlow( float modVal, float glowPow ){
     float glow = cos( modVal * PI * 2.0 );
     glow = clamp( glow, 0.0, 1.0 );
     glow = pow( glow, glowPow ) ;
@@ -85,21 +84,19 @@ void main() {
     float modY = mod( uvPosition.y * division, 1.0);
 
     /** グロー **/
-    float alphaXGlow = getGlow( modX, lineWeight, division, glowPow );
-    float alphaYGlow = getGlow( modY, lineWeight, division, glowPow );
+    float alphaXGlow = getGlow( modX, glowPow );
+    float alphaYGlow = getGlow( modY, glowPow );
     alphaYGlow = coverY( uvPosition.y, alphaYGlow, division);
     float alphaGlow = max( alphaXGlow, alphaYGlow );
     alphaGlow *= glowStrength;
 
     /** 格子線 **/
-    float alphaX = stepLine( modX, lineWeight, division);
-    float alphaY = stepLine( modY, lineWeight, division);
+    float alphaX = stepLine( modX, lineLimit);
+    float alphaY = stepLine( modY, lineLimit);
     alphaY = coverY( uvPosition.y, alphaY, division);
     float alphaGrid = max(alphaX, alphaY);
-    if( alphaGrid > 0.1 ){
-        drawColor =  color;
-    }
 
+    drawColor = mix( glowColor, color, alphaGrid );
     diffuseColor *= vec4( drawColor, max( alphaGlow,  alphaGrid));
 
     //#include <color_fragment>

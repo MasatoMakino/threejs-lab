@@ -11,14 +11,20 @@ import FragmentShader from "./Shader.frag";
 import VertexShader from "../customPhongMaterial/Shader.vert";
 
 export class EarthGridMaterial extends CustomPhongMaterial {
-  get lineWeight(): number {
-    return this._lineWeight;
+  /**
+   * 格子線になるcosグラフの範囲を指定する。
+   * cosグラフは格子線の頂点を1.0、格子中央を-1.0とする周期を持つグラフである。
+   * 例として0.0を指定した場合、グリッドの半分までの太さになる。
+   * {@link https://upload.wikimedia.org/wikipedia/commons/0/0c/Sin_and_cos.png}
+   */
+  get lineLimit(): number {
+    return this._lineLimit;
   }
 
-  set lineWeight(value: number) {
-    this._lineWeight = value;
-    if (this.uniforms && this.uniforms.lineWeight) {
-      this.uniforms.lineWeight.value = value;
+  set lineLimit(value: number) {
+    this._lineLimit = value;
+    if (this.uniforms && this.uniforms.lineLimit) {
+      this.uniforms.lineLimit.value = value;
     }
   }
 
@@ -80,12 +86,12 @@ export class EarthGridMaterial extends CustomPhongMaterial {
     }
   }
 
-  private _lineWeight: number;
-  private _division: number;
-  private _glowPow: number;
-  private _glowStrength: number;
-  private _glowColor: Color;
-  private _color: Color;
+  private _lineLimit: number = 0.975;
+  private _division: number = 8.0;
+  private _glowPow: number = 3.7;
+  private _glowStrength: number = 0.35;
+  private _glowColor: Color = new Color(0xffffff);
+  private _color: Color = new Color(0xffff00);
 
   constructor(parameters?: ShaderMaterialParameters) {
     super(VertexShader, FragmentShader, parameters);
@@ -94,7 +100,7 @@ export class EarthGridMaterial extends CustomPhongMaterial {
     this.uniforms = UniformsUtils.merge([
       CustomPhongMaterial.getBasicUniforms(),
       {
-        lineWeight: { value: 0.005 },
+        lineLimit: { value: 0.975 },
         division: { value: 8.0 },
         glowPow: { value: 3.7 },
         glowStrength: { value: 0.35 },
