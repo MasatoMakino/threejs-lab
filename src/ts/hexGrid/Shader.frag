@@ -9,13 +9,21 @@ uniform vec3 diffuse;
 uniform vec3 emissive;
 uniform vec3 specular;
 uniform float shininess;
+uniform float opacity;
 
 varying vec3 meshPosition;
 varying vec2 uvPosition;
 
-uniform float opacity;
+//user settings
 uniform vec3 color;
 uniform float time;
+uniform float hexScale;
+uniform float speed;
+uniform float raisedBottom;
+uniform float waveFrequency;
+uniform float wavePow;
+uniform int direction;
+uniform float gridWeight;
 
 #include <common>
 #include <packing>
@@ -64,10 +72,7 @@ vec4 hexCoords(vec2 uv)
     return vec4(x, y, id);
 }
 
-
 void main() {
-
-
     #include <clipping_planes_fragment>
 
     vec4 diffuseColor = vec4( diffuse, opacity );
@@ -78,19 +83,18 @@ void main() {
 
     //#include <map_fragment>
     //#include <color_fragment>
-    float hexScale = 32.0;
-    float speed = -0.5;
-    float base = 0.001;
-    float waveFrequency = 0.2;
-    float waveDepth = 2.0;
-
     vec4 hc = hexCoords( uvPosition * hexScale );
 
     float ntime = time * speed;
     //hc.wで縦方向、hc.zで横方向に、hc.zwで放射状に明滅
-    float wavy = pow( sin( (length(hc.w * waveFrequency) - ntime) ), waveDepth) + base;
+    float distance = hc.w;
+    if( direction == 3){
+        distance = hc.z;
+    }
+    float wavy = pow( sin( (length(distance * waveFrequency) - ntime) ), wavePow) + raisedBottom;
 
-    float gridLine = smoothstep(0.03, 0.05, hc.y);
+    float margin = min( gridWeight*0.33, 0.05 );
+    float gridLine = smoothstep(gridWeight, gridWeight+margin, hc.y);
     float alpha = gridLine * wavy;
     vec3 cl = color * alpha;
 

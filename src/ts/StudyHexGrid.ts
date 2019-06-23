@@ -1,14 +1,15 @@
 import {
-  Scene,
-  Mesh,
+  Color,
   Fog,
+  Mesh,
   PointLight,
   PointLightHelper,
-  Color,
+  Scene,
   SphereGeometry
 } from "three";
 import { Common } from "ts/Common";
 import { HexGridMaterial } from "ts/hexGrid/HexGridMaterial";
+import { Directions } from "ts/hexGrid/HexGridMaterial";
 
 export class StudyHexGrid {
   public static readonly W = 640;
@@ -29,7 +30,7 @@ export class StudyHexGrid {
   }
 
   private initObject(scene: Scene): HexGridMaterial {
-    const spot = new PointLight(0xffffff, 3, 0, 2);
+    const spot = new PointLight(0xffffff, 1, 0, 2);
     spot.position.set(10, 20, 30);
     scene.add(spot);
     const helper = new PointLightHelper(spot);
@@ -38,14 +39,17 @@ export class StudyHexGrid {
     const geo = new SphereGeometry(10, 64, 64);
 
     const mat = new HexGridMaterial({
-      opacity: 0.5,
+      // opacity: 0.5,
       // side:DoubleSide,
       fog: scene.fog !== undefined
     });
     mat.color = new Color(0xff6666);
-    // mat.alphaTest = 0.5;
-    // mat.glowColor = new Color(0x66ffff);
-    // mat.glowStrength = 0.5;
+    // mat.waveFrequency = 0.1;
+    // mat.speed = -0.1;
+    // mat.raisedBottom = 0.5;
+    // mat.wavePow =4;
+    mat.direction = Directions.vertical;
+    mat.gridWeight = 0.03;
 
     const mesh = new Mesh(geo, mat);
 
