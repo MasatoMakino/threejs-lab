@@ -98,9 +98,8 @@ void main() {
     float margin = min( gridWeight*0.33, 0.05 );
     float gridLine = smoothstep(gridWeight, gridWeight+margin, hc.y);
     float alpha = gridLine * wavy;
-    vec3 cl = color * alpha;
 
-    diffuseColor *= vec4(cl, alpha);
+    diffuseColor *= vec4(color, alpha);
 
     #include <alphamap_fragment>
     #include <alphatest_fragment>
