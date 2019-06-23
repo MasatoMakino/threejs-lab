@@ -90,8 +90,10 @@ void main() {
     float distance = hc.w;
     if( direction == 3){
         distance = hc.z;
+    }else if( direction == 5 ){
+        distance = length(hc.zw);
     }
-    float wavy = pow( sin( (length(distance * waveFrequency) - ntime) ), wavePow) + raisedBottom;
+    float wavy = pow( sin( (distance * waveFrequency - ntime) ), wavePow) + raisedBottom;
 
     float margin = min( gridWeight*0.33, 0.05 );
     float gridLine = smoothstep(gridWeight, gridWeight+margin, hc.y);

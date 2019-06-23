@@ -8,8 +8,9 @@ import {
   SphereGeometry
 } from "three";
 import { Common } from "ts/Common";
-import { HexGridMaterial } from "ts/hexGrid/HexGridMaterial";
-import { Directions } from "ts/hexGrid/HexGridMaterial";
+import { HexGridMaterial, Directions } from "ts/hexGrid/HexGridMaterial";
+import * as dat from "dat.gui";
+import { Material } from "three";
 
 export class StudyHexGrid {
   public static readonly W = 640;
@@ -27,6 +28,8 @@ export class StudyHexGrid {
     Common.render(control, renderer, scene, camera, () => {
       mat.time += 0.0333;
     });
+
+    this.initGUI(mat);
   }
 
   private initObject(scene: Scene): HexGridMaterial {
@@ -39,23 +42,45 @@ export class StudyHexGrid {
     const geo = new SphereGeometry(10, 64, 64);
 
     const mat = new HexGridMaterial({
-      // opacity: 0.5,
       // side:DoubleSide,
       fog: scene.fog !== undefined
     });
     mat.color = new Color(0xff6666);
-    // mat.waveFrequency = 0.1;
-    // mat.speed = -0.1;
-    // mat.raisedBottom = 0.5;
-    // mat.wavePow =4;
     mat.direction = Directions.vertical;
-    mat.gridWeight = 0.03;
-
     const mesh = new Mesh(geo, mat);
 
     scene.add(mesh);
 
     return mat;
+  }
+
+  public initGUI(mat: HexGridMaterial): void {
+    const gui = new dat.GUI();
+    this.initGULMaterial(gui, mat);
+  }
+
+  private initGULMaterial(gui, mat: HexGridMaterial): void {
+    const prop = {
+      color: mat.color.getHex()
+    };
+
+    const folder = gui.addFolder("Material");
+    folder.addColor(prop, "color").onChange(val => {
+      mat.color.setHex(val);
+    });
+    folder.add(mat, "speed", -2, 2);
+    folder.add(mat, "waveFrequency", 0.0, 1.0);
+    folder.add(mat, "raisedBottom", 0.0, 1.0);
+    folder.add(mat, "gridWeight", 0.0, 0.5);
+    folder.add(mat, "hexScale", 2.0, 128.0).step(1);
+    folder.add(mat, "wavePow", 0.0, 4.0);
+    folder.add(mat, "direction", {
+      horizontal: Directions.horizontal,
+      vertical: Directions.vertical,
+      radial: Directions.radial
+    });
+    folder.add(mat, "opacity", 0.0, 1.0);
+    folder.open();
   }
 }
 
