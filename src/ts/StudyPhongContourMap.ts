@@ -25,7 +25,7 @@ export class StudyContourMap {
       StudyContourMap.H
     );
     const renderer = Common.initRenderer(StudyContourMap.W, StudyContourMap.H);
-    const control = Common.initControl(camera);
+    const control = Common.initControl(camera, renderer);
     Common.initHelper(scene);
     this.initObject(scene);
     Common.render(control, renderer, scene, camera);
