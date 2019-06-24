@@ -76,7 +76,6 @@ export class EarthGridMaterial extends CustomPhongMaterial {
   private _division: number = 8.0;
   private _glowPow: number = 3.7;
 
-
   constructor(parameters?: ShaderMaterialParameters) {
     super(VertexShader, FragmentShader, parameters);
   }
