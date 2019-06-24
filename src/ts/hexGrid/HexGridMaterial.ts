@@ -30,13 +30,6 @@ export class HexGridMaterial extends CustomPhongMaterial {
     this.uniforms.speed.value = value;
   }
 
-  get color(): Color {
-    return this.uniforms.color.value;
-  }
-  set color(value: Color) {
-    this.uniforms.color.value = value;
-  }
-
   get hexScale(): number {
     return this.uniforms.hexScale.value;
   }
@@ -102,7 +95,6 @@ export class HexGridMaterial extends CustomPhongMaterial {
     this.uniforms = UniformsUtils.merge([
       CustomPhongMaterial.getBasicUniforms(),
       {
-        color: { value: new Color(0xffffff) },
         time: { value: 0.0 },
         speed: { value: -0.5 },
         raisedBottom: { value: 0.05 },

@@ -35,7 +35,7 @@ export class StudyEarthGrid {
       // side:DoubleSide,
       fog: scene.fog !== undefined
     });
-    mat.color = new Color(0xff6666);
+    mat.gridColor = new Color( 0xff6666);
     mat.glowColor = new Color(0x66ffff);
     mat.glowStrength = 0.5;
     // mat.startGlow();

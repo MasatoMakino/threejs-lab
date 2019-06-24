@@ -15,7 +15,6 @@ varying vec3 meshPosition;
 varying vec2 uvPosition;
 
 //user settings
-uniform vec3 color;
 uniform float time;
 uniform float hexScale;
 uniform float speed;
@@ -99,7 +98,7 @@ void main() {
     float gridLine = smoothstep(gridWeight, gridWeight+margin, hc.y);
     float alpha = gridLine * wavy;
 
-    diffuseColor *= vec4(color, alpha);
+    diffuseColor.a *= alpha;
 
     #include <alphamap_fragment>
     #include <alphatest_fragment>

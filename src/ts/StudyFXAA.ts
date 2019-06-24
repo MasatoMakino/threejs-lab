@@ -41,11 +41,10 @@ export class StudyFXAA {
     scene.add(helper);
 
     const geo = new SphereGeometry(10, 64, 64);
-
     const mat = new EarthGridMaterial({
       fog: scene.fog !== undefined
     });
-    mat.color = new Color(0xff6666);
+    mat.gridColor = new Color(0xff6666);
 
     const mesh = new Mesh(geo, mat);
 

@@ -14,7 +14,7 @@ varying vec3 meshPosition;
 varying vec2 uvPosition;
 
 uniform float opacity;
-uniform vec3 color;
+uniform vec3 gridColor;
 uniform vec3 glowColor;
 
 uniform float lineLimit;
@@ -96,7 +96,7 @@ void main() {
     alphaY = coverY( uvPosition.y, alphaY, division);
     float alphaGrid = max(alphaX, alphaY);
 
-    drawColor = mix( glowColor, color, alphaGrid );
+    drawColor = mix( glowColor, gridColor, alphaGrid );
     diffuseColor *= vec4( drawColor, max( alphaGlow,  alphaGrid));
 
     //#include <color_fragment>

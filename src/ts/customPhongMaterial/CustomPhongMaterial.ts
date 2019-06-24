@@ -84,6 +84,16 @@ export class CustomPhongMaterial extends ShaderMaterial {
    */
 
   /**
+   * MeshPhongマテリアルと互換性を持つために、colorプロパティはdiffuseへ代入される。
+   */
+  get color(): Color {
+    return this.uniforms.diffuse.value;
+  }
+  set color(value: Color) {
+    this.uniforms.diffuse.value = value;
+  }
+
+  /**
    * 透明度
    */
   get opacity(): number {

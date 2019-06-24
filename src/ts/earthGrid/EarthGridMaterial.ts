@@ -51,47 +51,31 @@ export class EarthGridMaterial extends CustomPhongMaterial {
   }
 
   get glowStrength(): number {
-    return this._glowStrength;
+    return this.uniforms.glowStrength.value;
   }
 
   set glowStrength(value: number) {
-    this._glowStrength = value;
-    if (this.uniforms && this.uniforms.glowStrength) {
-      this.uniforms.glowStrength.value = value;
-    }
+    this.uniforms.glowStrength.value = value;
   }
 
-  get color(): Color {
-    return this._color;
+  get gridColor(): Color {
+    return this.uniforms.gridColor.value;
   }
-
-  set color(value: Color) {
-    this._color = value;
-    console.log(this.uniforms);
-
-    if (this.uniforms && this.uniforms.color) {
-      this.uniforms.color.value = value;
-      console.log(this.uniforms.color);
-    }
+  set gridColor(value: Color) {
+    this.uniforms.gridColor.value = value;
   }
 
   get glowColor(): Color {
-    return this._glowColor;
+    return this.uniforms.glowColor.value;
   }
-
   set glowColor(value: Color) {
-    this._glowColor = value;
-    if (this.uniforms && this.uniforms.glowColor) {
-      this.uniforms.glowColor.value = value;
-    }
+    this.uniforms.glowColor.value = value;
   }
 
   private _lineLimit: number = 0.975;
   private _division: number = 8.0;
   private _glowPow: number = 3.7;
-  private _glowStrength: number = 0.35;
-  private _glowColor: Color = new Color(0xffffff);
-  private _color: Color = new Color(0xffff00);
+
 
   constructor(parameters?: ShaderMaterialParameters) {
     super(VertexShader, FragmentShader, parameters);
@@ -104,7 +88,7 @@ export class EarthGridMaterial extends CustomPhongMaterial {
         division: { value: 8.0 },
         glowPow: { value: 3.7 },
         glowStrength: { value: 0.35 },
-        color: { value: new Color(0xffffff) },
+        gridColor: { value: new Color(0xffffff) },
         glowColor: { value: new Color(0xffff00) }
       }
     ]);
