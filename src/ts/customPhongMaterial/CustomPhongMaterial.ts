@@ -103,15 +103,11 @@ export class CustomPhongMaterial extends ShaderMaterial {
    * 放射光
    */
   get emissive(): Color {
-    return this._emissive;
+    return this.uniforms.emissive.value;
   }
   set emissive(value: Color) {
-    this._emissive = value;
-    if (this.uniforms && this.uniforms.emissive) {
-      this.uniforms.emissive.value = value;
-    }
+    this.uniforms.emissive.value = value;
   }
-  private _emissive: Color;
 
   /**
    * 発光状態のために、マテリアルの設定をまとめて変更する。
