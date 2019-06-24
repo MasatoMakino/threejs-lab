@@ -100,8 +100,6 @@ export class CustomPhongMaterial extends ShaderMaterial {
     return this._opacity;
   }
   set opacity(value: number) {
-    if (value === undefined) return;
-
     this._opacity = value;
     if (this.uniforms && this.uniforms.opacity) {
       this.uniforms.opacity.value = value;
