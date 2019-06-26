@@ -8,9 +8,10 @@ import {
   SphereGeometry
 } from "three";
 import { Common } from "ts/Common";
-import { HexGridMaterial, Directions } from "ts/hexGrid/HexGridMaterial";
+import { HexGridMaterial } from "ts/hexGrid/HexGridMaterial";
 import * as dat from "dat.gui";
 import { Material } from "three";
+import { Directions } from "ts/customPhongMaterial/IAnimatable";
 
 export class StudyHexGrid {
   public static readonly W = 640;

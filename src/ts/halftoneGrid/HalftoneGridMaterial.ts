@@ -4,15 +4,16 @@
 
 import { ShaderMaterialParameters, UniformsUtils } from "three";
 import { CustomPhongMaterial } from "ts/customPhongMaterial/CustomPhongMaterial";
+import { IAnimatable, Directions } from "ts/customPhongMaterial/IAnimatable";
+import { IRepeatablePattern } from "ts/customPhongMaterial/IRepeatablePattern";
 
 // @ts-ignore
 import FragmentShader from "./Shader.frag";
 // @ts-ignore
 import VertexShader from "../customPhongMaterial/Shader.vert";
-import { IAnimatable,Directions } from "ts/customPhongMaterial/IAnimatable";
-import { IRepeatablePattern } from "ts/customPhongMaterial/IRepeatablePattern";
 
-export class HexGridMaterial extends CustomPhongMaterial
+
+export class HalftoneGridMaterial extends CustomPhongMaterial
   implements IAnimatable, IRepeatablePattern {
   addTime(delta: number): void {
     this.uniforms.time.value += delta * this.speed;
@@ -42,13 +43,6 @@ export class HexGridMaterial extends CustomPhongMaterial
     this.uniforms.division.value = value;
   }
 
-  get isReversed(): boolean {
-    return this.uniforms.isReversed.value;
-  }
-  set isReversed(value: boolean) {
-    this.uniforms.isReversed.value = value;
-  }
-
   /**
    * 明るさの底上げ
    */
@@ -63,11 +57,11 @@ export class HexGridMaterial extends CustomPhongMaterial
    * グリッド線の太さ
    * 0.0で線なし、0.5でグリッド面なしになる。
    */
-  get gridWeight(): number {
-    return this.uniforms.gridWeight.value;
+  get radius(): number {
+    return this.uniforms.radius.value;
   }
-  set gridWeight(value: number) {
-    this.uniforms.gridWeight.value = value;
+  set radius(value: number) {
+    this.uniforms.radius.value = value;
   }
 
   /**
@@ -109,13 +103,12 @@ export class HexGridMaterial extends CustomPhongMaterial
       {
         time: { value: 0.0 },
         isAnimate: { value: true },
-        isReversed: { value: false },
         raisedBottom: { value: 0.05 },
         division: { value: 32.0 },
         waveFrequency: { value: 0.2 },
         wavePow: { value: 4.0 },
         direction: { value: Directions.vertical },
-        gridWeight: { value: 0.03 }
+        radius: { value: 0.25 }
       }
     ]);
   }
@@ -127,3 +120,5 @@ export class HexGridMaterial extends CustomPhongMaterial
     }
   }
 }
+
+
