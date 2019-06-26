@@ -5,18 +5,21 @@
 
 #define PHONG
 
+//MeshPhong settings
 uniform vec3 diffuse;
 uniform vec3 emissive;
 uniform vec3 specular;
 uniform float shininess;
 uniform float opacity;
 
+//varying
 varying vec3 meshPosition;
 varying vec2 uvPosition;
 
 //user settings
 uniform float time;
 uniform float hexScale;
+uniform bool isWave;
 uniform float speed;
 uniform float raisedBottom;
 uniform float waveFrequency;
@@ -92,7 +95,9 @@ void main() {
     }else if( direction == 5 ){
         distance = length(hc.zw);
     }
-    float wavy = pow( sin( (distance * waveFrequency - ntime) ), wavePow) + raisedBottom;
+    float wavy = isWave
+        ? pow( sin( (distance * waveFrequency - ntime) ), wavePow) + raisedBottom
+        : 1.0;
 
     float margin = min( gridWeight*0.33, 0.05 );
     float gridLine = smoothstep(gridWeight, gridWeight+margin, hc.y);

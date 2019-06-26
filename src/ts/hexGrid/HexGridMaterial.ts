@@ -19,6 +19,16 @@ export class HexGridMaterial extends CustomPhongMaterial {
   }
 
   /**
+   * 波アニメーションを行うか否か。
+   */
+  get isWave(): boolean {
+    return this.uniforms.isWave.value;
+  }
+  set isWave(value: boolean) {
+    this.uniforms.isWave.value = value;
+  }
+
+  /**
    * 波の速度
    * 0.5にすると1の半分の速度になる。
    * マイナスを指定すると、波の進行方向が反転する。
@@ -96,6 +106,7 @@ export class HexGridMaterial extends CustomPhongMaterial {
       CustomPhongMaterial.getBasicUniforms(),
       {
         time: { value: 0.0 },
+        isWave: { value: true },
         speed: { value: -0.5 },
         raisedBottom: { value: 0.05 },
         hexScale: { value: 32.0 },
