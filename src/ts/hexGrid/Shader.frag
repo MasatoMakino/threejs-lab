@@ -19,8 +19,7 @@ varying vec2 uvPosition;
 //user settings
 uniform float time;
 uniform float hexScale;
-uniform bool isWave;
-uniform float speed;
+uniform bool isAnimate;
 uniform float raisedBottom;
 uniform float waveFrequency;
 uniform float wavePow;
@@ -87,7 +86,6 @@ void main() {
     //#include <color_fragment>
     vec4 hc = hexCoords( uvPosition * hexScale );
 
-    float ntime = time * speed;
     //hc.wで縦方向、hc.zで横方向に、hc.zwで放射状に明滅
     float distance = hc.w;
     if( direction == 3){
@@ -95,8 +93,8 @@ void main() {
     }else if( direction == 5 ){
         distance = length(hc.zw);
     }
-    float wavy = isWave
-        ? pow( sin( (distance * waveFrequency - ntime) ), wavePow) + raisedBottom
+    float wavy = isAnimate
+        ? pow( sin( (distance * waveFrequency - time) ), wavePow) + raisedBottom
         : 1.0;
 
     float margin = min( gridWeight*0.33, 0.05 );

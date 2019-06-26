@@ -26,7 +26,7 @@ export class StudyHexGrid {
     Common.initHelper(scene);
     const mat = this.initObject(scene);
     Common.render(control, renderer, scene, camera, () => {
-      mat.time += 0.0333;
+      mat.addTime(0.0333);
     });
 
     this.initGUI(mat);
@@ -68,7 +68,7 @@ export class StudyHexGrid {
     folder.addColor(prop, "color").onChange(val => {
       mat.color.setHex(val);
     });
-    folder.add(mat, "isWave");
+    folder.add(mat, "isAnimate");
     folder.add(mat, "speed", -2, 2);
     folder.add(mat, "waveFrequency", 0.0, 1.0);
     folder.add(mat, "raisedBottom", 0.0, 1.0);

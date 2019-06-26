@@ -9,23 +9,22 @@ import { CustomPhongMaterial } from "ts/customPhongMaterial/CustomPhongMaterial"
 import FragmentShader from "./Shader.frag";
 // @ts-ignore
 import VertexShader from "../customPhongMaterial/Shader.vert";
+import { IAnimatable } from "ts/customPhongMaterial/IAnimatable";
 
-export class HexGridMaterial extends CustomPhongMaterial {
-  get time(): number {
-    return this.uniforms.time.value;
-  }
-  set time(value: number) {
-    this.uniforms.time.value = value;
+export class HexGridMaterial extends CustomPhongMaterial
+  implements IAnimatable {
+  addTime(delta: number): void {
+    this.uniforms.time.value += delta * this.speed;
   }
 
   /**
    * 波アニメーションを行うか否か。
    */
-  get isWave(): boolean {
-    return this.uniforms.isWave.value;
+  get isAnimate(): boolean {
+    return this.uniforms.isAnimate.value;
   }
-  set isWave(value: boolean) {
-    this.uniforms.isWave.value = value;
+  set isAnimate(value: boolean) {
+    this.uniforms.isAnimate.value = value;
   }
 
   /**
@@ -33,12 +32,7 @@ export class HexGridMaterial extends CustomPhongMaterial {
    * 0.5にすると1の半分の速度になる。
    * マイナスを指定すると、波の進行方向が反転する。
    */
-  get speed(): number {
-    return this.uniforms.speed.value;
-  }
-  set speed(value: number) {
-    this.uniforms.speed.value = value;
-  }
+  speed: number = -0.5;
 
   get hexScale(): number {
     return this.uniforms.hexScale.value;
@@ -106,8 +100,7 @@ export class HexGridMaterial extends CustomPhongMaterial {
       CustomPhongMaterial.getBasicUniforms(),
       {
         time: { value: 0.0 },
-        isWave: { value: true },
-        speed: { value: -0.5 },
+        isAnimate: { value: true },
         raisedBottom: { value: 0.05 },
         hexScale: { value: 32.0 },
         waveFrequency: { value: 0.2 },
