@@ -8,12 +8,12 @@ import {
   SphereGeometry
 } from "three";
 import { Common } from "ts/Common";
-import { HexGridMaterial } from "ts/hexGrid/HexGridMaterial";
 import * as dat from "dat.gui";
 import { Material } from "three";
 import { Directions } from "ts/customPhongMaterial/IAnimatable";
+import { HalftoneGridMaterial } from "ts/halftoneGrid/HalftoneGridMaterial";
 
-export class StudyHexGrid {
+export class StudyHalftoneGrid {
   public static readonly W = 640;
   public static readonly H = 480;
 
@@ -21,8 +21,15 @@ export class StudyHexGrid {
     const scene = Common.initScene();
     scene.fog = new Fog(0x000000, 80, 160);
     Common.initLight(scene);
-    const camera = Common.initCamera(scene, StudyHexGrid.W, StudyHexGrid.H);
-    const renderer = Common.initRenderer(StudyHexGrid.W, StudyHexGrid.H);
+    const camera = Common.initCamera(
+      scene,
+      StudyHalftoneGrid.W,
+      StudyHalftoneGrid.H
+    );
+    const renderer = Common.initRenderer(
+      StudyHalftoneGrid.W,
+      StudyHalftoneGrid.H
+    );
     const control = Common.initControl(camera, renderer);
     Common.initHelper(scene);
     const mat = this.initObject(scene);
@@ -33,7 +40,7 @@ export class StudyHexGrid {
     this.initGUI(mat);
   }
 
-  private initObject(scene: Scene): HexGridMaterial {
+  private initObject(scene: Scene): HalftoneGridMaterial {
     const spot = new PointLight(0xffffff, 1, 0, 2);
     spot.position.set(10, 20, 30);
     scene.add(spot);
@@ -42,7 +49,7 @@ export class StudyHexGrid {
 
     const geo = new SphereGeometry(10, 64, 64);
 
-    const mat = new HexGridMaterial({
+    const mat = new HalftoneGridMaterial({
       // side:DoubleSide,
       fog: scene.fog !== undefined
     });
@@ -55,12 +62,12 @@ export class StudyHexGrid {
     return mat;
   }
 
-  public initGUI(mat: HexGridMaterial): void {
+  public initGUI(mat: HalftoneGridMaterial): void {
     const gui = new dat.GUI();
     this.initGULMaterial(gui, mat);
   }
 
-  private initGULMaterial(gui, mat: HexGridMaterial): void {
+  private initGULMaterial(gui, mat: HalftoneGridMaterial): void {
     const prop = {
       color: mat.color.getHex()
     };
@@ -73,11 +80,10 @@ export class StudyHexGrid {
     folder.add(mat, "speed", -2, 2);
     folder.add(mat, "waveFrequency", 0.0, 1.0);
     folder.add(mat, "raisedBottom", 0.0, 1.0);
-    folder.add(mat, "gridWeight", 0.0, 0.5);
-    folder.add(mat, "isReversed");
     folder.add(mat, "division", 2.0, 128.0).step(1);
     folder.add(mat, "divisionScaleX", 0.0, 4.0).step(1);
     folder.add(mat, "wavePow", 0.0, 4.0);
+    folder.add(mat, "radius", 0.0, 1.0);
     folder.add(mat, "direction", {
       horizontal: Directions.horizontal,
       vertical: Directions.vertical,
@@ -89,5 +95,5 @@ export class StudyHexGrid {
 }
 
 window.onload = () => {
-  const study = new StudyHexGrid();
+  const study = new StudyHalftoneGrid();
 };

@@ -12,7 +12,6 @@ import FragmentShader from "./Shader.frag";
 // @ts-ignore
 import VertexShader from "../customPhongMaterial/Shader.vert";
 
-
 export class HalftoneGridMaterial extends CustomPhongMaterial
   implements IAnimatable, IRepeatablePattern {
   addTime(delta: number): void {
@@ -41,6 +40,12 @@ export class HalftoneGridMaterial extends CustomPhongMaterial
   }
   set division(value: number) {
     this.uniforms.division.value = value;
+  }
+  get divisionScaleX(): number {
+    return this.uniforms.divisionScaleX.value;
+  }
+  set divisionScaleX(value: number) {
+    this.uniforms.divisionScaleX.value = value;
   }
 
   /**
@@ -105,6 +110,7 @@ export class HalftoneGridMaterial extends CustomPhongMaterial
         isAnimate: { value: true },
         raisedBottom: { value: 0.05 },
         division: { value: 32.0 },
+        divisionScaleX: { value: 1.0 },
         waveFrequency: { value: 0.2 },
         wavePow: { value: 4.0 },
         direction: { value: Directions.vertical },
@@ -120,5 +126,3 @@ export class HalftoneGridMaterial extends CustomPhongMaterial
     }
   }
 }
-
-

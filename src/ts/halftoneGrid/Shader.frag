@@ -1,6 +1,5 @@
 /**
- * 6角形シェーダー
- * {@link http://glslsandbox.com/e#55098}
+ * ハーフトーンシェーダー
  */
 
 #define PHONG
@@ -19,6 +18,7 @@ varying vec2 uvPosition;
 //user settings
 uniform float time;
 uniform float division;
+uniform float divisionScaleX;
 uniform bool isAnimate;
 uniform float raisedBottom;
 uniform float waveFrequency;
@@ -62,7 +62,9 @@ void main() {
     //#include <map_fragment>
     //#include <color_fragment>
 
-    vec2 uv = uvPosition * division;
+    vec2 uv =
+          uvPosition
+        * vec2( division * divisionScaleX, division);
 
     //hex angle
     vec2 r = normalize(vec2(1.0, 1.73));
@@ -89,11 +91,11 @@ void main() {
     float ln = length(localPos);
     float alpha = smoothstep (
         0.0,
-        0.01,
+        0.05,
         1.0 - ( ln * 4.0 / radius )
     );
 
-    diffuseColor.a *= alpha;
+    diffuseColor.a *= alpha * wavy;
 
     #include <alphamap_fragment>
     #include <alphatest_fragment>

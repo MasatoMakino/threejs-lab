@@ -19,6 +19,7 @@ varying vec2 uvPosition;
 //user settings
 uniform float time;
 uniform float division;
+uniform float divisionScaleX;
 uniform bool isReversed;
 uniform bool isAnimate;
 uniform float raisedBottom;
@@ -85,7 +86,10 @@ void main() {
 
     //#include <map_fragment>
     //#include <color_fragment>
-    vec4 hc = hexCoords( uvPosition * division );
+    vec4 hc = hexCoords(
+          uvPosition
+        * vec2( division * divisionScaleX, division)
+    );
 
     //hc.wで縦方向、hc.zで横方向に、hc.zwで放射状に明滅
     float distance = hc.w;

@@ -9,7 +9,7 @@ import { CustomPhongMaterial } from "ts/customPhongMaterial/CustomPhongMaterial"
 import FragmentShader from "./Shader.frag";
 // @ts-ignore
 import VertexShader from "../customPhongMaterial/Shader.vert";
-import { IAnimatable,Directions } from "ts/customPhongMaterial/IAnimatable";
+import { IAnimatable, Directions } from "ts/customPhongMaterial/IAnimatable";
 import { IRepeatablePattern } from "ts/customPhongMaterial/IRepeatablePattern";
 
 export class HexGridMaterial extends CustomPhongMaterial
@@ -40,6 +40,13 @@ export class HexGridMaterial extends CustomPhongMaterial
   }
   set division(value: number) {
     this.uniforms.division.value = value;
+  }
+
+  get divisionScaleX(): number {
+    return this.uniforms.divisionScaleX.value;
+  }
+  set divisionScaleX(value: number) {
+    this.uniforms.divisionScaleX.value = value;
   }
 
   get isReversed(): boolean {
@@ -112,6 +119,7 @@ export class HexGridMaterial extends CustomPhongMaterial
         isReversed: { value: false },
         raisedBottom: { value: 0.05 },
         division: { value: 32.0 },
+        divisionScaleX: { value: 1.0 },
         waveFrequency: { value: 0.2 },
         wavePow: { value: 4.0 },
         direction: { value: Directions.vertical },
