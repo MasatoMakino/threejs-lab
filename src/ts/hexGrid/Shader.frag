@@ -18,7 +18,8 @@ varying vec2 uvPosition;
 
 //user settings
 uniform float time;
-uniform float hexScale;
+uniform float division;
+uniform bool isReversed;
 uniform bool isAnimate;
 uniform float raisedBottom;
 uniform float waveFrequency;
@@ -84,7 +85,7 @@ void main() {
 
     //#include <map_fragment>
     //#include <color_fragment>
-    vec4 hc = hexCoords( uvPosition * hexScale );
+    vec4 hc = hexCoords( uvPosition * division );
 
     //hc.wで縦方向、hc.zで横方向に、hc.zwで放射状に明滅
     float distance = hc.w;
@@ -99,6 +100,9 @@ void main() {
 
     float margin = min( gridWeight*0.33, 0.05 );
     float gridLine = smoothstep(gridWeight, gridWeight+margin, hc.y);
+    gridLine = isReversed
+        ? 1.0 - gridLine
+        : gridLine;
     float alpha = gridLine * wavy;
 
     diffuseColor.a *= alpha;

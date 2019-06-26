@@ -2,7 +2,7 @@
  * 地球儀用の緯度経度グリッド
  */
 
-import { ShaderMaterialParameters, Color, UniformsUtils } from "three";
+import { ShaderMaterialParameters, UniformsUtils } from "three";
 import { CustomPhongMaterial } from "ts/customPhongMaterial/CustomPhongMaterial";
 
 // @ts-ignore
@@ -10,9 +10,10 @@ import FragmentShader from "./Shader.frag";
 // @ts-ignore
 import VertexShader from "../customPhongMaterial/Shader.vert";
 import { IAnimatable } from "ts/customPhongMaterial/IAnimatable";
+import { IRepeatablePattern } from "ts/customPhongMaterial/IRepeatablePattern";
 
 export class HexGridMaterial extends CustomPhongMaterial
-  implements IAnimatable {
+  implements IAnimatable, IRepeatablePattern {
   addTime(delta: number): void {
     this.uniforms.time.value += delta * this.speed;
   }
@@ -34,11 +35,18 @@ export class HexGridMaterial extends CustomPhongMaterial
    */
   speed: number = -0.5;
 
-  get hexScale(): number {
-    return this.uniforms.hexScale.value;
+  get division(): number {
+    return this.uniforms.division.value;
   }
-  set hexScale(value: number) {
-    this.uniforms.hexScale.value = value;
+  set division(value: number) {
+    this.uniforms.division.value = value;
+  }
+
+  get isReversed(): boolean {
+    return this.uniforms.isReversed.value;
+  }
+  set isReversed(value: boolean) {
+    this.uniforms.isReversed.value = value;
   }
 
   /**
@@ -101,8 +109,9 @@ export class HexGridMaterial extends CustomPhongMaterial
       {
         time: { value: 0.0 },
         isAnimate: { value: true },
+        isReversed: { value: false },
         raisedBottom: { value: 0.05 },
-        hexScale: { value: 32.0 },
+        division: { value: 32.0 },
         waveFrequency: { value: 0.2 },
         wavePow: { value: 4.0 },
         direction: { value: Directions.vertical },

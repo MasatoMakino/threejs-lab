@@ -73,7 +73,8 @@ export class StudyHexGrid {
     folder.add(mat, "waveFrequency", 0.0, 1.0);
     folder.add(mat, "raisedBottom", 0.0, 1.0);
     folder.add(mat, "gridWeight", 0.0, 0.5);
-    folder.add(mat, "hexScale", 2.0, 128.0).step(1);
+    folder.add(mat, "isReversed");
+    folder.add(mat, "division", 2.0, 128.0).step(1);
     folder.add(mat, "wavePow", 0.0, 4.0);
     folder.add(mat, "direction", {
       horizontal: Directions.horizontal,
