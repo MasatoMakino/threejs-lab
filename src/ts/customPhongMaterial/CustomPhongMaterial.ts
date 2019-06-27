@@ -127,3 +127,9 @@ export class CustomPhongMaterial extends ShaderMaterial {
     this.blending = AdditiveBlending;
   }
 }
+
+export class MaterialInterfaceChunk {
+  static getUniform(): any {
+    return {};
+  }
+}

@@ -9,13 +9,25 @@ import { CustomPhongMaterial } from "ts/customPhongMaterial/CustomPhongMaterial"
 import FragmentShader from "./Shader.frag";
 // @ts-ignore
 import VertexShader from "../customPhongMaterial/Shader.vert";
-import { IAnimatable, Directions } from "ts/customPhongMaterial/IAnimatable";
-import { IRepeatablePattern } from "ts/customPhongMaterial/IRepeatablePattern";
+import {
+  AnimatableMaterialChunk,
+  IWaveAnimatable,
+  Directions,
+  WaveAnimatableMaterialChunk
+} from "ts/customPhongMaterial/IAnimatable";
+import {
+  IRepeatablePattern,
+  RepeatablePatternMaterialChunk
+} from "ts/customPhongMaterial/IRepeatablePattern";
+import {
+  IReversible,
+  ReversibleMaterialChunk
+} from "ts/customPhongMaterial/IReversible";
 
 export class HexGridMaterial extends CustomPhongMaterial
-  implements IAnimatable, IRepeatablePattern {
+  implements IWaveAnimatable, IRepeatablePattern, IReversible {
   addTime(delta: number): void {
-    this.uniforms.time.value += delta * this.speed;
+    AnimatableMaterialChunk.addTime(this, delta);
   }
 
   /**
@@ -113,16 +125,10 @@ export class HexGridMaterial extends CustomPhongMaterial
   protected initUniforms(): void {
     this.uniforms = UniformsUtils.merge([
       CustomPhongMaterial.getBasicUniforms(),
+      ReversibleMaterialChunk.getUniform(),
+      RepeatablePatternMaterialChunk.getUniform(),
+      WaveAnimatableMaterialChunk.getUniform(),
       {
-        time: { value: 0.0 },
-        isAnimate: { value: true },
-        isReversed: { value: false },
-        raisedBottom: { value: 0.05 },
-        division: { value: 32.0 },
-        divisionScaleX: { value: 1.0 },
-        waveFrequency: { value: 0.2 },
-        wavePow: { value: 4.0 },
-        direction: { value: Directions.vertical },
         gridWeight: { value: 0.03 }
       }
     ]);
