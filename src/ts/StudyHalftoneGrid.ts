@@ -55,6 +55,7 @@ export class StudyHalftoneGrid {
     });
     mat.color = new Color(0xff6666);
     mat.direction = Directions.vertical;
+    // mat.loadMaskTexture("./textures/landmask.png");
     const mesh = new Mesh(geo, mat);
 
     scene.add(mesh);
@@ -69,7 +70,8 @@ export class StudyHalftoneGrid {
 
   private initGULMaterial(gui, mat: HalftoneGridMaterial): void {
     const prop = {
-      color: mat.color.getHex()
+      color: mat.color.getHex(),
+      mask: "./textures/landmask.png"
     };
 
     const folder = gui.addFolder("Material");
@@ -89,6 +91,21 @@ export class StudyHalftoneGrid {
       vertical: Directions.vertical,
       radial: Directions.radial
     });
+
+    folder
+      .add(prop, "mask", {
+        none: "",
+        earth: "./textures/landmask.png"
+      })
+      .onChange(val => {
+        if (val === "") {
+          mat.deleteMaskTexture();
+        } else {
+          mat.loadMaskTexture(val);
+        }
+      });
+    mat.loadMaskTexture("./textures/landmask.png");
+
     folder.add(mat, "opacity", 0.0, 1.0);
     folder.open();
   }

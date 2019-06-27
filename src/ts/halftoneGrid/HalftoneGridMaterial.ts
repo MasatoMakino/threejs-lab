@@ -11,6 +11,8 @@ import { IRepeatablePattern } from "ts/customPhongMaterial/IRepeatablePattern";
 import FragmentShader from "./Shader.frag";
 // @ts-ignore
 import VertexShader from "../customPhongMaterial/Shader.vert";
+import { Texture } from "three";
+import { TextureLoader } from "three";
 
 export class HalftoneGridMaterial extends CustomPhongMaterial
   implements IAnimatable, IRepeatablePattern {
@@ -98,6 +100,29 @@ export class HalftoneGridMaterial extends CustomPhongMaterial
     this.uniforms.direction.value = value;
   }
 
+  /**
+   *
+   *
+   */
+  private _loading: boolean = false;
+  get maskTexture(): Texture {
+    return this.uniforms.maskTexture.value;
+  }
+  loadMaskTexture(url: string): void {
+    this._loading = true;
+    new TextureLoader().load(url, texture => {
+      if (!this._loading) return;
+      this.uniforms.hasMaskTexture.value = true;
+      this.uniforms.maskTexture.value = texture;
+      this._loading = false;
+    });
+  }
+  deleteMaskTexture(): void {
+    this._loading = false;
+    this.uniforms.hasMaskTexture.value = false;
+    this.uniforms.maskTexture.value = null;
+  }
+
   constructor(parameters?: ShaderMaterialParameters) {
     super(VertexShader, FragmentShader, parameters);
   }
@@ -114,7 +139,9 @@ export class HalftoneGridMaterial extends CustomPhongMaterial
         waveFrequency: { value: 0.2 },
         wavePow: { value: 4.0 },
         direction: { value: Directions.vertical },
-        radius: { value: 0.25 }
+        radius: { value: 0.75 },
+        hasMaskTexture: { value: false },
+        maskTexture: { value: null }
       }
     ]);
   }

@@ -25,6 +25,8 @@ uniform float waveFrequency;
 uniform float wavePow;
 uniform int direction;
 uniform float radius;
+uniform bool hasMaskTexture;
+uniform sampler2D maskTexture;
 
 #include <common>
 #include <packing>
@@ -88,14 +90,19 @@ void main() {
         ? pow( sin( (distance * waveFrequency - time) ), wavePow) + raisedBottom
         : 1.0;
 
-    float ln = length(localPos);
-    float alpha = smoothstep (
-        0.0,
-        0.05,
-        1.0 - ( ln * 4.0 / radius )
-    );
+    float mask = 1.0;
+    if( hasMaskTexture ){
+        vec2 uVm = id / vec2( division * divisionScaleX, division);
+        mask = texture2D( maskTexture, uVm ).r;
+    }
 
-    diffuseColor.a *= alpha * wavy;
+    float ln = length(localPos);
+    float current = 1.0 - ( ln * 4.0 / radius / mask );
+    current = clamp( current, 0.0, 1.0 );
+
+    float alpha = smoothstep ( 0.0, 0.1, current );
+
+    diffuseColor.a *= alpha *wavy ;
 
     #include <alphamap_fragment>
     #include <alphatest_fragment>
