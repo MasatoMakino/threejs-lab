@@ -111,15 +111,12 @@ export class HalftoneGridMaterial extends CustomPhongMaterial
   }
 
   //IMaskable interface implements
-  isLoading: boolean = false;
   get maskTexture(): Texture {
     return this.uniforms.maskTexture.value;
   }
-  loadMaskTexture(url: string): void {
-    MaskableMaterialChunk.loadMaskTexture(this, url);
-  }
-  deleteMaskTexture(): void {
-    MaskableMaterialChunk.deleteMaskTexture(this);
+  set maskTexture(val: Texture) {
+    this.uniforms.maskTexture.value = val;
+    this.uniforms.hasMaskTexture.value = val != null;
   }
 
   constructor(parameters?: ShaderMaterialParameters) {

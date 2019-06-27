@@ -12,6 +12,7 @@ import * as dat from "dat.gui";
 import { Material } from "three";
 import { Directions } from "ts/customPhongMaterial/IAnimatable";
 import { HalftoneGridMaterial } from "ts/halftoneGrid/HalftoneGridMaterial";
+import { TextureLoader } from "three";
 
 export class StudyHalftoneGrid {
   public static readonly W = 640;
@@ -99,12 +100,12 @@ export class StudyHalftoneGrid {
       })
       .onChange(val => {
         if (val === "") {
-          mat.deleteMaskTexture();
+          mat.maskTexture = null;
         } else {
-          mat.loadMaskTexture(val);
+          mat.maskTexture = new TextureLoader().load(val);
         }
       });
-    mat.loadMaskTexture("./textures/landmask.png");
+    mat.maskTexture = new TextureLoader().load("./textures/landmask.png");
 
     folder.add(mat, "opacity", 0.0, 1.0);
     folder.open();
