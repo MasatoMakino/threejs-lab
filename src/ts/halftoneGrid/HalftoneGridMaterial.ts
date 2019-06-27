@@ -110,6 +110,7 @@ export class HalftoneGridMaterial extends CustomPhongMaterial
     this.uniforms.direction.value = value;
   }
 
+  //IMaskable interface implements
   isLoading: boolean = false;
   get maskTexture(): Texture {
     return this.uniforms.maskTexture.value;

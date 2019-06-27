@@ -102,7 +102,7 @@ void main() {
 
     float alpha = smoothstep ( 0.0, 0.1, current );
 
-    diffuseColor.a *= alpha *wavy ;
+    diffuseColor.a *= alpha * wavy ;
 
     #include <alphamap_fragment>
     #include <alphatest_fragment>

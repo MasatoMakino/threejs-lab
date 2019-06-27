@@ -23,9 +23,11 @@ import {
   IReversible,
   ReversibleMaterialChunk
 } from "ts/customPhongMaterial/IReversible";
+import {IMaskable, MaskableMaterialChunk} from "ts/customPhongMaterial/IMaskable";
+import {Texture} from "three";
 
 export class HexGridMaterial extends CustomPhongMaterial
-  implements IWaveAnimatable, IRepeatablePattern, IReversible {
+  implements IWaveAnimatable, IRepeatablePattern, IReversible,IMaskable {
   addTime(delta: number): void {
     AnimatableMaterialChunk.addTime(this, delta);
   }
@@ -118,6 +120,19 @@ export class HexGridMaterial extends CustomPhongMaterial
     this.uniforms.direction.value = value;
   }
 
+
+  //IMaskable interface implements
+  isLoading: boolean = false;
+  get maskTexture(): Texture {
+    return this.uniforms.maskTexture.value;
+  }
+  loadMaskTexture(url: string): void {
+    MaskableMaterialChunk.loadMaskTexture(this, url);
+  }
+  deleteMaskTexture(): void {
+    MaskableMaterialChunk.deleteMaskTexture(this);
+  }
+
   constructor(parameters?: ShaderMaterialParameters) {
     super(VertexShader, FragmentShader, parameters);
   }
@@ -128,7 +143,9 @@ export class HexGridMaterial extends CustomPhongMaterial
       ReversibleMaterialChunk.getUniform(),
       RepeatablePatternMaterialChunk.getUniform(),
       WaveAnimatableMaterialChunk.getUniform(),
+      MaskableMaterialChunk.getUniform(),
       {
+        hasAlphaMap: { value: false },
         gridWeight: { value: 0.03 }
       }
     ]);

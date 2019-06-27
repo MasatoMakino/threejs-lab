@@ -27,6 +27,11 @@ uniform float waveFrequency;
 uniform float wavePow;
 uniform int direction;
 uniform float gridWeight;
+uniform bool hasMaskTexture;
+uniform sampler2D maskTexture;
+
+uniform bool hasAlphaMap;
+uniform sampler2D alphaMap;
 
 #include <common>
 #include <packing>
@@ -75,6 +80,17 @@ vec4 hexCoords(vec2 uv)
     return vec4(x, y, id);
 }
 
+float getMask(vec2 id){
+
+    if( !hasMaskTexture ){
+        return 1.0;
+    }
+
+    vec2 uVm = id / vec2( division * divisionScaleX, division);
+    float mask = texture2D( maskTexture, uVm ).r;
+    return mask;
+}
+
 void main() {
     #include <clipping_planes_fragment>
 
@@ -102,16 +118,27 @@ void main() {
         ? pow( sin( (distance * waveFrequency - time) ), wavePow) + raisedBottom
         : 1.0;
 
-    float margin = min( gridWeight*0.33, 0.05 );
-    float gridLine = smoothstep(gridWeight, gridWeight+margin, hc.y);
+    float mask = 1.0 - getMask( hc.zw );
+    float w = gridWeight + mask;
+    w = clamp( w, 0.0, 1.0);
+
+    float margin = clamp ( w * 0.33, 0.00, 0.02 );
+    float stepMax = w + margin;
+
+    float gridLine = smoothstep(w, stepMax, hc.y);
     gridLine = isReversed
         ? 1.0 - gridLine
         : gridLine;
     float alpha = gridLine * wavy;
 
-    diffuseColor.a *= alpha;
+    diffuseColor.a *= alpha ;
 
-    #include <alphamap_fragment>
+    //#include <alphamap_fragment>
+
+    if( hasAlphaMap ){
+        diffuseColor.a *= texture2D( alphaMap, uvPosition ).g;
+    }
+
     #include <alphatest_fragment>
     #include <specularmap_fragment>
     #include <normal_fragment_begin>

@@ -12,6 +12,7 @@ import { HexGridMaterial } from "ts/hexGrid/HexGridMaterial";
 import * as dat from "dat.gui";
 import { Material } from "three";
 import { Directions } from "ts/customPhongMaterial/IAnimatable";
+import {TextureLoader} from "three";
 
 export class StudyHexGrid {
   public static readonly W = 640;
@@ -44,7 +45,8 @@ export class StudyHexGrid {
 
     const mat = new HexGridMaterial({
       // side:DoubleSide,
-      fog: scene.fog !== undefined
+      fog: scene.fog !== undefined,
+
     });
     mat.color = new Color(0xff6666);
     mat.direction = Directions.vertical;
@@ -75,7 +77,7 @@ export class StudyHexGrid {
     folder.add(mat, "raisedBottom", 0.0, 1.0);
     folder.add(mat, "gridWeight", 0.0, 0.5);
     folder.add(mat, "isReversed");
-    folder.add(mat, "division", 2.0, 128.0).step(1);
+    folder.add(mat, "division", 2.0, 256.0).step(1);
     folder.add(mat, "divisionScaleX", 0.0, 4.0).step(1);
     folder.add(mat, "wavePow", 0.0, 4.0);
     folder.add(mat, "direction", {
@@ -83,6 +85,14 @@ export class StudyHexGrid {
       vertical: Directions.vertical,
       radial: Directions.radial
     });
+
+    mat.loadMaskTexture("./textures/landmask.png");
+    
+    // new TextureLoader().load("./textures/landmask.png", texture => {
+    //   mat.uniforms.alphaMap.value = texture;
+    //   mat.uniforms.hasAlphaMap.value = true;
+    // });
+
     folder.add(mat, "opacity", 0.0, 1.0);
     folder.open();
   }
