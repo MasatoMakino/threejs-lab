@@ -2,13 +2,9 @@
  * 地球儀用の緯度経度グリッド
  */
 
-import { ShaderMaterialParameters, UniformsUtils } from "three";
+import { ShaderMaterialParameters, UniformsUtils, Texture } from "three";
 import { CustomPhongMaterial } from "ts/customPhongMaterial/CustomPhongMaterial";
 
-// @ts-ignore
-import FragmentShader from "./Shader.frag";
-// @ts-ignore
-import VertexShader from "../customPhongMaterial/Shader.vert";
 import {
   AnimatableMaterialChunk,
   IWaveAnimatable,
@@ -27,7 +23,11 @@ import {
   IMaskable,
   MaskableMaterialChunk
 } from "ts/customPhongMaterial/IMaskable";
-import { Texture } from "three";
+
+// @ts-ignore
+import FragmentShader from "./Shader.frag";
+// @ts-ignore
+import VertexShader from "../customPhongMaterial/Shader.vert";
 
 export class HexGridMaterial extends CustomPhongMaterial
   implements IWaveAnimatable, IRepeatablePattern, IReversible, IMaskable {
@@ -144,7 +144,6 @@ export class HexGridMaterial extends CustomPhongMaterial
       WaveAnimatableMaterialChunk.getUniform(),
       MaskableMaterialChunk.getUniform(),
       {
-        hasAlphaMap: { value: false },
         gridWeight: { value: 0.03 }
       }
     ]);

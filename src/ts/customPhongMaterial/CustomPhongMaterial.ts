@@ -4,6 +4,7 @@ import { AdditiveBlending } from "three";
 import { UniformsUtils } from "three";
 import { UniformsLib } from "three";
 import { ShaderMaterialParameters } from "three";
+import { Texture } from "three";
 
 /**
  * MeshPhongMaterialに準じるShaderMaterialクラス。
@@ -33,7 +34,8 @@ export class CustomPhongMaterial extends ShaderMaterial {
       {
         emissive: { value: new Color(0x000000) },
         specular: { value: new Color(0x111111) },
-        shininess: { value: 30 }
+        shininess: { value: 30 },
+        hasAlphaMap: { value: false }
       }
     ]);
   }
@@ -52,6 +54,7 @@ export class CustomPhongMaterial extends ShaderMaterial {
     super(parameters);
 
     this.initUniforms();
+    this.initDefines();
     this.vertexShader = vertexShader;
     this.fragmentShader = fragmentShader;
     this.initDefaultSetting(parameters);
@@ -65,6 +68,13 @@ export class CustomPhongMaterial extends ShaderMaterial {
       CustomPhongMaterial.getBasicUniforms(),
       {}
     ]);
+  }
+
+  /**
+   * definesを初期化する。
+   */
+  protected initDefines(): void {
+    this.defines = Object.assign({}, this.defines);
   }
 
   /**
@@ -115,6 +125,14 @@ export class CustomPhongMaterial extends ShaderMaterial {
   }
   set emissive(value: Color) {
     this.uniforms.emissive.value = value;
+  }
+
+  get alphaMap(): Texture {
+    return this.uniforms.alphaMap.value;
+  }
+  set alphaMap(value: Texture) {
+    this.uniforms.alphaMap.value = value;
+    this.uniforms.hasAlphaMap.value = value != null;
   }
 
   /**

@@ -11,6 +11,8 @@ uniform vec3 emissive;
 uniform vec3 specular;
 uniform float shininess;
 uniform float opacity;
+uniform bool hasAlphaMap;
+uniform sampler2D alphaMap;
 
 //varying
 varying vec3 meshPosition;
@@ -30,9 +32,6 @@ uniform float gridWeight;
 uniform bool hasMaskTexture;
 uniform sampler2D maskTexture;
 
-uniform bool hasAlphaMap;
-uniform sampler2D alphaMap;
-
 #include <common>
 #include <packing>
 #include <dithering_pars_fragment>
@@ -40,7 +39,7 @@ uniform sampler2D alphaMap;
 #include <uv_pars_fragment>
 #include <uv2_pars_fragment>
 #include <map_pars_fragment>
-#include <alphamap_pars_fragment>
+//#include <alphamap_pars_fragment>
 #include <aomap_pars_fragment>
 #include <lightmap_pars_fragment>
 #include <emissivemap_pars_fragment>
@@ -100,8 +99,9 @@ void main() {
     vec3 totalEmissiveRadiance = emissive;
     #include <logdepthbuf_fragment>
 
-    //#include <map_fragment>
-    //#include <color_fragment>
+    #include <map_fragment>
+    #include <color_fragment>
+
     vec4 hc = hexCoords(
           uvPosition
         * vec2( division * divisionScaleX, division)
@@ -134,7 +134,6 @@ void main() {
     diffuseColor.a *= alpha ;
 
     //#include <alphamap_fragment>
-
     if( hasAlphaMap ){
         diffuseColor.a *= texture2D( alphaMap, uvPosition ).g;
     }

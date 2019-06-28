@@ -85,8 +85,9 @@ export class StudyHexGrid {
       radial: Directions.radial
     });
 
-    mat.maskTexture = new TextureLoader().load("./textures/landmask.png");
+    // mat.maskTexture = new TextureLoader().load("./textures/landmask.png");
 
+    mat.alphaMap = new TextureLoader().load("./textures/landmask.png");
     // mat.uniforms.alphaMap.value = new TextureLoader().load("./textures/landmask.png");
     // mat.uniforms.hasAlphaMap.value = true;
 
