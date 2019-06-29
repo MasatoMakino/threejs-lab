@@ -93,7 +93,7 @@ void main() {
 
     //#include <color_fragment>
 
-    #include <alphamap_fragment>
+    #include <mesh_phong_switching_alpha_map>
     #include <alphatest_fragment>
     #include <specularmap_fragment>
     #include <normal_fragment_begin>

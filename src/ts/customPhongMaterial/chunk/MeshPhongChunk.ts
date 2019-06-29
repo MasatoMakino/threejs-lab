@@ -32,9 +32,24 @@ class MeshPhongDiffuseColorChunk extends GLSLChunk {
   }
 }
 
+class MeshPhongSwitchingAlphaMapChunk extends GLSLChunk {
+  protected static getChunkName(): string {
+    return "mesh_phong_switching_alpha_map";
+  }
+
+  protected static getChunk(): string {
+    return `
+      if( hasAlphaMap ){
+        diffuseColor.a *= texture2D( alphaMap, uvPosition ).g;
+      }
+    `;
+  }
+}
+
 export class MeshPhongChunk extends GLSLChunk {
   public static add(): void {
     MeshPhongUniformChunk.add();
     MeshPhongDiffuseColorChunk.add();
+    MeshPhongSwitchingAlphaMapChunk.add();
   }
 }

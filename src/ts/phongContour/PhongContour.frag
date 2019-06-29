@@ -5,6 +5,7 @@
 #define PHONG
 
 #include <mesh_phong_uniform>
+varying vec2 uvPosition;
 #include <mesh_position_varying>
 uniform float bottom;
 uniform float top;
@@ -49,7 +50,7 @@ void main() {
     #endif
 
     #include <color_fragment>
-    #include <alphamap_fragment>
+    #include <mesh_phong_switching_alpha_map>
     #include <alphatest_fragment>
     #include <specularmap_fragment>
     #include <normal_fragment_begin>

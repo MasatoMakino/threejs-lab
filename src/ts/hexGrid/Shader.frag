@@ -123,11 +123,7 @@ void main() {
 
     diffuseColor.a *= alpha ;
 
-    //#include <alphamap_fragment>
-    if( hasAlphaMap ){
-        diffuseColor.a *= texture2D( alphaMap, uvPosition ).g;
-    }
-
+    #include <mesh_phong_switching_alpha_map>
     #include <alphatest_fragment>
     #include <specularmap_fragment>
     #include <normal_fragment_begin>

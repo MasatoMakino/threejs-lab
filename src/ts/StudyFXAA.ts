@@ -22,7 +22,7 @@ export class StudyFXAA {
       "webgl-canvas",
       false
     );
-    const control = Common.initControl(camera);
+    const control = Common.initControl(camera, renderer);
     Common.initHelper(scene);
     this.initObject(scene);
 
