@@ -63,7 +63,9 @@ export class StudyHexGrid {
 
   private initGULMaterial(gui, mat: HexGridMaterial): void {
     const prop = {
-      color: mat.color.getHex()
+      color: mat.color.getHex(),
+      mask: "",
+      alphaMap: ""
     };
 
     const folder = gui.addFolder("Material");
@@ -85,11 +87,31 @@ export class StudyHexGrid {
       radial: Directions.radial
     });
 
-    // mat.maskTexture = new TextureLoader().load("./textures/landmask.png");
+    folder
+      .add(prop, "mask", {
+        none: "",
+        earth: "./textures/landmask.png"
+      })
+      .onChange(val => {
+        if (val === "") {
+          mat.maskTexture = null;
+        } else {
+          mat.maskTexture = new TextureLoader().load(val);
+        }
+      });
 
-    mat.alphaMap = new TextureLoader().load("./textures/landmask.png");
-    // mat.uniforms.alphaMap.value = new TextureLoader().load("./textures/landmask.png");
-    // mat.uniforms.hasAlphaMap.value = true;
+    folder
+      .add(prop, "alphaMap", {
+        none: "",
+        earth: "./textures/landmask.png"
+      })
+      .onChange(val => {
+        if (val === "") {
+          mat.alphaMap = null;
+        } else {
+          mat.alphaMap = new TextureLoader().load(val);
+        }
+      });
 
     folder.add(mat, "opacity", 0.0, 1.0);
     folder.open();
