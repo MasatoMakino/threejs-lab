@@ -11,15 +11,10 @@
 varying vec2 uvPosition;
 
 //user settings
-uniform float time;
+#include <wavy_animation_uniform_chunk>
 uniform float division;
 uniform float divisionScaleX;
 uniform bool isReversed;
-uniform bool isAnimate;
-uniform float raisedBottom;
-uniform float waveFrequency;
-uniform float wavePow;
-uniform int direction;
 uniform float gridWeight;
 uniform bool hasMaskTexture;
 uniform sampler2D maskTexture;
@@ -84,11 +79,8 @@ float getMask(vec2 id){
 
 void main() {
     #include <clipping_planes_fragment>
-
     #include <mesh_phong_diffuse_color>
-
     #include <logdepthbuf_fragment>
-
     #include <map_fragment>
     #include <color_fragment>
 
@@ -96,9 +88,8 @@ void main() {
           uvPosition
         * vec2( division * divisionScaleX, division)
     );
-
     vec2 id = hc.zw;
-    #include <wavy_animation_chunk>
+    #include <wavy_animation_fragment_chunk>
 
     float mask = 1.0 - getMask( hc.zw );
     float w = gridWeight + mask;

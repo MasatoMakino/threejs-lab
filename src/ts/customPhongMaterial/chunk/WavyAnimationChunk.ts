@@ -6,9 +6,17 @@ import { Directions } from "ts/customPhongMaterial/IAnimatable";
  * 実行にはグリッドid値が必要。idはvec2。
  * 結果はdiffuseColor.aに反映される。
  */
+
 export class WavyAnimationChunk extends GLSLChunk {
+  public static add(): void {
+    WavyAnimationFragmentChunk.add();
+    WavyAnimationUniformChunk.add();
+  }
+}
+
+class WavyAnimationFragmentChunk extends GLSLChunk {
   protected static getChunkName(): string {
-    return "wavy_animation_chunk";
+    return "wavy_animation_fragment_chunk";
   }
 
   protected static getChunk(): string {
@@ -26,5 +34,36 @@ export class WavyAnimationChunk extends GLSLChunk {
   
     diffuseColor.a *= wavy;
     `;
+  }
+}
+
+class TimeAnimationUniformChunk extends GLSLChunk {
+  protected static getChunkName(): string {
+    return "time_animation_uniform_chunk";
+  }
+
+  protected static getChunk(): string {
+    return `
+    uniform float time;
+    uniform bool isAnimate;
+    `;
+  }
+}
+
+class WavyAnimationUniformChunk extends TimeAnimationUniformChunk {
+  protected static getChunkName(): string {
+    return "wavy_animation_uniform_chunk";
+  }
+
+  protected static getChunk(): string {
+    return (
+      super.getChunk() +
+      `
+    uniform float raisedBottom;
+    uniform float waveFrequency;
+    uniform float wavePow;
+    uniform int direction;
+    `
+    );
   }
 }

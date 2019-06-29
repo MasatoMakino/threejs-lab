@@ -10,14 +10,9 @@
 varying vec2 uvPosition;
 
 //user settings
-uniform float time;
+#include <wavy_animation_uniform_chunk>
 uniform float division;
 uniform float divisionScaleX;
-uniform bool isAnimate;
-uniform float raisedBottom;
-uniform float waveFrequency;
-uniform float wavePow;
-uniform int direction;
 uniform float radius;
 uniform bool hasMaskTexture;
 uniform sampler2D maskTexture;
@@ -70,12 +65,12 @@ void main() {
     vec2 localPos = length(p1) < length(p2) ? p1 : p2;
 
     vec2 id = uv - localPos;
-    #include <wavy_animation_chunk>
+    #include <wavy_animation_fragment_chunk>
 
     float mask = 1.0;
     if( hasMaskTexture ){
         vec2 uVm = id / vec2( division * divisionScaleX, division);
-        mask = texture2D( maskTexture, uVm ).r;
+        mask = texture2D( maskTexture, uVm ).g;
     }
 
     float ln = length(localPos);
