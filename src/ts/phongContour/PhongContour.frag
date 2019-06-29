@@ -4,14 +4,10 @@
 
 #define PHONG
 
-uniform vec3 diffuse;
-uniform vec3 emissive;
-uniform vec3 specular;
-uniform float shininess;
-uniform float opacity;
+#include <mesh_phong_uniform>
+#include <mesh_position_varying>
 uniform float bottom;
 uniform float top;
-#include <mesh_position_varying>
 
 #include <common>
 #include <packing>

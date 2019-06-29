@@ -5,18 +5,12 @@
 
 #define PHONG
 
-uniform vec3 diffuse;
-uniform vec3 emissive;
-uniform vec3 specular;
-uniform float shininess;
+#include <mesh_phong_uniform>
 
-varying vec3 meshPosition;
 varying vec2 uvPosition;
 
-uniform float opacity;
 uniform vec3 gridColor;
 uniform vec3 glowColor;
-
 uniform float lineLimit;
 uniform float division;
 uniform float glowPow;

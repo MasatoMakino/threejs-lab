@@ -1,6 +1,6 @@
 import { GLSLChunk } from "ts/customPhongMaterial/chunk/GLSLChunk";
 
-export class MeshPositionVaryingChunk extends GLSLChunk {
+class MeshPositionVaryingChunk extends GLSLChunk {
   protected static getChunkName(): string {
     return "mesh_position_varying";
   }
@@ -14,7 +14,7 @@ export class MeshPositionVaryingChunk extends GLSLChunk {
   }
 }
 
-export class MeshPositionVertexChunk extends GLSLChunk {
+class MeshPositionVertexChunk extends GLSLChunk {
   protected static getChunkName(): string {
     return "mesh_position_vertex";
   }

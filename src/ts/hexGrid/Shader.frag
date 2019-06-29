@@ -5,14 +5,7 @@
 
 #define PHONG
 
-//MeshPhong settings
-uniform vec3 diffuse;
-uniform vec3 emissive;
-uniform vec3 specular;
-uniform float shininess;
-uniform float opacity;
-uniform bool hasAlphaMap;
-uniform sampler2D alphaMap;
+#include <mesh_phong_uniform>
 
 //varying
 varying vec2 uvPosition;
