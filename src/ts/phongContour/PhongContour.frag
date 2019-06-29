@@ -11,7 +11,7 @@ uniform float shininess;
 uniform float opacity;
 uniform float bottom;
 uniform float top;
-varying vec3 meshPosition;
+#include <mesh_position_varying>
 
 #include <common>
 #include <packing>

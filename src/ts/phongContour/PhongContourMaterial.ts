@@ -40,6 +40,11 @@ export class PhongContourMaterial extends CustomPhongMaterial {
     super(PhongContourVertexShader, PhongContourFragmentShader, parameters);
   }
 
+  protected initDefines(): void {
+    super.initDefines();
+    this.defines.USE_MESH_POSITION = true;
+  }
+
   protected initUniforms(): void {
     this.uniforms = UniformsUtils.merge([
       CustomPhongMaterial.getBasicUniforms(),

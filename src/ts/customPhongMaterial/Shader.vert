@@ -5,8 +5,8 @@
 #define PHONG
 
 varying vec3 vViewPosition;
-varying vec3 meshPosition;
 varying vec2 uvPosition;
+#include <mesh_position_varying>
 
 #ifndef FLAT_SHADED
 
@@ -28,7 +28,7 @@ varying vec3 vNormal;
 #include <clipping_planes_pars_vertex>
 
 void main() {
-    meshPosition = position;
+    #include <mesh_position_vertex>
     uvPosition = uv;
 
     #include <uv_vertex>

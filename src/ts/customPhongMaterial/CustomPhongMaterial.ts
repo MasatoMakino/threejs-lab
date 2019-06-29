@@ -5,6 +5,7 @@ import { UniformsUtils } from "three";
 import { UniformsLib } from "three";
 import { ShaderMaterialParameters } from "three";
 import { Texture } from "three";
+import { MeshPositionChunk } from "ts/customPhongMaterial/chunk/MeshPositionChunk";
 
 /**
  * MeshPhongMaterialに準じるShaderMaterialクラス。
@@ -53,11 +54,16 @@ export class CustomPhongMaterial extends ShaderMaterial {
   ) {
     super(parameters);
 
+    this.initChunks();
     this.initUniforms();
     this.initDefines();
     this.vertexShader = vertexShader;
     this.fragmentShader = fragmentShader;
     this.initDefaultSetting(parameters);
+  }
+
+  protected initChunks(): void {
+    MeshPositionChunk.add();
   }
 
   /**
@@ -74,7 +80,11 @@ export class CustomPhongMaterial extends ShaderMaterial {
    * definesを初期化する。
    */
   protected initDefines(): void {
-    this.defines = Object.assign({}, this.defines);
+    this.defines = Object.assign(
+      {},
+      MeshPositionChunk.getDefines(),
+      this.defines
+    );
   }
 
   /**

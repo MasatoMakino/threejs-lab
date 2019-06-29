@@ -12,7 +12,6 @@ uniform float shininess;
 uniform float opacity;
 
 //varying
-varying vec3 meshPosition;
 varying vec2 uvPosition;
 
 //user settings

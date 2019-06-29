@@ -15,7 +15,6 @@ uniform bool hasAlphaMap;
 uniform sampler2D alphaMap;
 
 //varying
-varying vec3 meshPosition;
 varying vec2 uvPosition;
 
 //user settings
