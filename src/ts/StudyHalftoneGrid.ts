@@ -72,7 +72,8 @@ export class StudyHalftoneGrid {
   private initGULMaterial(gui, mat: HalftoneGridMaterial): void {
     const prop = {
       color: mat.color.getHex(),
-      mask: "./textures/landmask.png"
+      mask: "",
+      alphaMap: ""
     };
 
     const folder = gui.addFolder("Material");
@@ -105,7 +106,19 @@ export class StudyHalftoneGrid {
           mat.maskTexture = new TextureLoader().load(val);
         }
       });
-    mat.maskTexture = new TextureLoader().load("./textures/landmask.png");
+
+    folder
+      .add(prop, "alphaMap", {
+        none: "",
+        earth: "./textures/landmask.png"
+      })
+      .onChange(val => {
+        if (val === "") {
+          mat.alphaMap = null;
+        } else {
+          mat.alphaMap = new TextureLoader().load(val);
+        }
+      });
 
     folder.add(mat, "opacity", 0.0, 1.0);
     folder.open();
