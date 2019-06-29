@@ -18,8 +18,23 @@ class MeshPhongUniformChunk extends GLSLChunk {
   }
 }
 
+class MeshPhongDiffuseColorChunk extends GLSLChunk {
+  protected static getChunkName(): string {
+    return "mesh_phong_diffuse_color";
+  }
+
+  protected static getChunk(): string {
+    return `
+      vec4 diffuseColor = vec4( diffuse, opacity );
+      ReflectedLight reflectedLight = ReflectedLight( vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ) );
+      vec3 totalEmissiveRadiance = emissive;
+    `;
+  }
+}
+
 export class MeshPhongChunk extends GLSLChunk {
   public static add(): void {
     MeshPhongUniformChunk.add();
+    MeshPhongDiffuseColorChunk.add();
   }
 }

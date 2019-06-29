@@ -85,10 +85,8 @@ float getMask(vec2 id){
 void main() {
     #include <clipping_planes_fragment>
 
-    vec4 diffuseColor = vec4( diffuse, opacity );
+    #include <mesh_phong_diffuse_color>
 
-    ReflectedLight reflectedLight = ReflectedLight( vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ) );
-    vec3 totalEmissiveRadiance = emissive;
     #include <logdepthbuf_fragment>
 
     #include <map_fragment>
