@@ -68,19 +68,9 @@ void main() {
     vec2 p2 = mod(uv - halfR, r) - halfR;
 
     vec2 localPos = length(p1) < length(p2) ? p1 : p2;
+
     vec2 id = uv - localPos;
-
-    //hc.wで縦方向、hc.zで横方向に、hc.zwで放射状に明滅
-    float distance = id.y;
-    if( direction == 3){
-        distance = id.x;
-    }else if( direction == 5 ){
-        distance = length(id.xy);
-    }
-
-    float wavy = isAnimate
-        ? pow( sin( (distance * waveFrequency - time) ), wavePow) + raisedBottom
-        : 1.0;
+    #include <wavy_animation_chunk>
 
     float mask = 1.0;
     if( hasMaskTexture ){
@@ -94,7 +84,7 @@ void main() {
 
     float alpha = smoothstep ( 0.0, 0.1, current );
 
-    diffuseColor.a *= alpha * wavy ;
+    diffuseColor.a *= alpha;
 
     #include <mesh_phong_switching_alpha_map>
     #include <alphatest_fragment>

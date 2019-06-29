@@ -10,6 +10,7 @@ import {
   AnimatableMaterialChunk,
   WaveAnimatableMaterialChunk
 } from "ts/customPhongMaterial/IAnimatable";
+import { WavyAnimationChunk } from "ts/customPhongMaterial/chunk/WavyAnimationChunk";
 import {
   IRepeatablePattern,
   RepeatablePatternMaterialChunk
@@ -133,6 +134,11 @@ export class HalftoneGridMaterial extends CustomPhongMaterial
         radius: { value: 0.75 }
       }
     ]);
+  }
+
+  protected initChunks(): void {
+    super.initChunks();
+    WavyAnimationChunk.add();
   }
 
   protected initDefaultSetting(parameters?: ShaderMaterialParameters): void {

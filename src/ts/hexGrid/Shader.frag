@@ -97,16 +97,8 @@ void main() {
         * vec2( division * divisionScaleX, division)
     );
 
-    //hc.wで縦方向、hc.zで横方向に、hc.zwで放射状に明滅
-    float distance = hc.w;
-    if( direction == 3){
-        distance = hc.z;
-    }else if( direction == 5 ){
-        distance = length(hc.zw);
-    }
-    float wavy = isAnimate
-        ? pow( sin( (distance * waveFrequency - time) ), wavePow) + raisedBottom
-        : 1.0;
+    vec2 id = hc.zw;
+    #include <wavy_animation_chunk>
 
     float mask = 1.0 - getMask( hc.zw );
     float w = gridWeight + mask;
@@ -119,7 +111,7 @@ void main() {
     gridLine = isReversed
         ? 1.0 - gridLine
         : gridLine;
-    float alpha = gridLine * wavy;
+    float alpha = gridLine;
 
     diffuseColor.a *= alpha ;
 

@@ -28,6 +28,7 @@ import {
 import FragmentShader from "./Shader.frag";
 // @ts-ignore
 import VertexShader from "../customPhongMaterial/Shader.vert";
+import { WavyAnimationChunk } from "ts/customPhongMaterial/chunk/WavyAnimationChunk";
 
 export class HexGridMaterial extends CustomPhongMaterial
   implements IWaveAnimatable, IRepeatablePattern, IReversible, IMaskable {
@@ -134,6 +135,11 @@ export class HexGridMaterial extends CustomPhongMaterial
 
   constructor(parameters?: ShaderMaterialParameters) {
     super(VertexShader, FragmentShader, parameters);
+  }
+
+  protected initChunks(): void {
+    super.initChunks();
+    WavyAnimationChunk.add();
   }
 
   protected initUniforms(): void {
