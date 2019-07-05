@@ -3,9 +3,13 @@ import { Scene } from "three";
 import { PerspectiveCamera } from "three";
 import { Vector2 } from "three";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
+import { Pass } from "three/examples/jsm/postprocessing/Pass";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
 
 export class PostProcessRenderer {
   protected renderer: WebGLRenderer;
+  protected pass: Pass;
+  protected composer: EffectComposer;
   protected scene: Scene;
   protected camera: PerspectiveCamera;
   protected id: number;
@@ -30,6 +34,28 @@ export class PostProcessRenderer {
       undefined
     );
   }
+
+  /**
+   * シェーダーパスを挟んだEffectComposerを初期化する。
+   * @param renderer
+   */
+  protected initComposer(
+    pass: Pass | Pass[],
+    renderer: WebGLRenderer
+  ): EffectComposer {
+    const renderPass = this.getRenderPass();
+    const composer = new EffectComposer(renderer);
+    composer.addPass(renderPass);
+    if (pass instanceof Array) {
+      pass.forEach(p => {
+        composer.addPass(p);
+      });
+    } else {
+      composer.addPass(pass);
+    }
+    return composer;
+  }
+
   /**
    * レンダリングを開始する。
    */
@@ -52,6 +78,13 @@ export class PostProcessRenderer {
     this.camera.updateProjectionMatrix();
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(w, h);
+
+    if (this.composer != null) {
+      this.composer.setSize(w, h);
+    }
+    if (this.pass != null) {
+      this.pass.setSize(w, h);
+    }
   }
 
   public getSize(): Vector2 {

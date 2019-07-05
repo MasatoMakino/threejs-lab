@@ -1,10 +1,12 @@
-import { PerspectiveCamera, Scene, WebGLRenderer } from "three";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
-import { FXAAShaderPass } from "ts/fxaa/FXAAShaderPass";
 import { PostProcessRenderer } from "ts/postprocess/PostProcessRenderer";
+import { Scene } from "three";
+import { PerspectiveCamera } from "three";
+import { WebGLRenderer } from "three";
+import { Vector2 } from "three";
+import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass";
 
-export class FXAARenderer extends PostProcessRenderer {
-  public isActive: boolean = true;
+export class SMAARenderer extends PostProcessRenderer {
+  public isActive = true;
 
   constructor(
     scene: Scene,
@@ -12,7 +14,8 @@ export class FXAARenderer extends PostProcessRenderer {
     renderer: WebGLRenderer
   ) {
     super(scene, camera, renderer);
-    this.pass = new FXAAShaderPass(renderer);
+    const size = renderer.getSize(new Vector2());
+    this.pass = new SMAAPass(size.width, size.height);
     this.composer = this.initComposer(this.pass, renderer);
   }
 

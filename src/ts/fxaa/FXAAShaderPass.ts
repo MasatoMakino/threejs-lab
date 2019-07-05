@@ -26,8 +26,12 @@ export class FXAAShaderPass extends ShaderPass {
   public updateSize(): void {
     const size = this.renderer.getSize(new Vector2());
     const pixelRatio = this.renderer.getPixelRatio();
+    this.setSize(size.width * pixelRatio, size.height * pixelRatio);
+  }
+
+  public setSize(width: number, height: number): void {
     const uniforms = (this.material as ShaderMaterial).uniforms;
-    uniforms.resolution.value.x = 1 / (size.width * pixelRatio);
-    uniforms.resolution.value.y = 1 / (size.height * pixelRatio);
+    uniforms.resolution.value.x = 1 / width;
+    uniforms.resolution.value.y = 1 / height;
   }
 }
