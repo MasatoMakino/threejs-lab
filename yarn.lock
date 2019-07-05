@@ -4707,6 +4707,12 @@ three@^0.106.2:
   resolved "https://registry.yarnpkg.com/three/-/three-0.106.2.tgz#6752d304c470e4df230944ecd45325e7bf79e1f8"
   integrity sha512-4Tlx43uoxnIaZFW2Bzkd1rXsatvVHEWAZJy8LuE+s6Q8c66ogNnhfq1bHiBKPAnXP230LD11H/ScIZc2LZMviA==
 
+"threejs-shader-materials@https://github.com/MasatoMakino/threejs-shader-materials.git":
+  version "0.1.0"
+  resolved "https://github.com/MasatoMakino/threejs-shader-materials.git#34dd40d08a94515b6c4819fdb675c8cf5892b59e"
+  dependencies:
+    three "^0.106.2"
+
 through2-filter@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/through2-filter/-/through2-filter-3.0.0.tgz#700e786df2367c2c88cd8aa5be4cf9c1e7831254"

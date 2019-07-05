@@ -1,8 +1,8 @@
 import { Scene, Mesh, Fog, PointLight, PointLightHelper, Color } from "three";
 import { Common } from "ts/Common";
-import { EarthGridMaterial } from "ts/earthGrid/EarthGridMaterial";
 import { SphereGeometry } from "three";
 import { FXAARenderer } from "ts/fxaa/FXAARenderer";
+import { SquareGridMaterial } from "threejs-shader-materials";
 
 export class StudyFXAA {
   public static readonly W = 640;
@@ -41,10 +41,11 @@ export class StudyFXAA {
     scene.add(helper);
 
     const geo = new SphereGeometry(10, 64, 64);
-    const mat = new EarthGridMaterial({
+    const mat = new SquareGridMaterial({
       fog: scene.fog !== undefined
     });
-    mat.gridColor = new Color(0xff6666);
+    mat.isAnimate = false;
+    mat.isReversed = true;
 
     const mesh = new Mesh(geo, mat);
 

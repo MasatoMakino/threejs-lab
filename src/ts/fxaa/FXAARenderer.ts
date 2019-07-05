@@ -1,6 +1,5 @@
-import { PerspectiveCamera, WebGLRenderer, Scene } from "three";
+import { PerspectiveCamera, Scene, WebGLRenderer } from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 import { FXAAShaderPass } from "ts/fxaa/FXAAShaderPass";
 import { PostProcessRenderer } from "ts/postprocess/PostProcessRenderer";
 

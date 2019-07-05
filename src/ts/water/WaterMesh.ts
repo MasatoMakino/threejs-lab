@@ -1,11 +1,11 @@
 import {
-  Geometry,
   BufferGeometry,
+  Geometry,
   Light,
+  RepeatWrapping,
   ShaderMaterial,
   Texture,
-  TextureLoader,
-  RepeatWrapping
+  TextureLoader
 } from "three";
 import { Water, WaterOptions } from "three/examples/jsm/objects/Water";
 
