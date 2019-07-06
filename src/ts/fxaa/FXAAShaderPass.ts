@@ -30,6 +30,7 @@ export class FXAAShaderPass extends ShaderPass {
   }
 
   public setSize(width: number, height: number): void {
+    super.setSize(width, height);
     const uniforms = (this.material as ShaderMaterial).uniforms;
     uniforms.resolution.value.x = 1 / width;
     uniforms.resolution.value.y = 1 / height;

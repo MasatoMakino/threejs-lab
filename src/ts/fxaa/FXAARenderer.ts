@@ -12,8 +12,7 @@ export class FXAARenderer extends PostProcessRenderer {
     renderer: WebGLRenderer
   ) {
     super(scene, camera, renderer);
-    this.pass = new FXAAShaderPass(renderer);
-    this.composer = this.initComposer(this.pass, renderer);
+    this.composer = this.initComposer([new FXAAShaderPass(renderer)], renderer);
   }
 
   protected render(delta): void {
