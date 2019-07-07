@@ -29,13 +29,13 @@ export class BloomRenderer extends PostProcessRenderer {
     renderer: WebGLRenderer
   ) {
     super(scene, camera, renderer);
-    const renderScene = this.getRenderPass();
+    const renderPass = this.getRenderPass();
 
     this.layers = new Layers();
     this.layers.set(BloomRenderer.BLOOM);
 
-    this.bloom = new BloomComposer(renderer, renderScene);
-    this.mix = new MixComposer(renderer, renderScene, this.bloom);
+    this.bloom = new BloomComposer(renderer, renderPass);
+    this.mix = new MixComposer(renderer, renderPass, this.bloom);
   }
 
   public updateSize(w: number, h: number): void {

@@ -8,7 +8,6 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 
 export class PostProcessRenderer {
   protected renderer: WebGLRenderer;
-  protected passes: Pass[];
   protected composer: EffectComposer;
   protected scene: Scene;
   protected camera: PerspectiveCamera;
@@ -46,12 +45,9 @@ export class PostProcessRenderer {
     const renderPass = this.getRenderPass();
     const composer = new EffectComposer(renderer);
     composer.addPass(renderPass);
-
-    this.passes = passes;
     passes.forEach(p => {
       composer.addPass(p);
     });
-
     return composer;
   }
 
