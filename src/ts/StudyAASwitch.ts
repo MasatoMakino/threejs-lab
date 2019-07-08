@@ -3,7 +3,7 @@ import { SphereGeometry } from "three";
 import { Common } from "ts/Common";
 import { SquareGridMaterial } from "threejs-shader-materials";
 import { AARenderer } from "ts/aa/AARenderer";
-import { AAType } from "ts/aa/AARenderer";
+import { AntiAliasingType } from "ts/aa/AntiAliasingType";
 import * as dat from "dat.gui";
 
 export class StudyAA {
@@ -66,9 +66,9 @@ export class StudyAA {
   private initGUI_AAType(gui): void {
     const folder = gui.addFolder("AA Type");
     folder.add(this.aaRenderer, "type", {
-      None: AAType.None,
-      FXAA: AAType.FXAA,
-      SMAA: AAType.SMAA
+      None: AntiAliasingType.None,
+      FXAA: AntiAliasingType.FXAA,
+      SMAA: AntiAliasingType.SMAA
     });
     folder.open();
   }
