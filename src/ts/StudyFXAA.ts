@@ -58,12 +58,12 @@ export class StudyFXAA {
 
   public sizeUp(): void {
     const size = this.fxaaRenderer.getSize();
-    this.fxaaRenderer.updateSize(size.width + 4, size.height + 4);
+    this.fxaaRenderer.setSize(size.width + 4, size.height + 4);
   }
 
   public sizeDown(): void {
     const size = this.fxaaRenderer.getSize();
-    this.fxaaRenderer.updateSize(size.width - 4, size.height - 4);
+    this.fxaaRenderer.setSize(size.width - 4, size.height - 4);
   }
 }
 

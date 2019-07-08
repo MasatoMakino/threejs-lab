@@ -68,7 +68,7 @@ export class PostProcessRenderer {
     this.lastUpdateTimestamp = null;
   }
 
-  public updateSize(w: number, h: number): void {
+  public setSize(w: number, h: number): void {
     this.camera.aspect = w / h;
     this.camera.updateProjectionMatrix();
     this.renderer.setPixelRatio(window.devicePixelRatio);

@@ -112,12 +112,12 @@ export class StudyBloom {
 
   public sizeUp(): void {
     const size = this.bloomRenderer.getSize();
-    this.bloomRenderer.updateSize(size.width + 4, size.height + 4);
+    this.bloomRenderer.setSize(size.width + 4, size.height + 4);
   }
 
   public sizeDown(): void {
     const size = this.bloomRenderer.getSize();
-    this.bloomRenderer.updateSize(size.width - 4, size.height - 4);
+    this.bloomRenderer.setSize(size.width - 4, size.height - 4);
   }
 }
 

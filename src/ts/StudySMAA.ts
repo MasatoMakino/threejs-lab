@@ -59,12 +59,12 @@ export class StudyFXAA {
 
   public sizeUp(): void {
     const size = this.smaaRenderer.getSize();
-    this.smaaRenderer.updateSize(size.width + 4, size.height + 4);
+    this.smaaRenderer.setSize(size.width + 4, size.height + 4);
   }
 
   public sizeDown(): void {
     const size = this.smaaRenderer.getSize();
-    this.smaaRenderer.updateSize(size.width - 4, size.height - 4);
+    this.smaaRenderer.setSize(size.width - 4, size.height - 4);
   }
 }
 

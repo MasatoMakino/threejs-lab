@@ -81,7 +81,7 @@ export class StudyAA {
     };
 
     const onChange = () => {
-      this.aaRenderer.updateSize(prop.width, prop.height);
+      this.aaRenderer.setSize(prop.width, prop.height);
     };
     const folder = gui.addFolder("Resolution");
     folder

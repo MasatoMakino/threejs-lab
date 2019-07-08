@@ -38,8 +38,8 @@ export class BloomRenderer extends PostProcessRenderer {
     this.mix = new MixComposer(renderer, renderPass, this.bloom);
   }
 
-  public updateSize(w: number, h: number): void {
-    super.updateSize(w, h);
+  public setSize(w: number, h: number): void {
+    super.setSize(w, h);
     this.mix.setSize(w, h);
     this.bloom.setSize(w, h);
   }
