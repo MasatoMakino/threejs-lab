@@ -3,7 +3,7 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass";
 import { MixShaderPass } from "ts/bloom/mix/MixShaderPass";
-import { FXAAShaderPass } from "ts/fxaa/FXAAShaderPass";
+import { FXAAShaderPass } from "ts/aa/FXAAShaderPass";
 import { AntiAliasingType } from "ts/aa/AntiAliasingType";
 
 export class MixComposer extends EffectComposer {

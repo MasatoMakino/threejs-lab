@@ -2,14 +2,14 @@ import { Fog, Mesh, PointLight, PointLightHelper, Scene } from "three";
 import { SphereGeometry } from "three";
 import { Common } from "ts/Common";
 import { SquareGridMaterial } from "threejs-shader-materials";
-import { AARenderer } from "ts/aa/AARenderer";
+import { AntiAliasingRenderer } from "ts/aa/AntiAliasingRenderer";
 import { AntiAliasingType } from "ts/aa/AntiAliasingType";
 import * as dat from "dat.gui";
 
 export class StudyAA {
   public static readonly W = 640;
   public static readonly H = 480;
-  protected aaRenderer: AARenderer;
+  protected aaRenderer: AntiAliasingRenderer;
 
   constructor() {
     const scene = Common.initScene();
@@ -28,7 +28,7 @@ export class StudyAA {
     Common.initHelper(scene);
     this.initObject(scene);
 
-    this.aaRenderer = new AARenderer(scene, camera, renderer);
+    this.aaRenderer = new AntiAliasingRenderer(scene, camera, renderer);
     this.aaRenderer.onBeforeRequestAnimationFrame = () => {
       control.update();
     };
