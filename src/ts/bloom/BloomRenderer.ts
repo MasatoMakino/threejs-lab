@@ -8,6 +8,7 @@ import {
 import { BloomComposer } from "ts/bloom/BloomComposer";
 import { MixComposer } from "ts/bloom/mix/MixComposer";
 import { PostProcessRenderer } from "ts/postprocess/PostProcessRenderer";
+import { AntiAliasingType } from "ts/aa/AntiAliasingType";
 
 /**
  * Bloomレンダリングを行うクラス。
@@ -107,6 +108,13 @@ export class BloomRenderer extends PostProcessRenderer {
   }
   get radius(): number {
     return this.bloom.bloomPass.radius;
+  }
+
+  set antiAliasingType(value: AntiAliasingType) {
+    this.mix.type = value;
+  }
+  get antiAliasingType(): AntiAliasingType {
+    return this.mix.type;
   }
 }
 

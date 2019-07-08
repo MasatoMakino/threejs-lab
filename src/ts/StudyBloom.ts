@@ -11,6 +11,7 @@ import {
 import { Common } from "ts/Common";
 import { BloomRenderer } from "ts/bloom/BloomRenderer";
 import * as dat from "dat.gui";
+import { AntiAliasingType } from "ts/aa/AntiAliasingType";
 
 export class StudyBloom {
   public static readonly W = 640;
@@ -71,6 +72,7 @@ export class StudyBloom {
     this.initGUISatellite(gui);
     this.initRenderGUI(gui);
     this.initGUIResolution(gui);
+    this.initGUI_AAType(gui);
   }
 
   private initGULBloom(gui): void {
@@ -133,34 +135,17 @@ export class StudyBloom {
     folder.open();
   }
 
-  public sizeUp(): void {
-    const size = this.bloomRenderer.getSize();
-    this.bloomRenderer.setSize(size.width + 4, size.height + 4);
-  }
-
-  public sizeDown(): void {
-    const size = this.bloomRenderer.getSize();
-    this.bloomRenderer.setSize(size.width - 4, size.height - 4);
+  private initGUI_AAType(gui): void {
+    const folder = gui.addFolder("AA Type");
+    folder.add(this.bloomRenderer, "antiAliasingType", {
+      None: AntiAliasingType.None,
+      FXAA: AntiAliasingType.FXAA,
+      SMAA: AntiAliasingType.SMAA
+    });
+    folder.open();
   }
 }
 
 window.onload = () => {
   const study = new StudyBloom();
-
-  document.addEventListener(
-    "keydown",
-    event => {
-      const keyName = event.key;
-
-      switch (keyName) {
-        case "q":
-          study.sizeUp();
-          break;
-        case "a":
-          study.sizeDown();
-          break;
-      }
-    },
-    false
-  );
 };
