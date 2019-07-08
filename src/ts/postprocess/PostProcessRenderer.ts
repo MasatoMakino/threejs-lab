@@ -8,7 +8,7 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 
 export class PostProcessRenderer {
   protected renderer: WebGLRenderer;
-  protected composer: EffectComposer;
+  protected composers: EffectComposer[] = [];
   protected scene: Scene;
   protected camera: PerspectiveCamera;
   protected id: number;
@@ -48,6 +48,7 @@ export class PostProcessRenderer {
     passes.forEach(p => {
       composer.addPass(p);
     });
+    this.composers.push(composer);
     return composer;
   }
 
@@ -74,9 +75,9 @@ export class PostProcessRenderer {
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(w, h);
 
-    if (this.composer != null) {
-      this.composer.setSize(w, h);
-    }
+    this.composers.forEach(composer => {
+      composer.setSize(w, h);
+    });
   }
 
   public getSize(): Vector2 {
@@ -104,7 +105,9 @@ export class PostProcessRenderer {
   };
 
   protected render(delta): void {
-    // this.composer.render(delta);
+    this.composers.forEach(composer => {
+      composer.render(delta);
+    });
   }
 
   public onBeforeRequestAnimationFrame: (timestamp?: number) => void;
