@@ -1,13 +1,11 @@
-import { PostProcessRenderer } from "ts/postprocess/PostProcessRenderer";
-import { Scene } from "three";
-import { PerspectiveCamera } from "three";
-import { WebGLRenderer } from "three";
-import { FXAAShaderPass } from "ts/fxaa/FXAAShaderPass";
-import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass";
-import { Vector2 } from "three";
-import { AntiAliasingType } from "ts/aa/AntiAliasingType";
+import { Scene, PerspectiveCamera, WebGLRenderer, Vector2 } from "three";
 
-export class AARenderer extends PostProcessRenderer {
+import { PostProcessRenderer } from "ts/postprocess/PostProcessRenderer";
+import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass";
+import { FXAAShaderPass } from "./FXAAShaderPass";
+import { AntiAliasingType } from "./AntiAliasingType";
+
+export class AntiAliasingRenderer extends PostProcessRenderer {
   private _type: AntiAliasingType;
   private fxaaPass: FXAAShaderPass;
   private smaaPass: SMAAPass;
