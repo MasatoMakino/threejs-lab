@@ -21,13 +21,9 @@ export class AARenderer extends PostProcessRenderer {
     const size = renderer.getSize(new Vector2());
     this.fxaaPass = new FXAAShaderPass(renderer);
     this.smaaPass = new SMAAPass(size.width, size.height);
-    this.composer = this.initComposer([this.fxaaPass, this.smaaPass], renderer);
+    this.initComposer([this.fxaaPass, this.smaaPass], renderer);
 
     this.type = AAType.SMAA;
-  }
-
-  protected render(delta): void {
-    this.composer.render(delta);
   }
 
   get type(): AAType {

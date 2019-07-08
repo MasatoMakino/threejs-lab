@@ -16,12 +16,12 @@ export class SMAARenderer extends PostProcessRenderer {
     super(scene, camera, renderer);
     const size = renderer.getSize(new Vector2());
     const pass = new SMAAPass(size.width, size.height);
-    this.composer = this.initComposer([pass], renderer);
+    this.initComposer([pass], renderer);
   }
 
   protected render(delta): void {
-    if (this.composer && this.isActive) {
-      this.composer.render(delta);
+    if (this.isActive) {
+      super.render(delta);
     } else {
       this.renderer.render(this.scene, this.camera);
     }

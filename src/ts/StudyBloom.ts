@@ -70,6 +70,7 @@ export class StudyBloom {
     this.initGULBloom(gui);
     this.initGUISatellite(gui);
     this.initRenderGUI(gui);
+    this.initGUIResolution(gui);
   }
 
   private initGULBloom(gui): void {
@@ -107,6 +108,28 @@ export class StudyBloom {
     folder.add(this.bloomRenderer, "threshold", 0.0, 1.0);
     folder.add(this.bloomRenderer, "strength", 0.0, 4.0);
     folder.add(this.bloomRenderer, "radius", 0.0, 1.0);
+    folder.open();
+  }
+
+  private initGUIResolution(gui): void {
+    const size = this.bloomRenderer.getSize();
+    const prop = {
+      width: size.width,
+      height: size.height
+    };
+
+    const onChange = () => {
+      this.bloomRenderer.setSize(prop.width, prop.height);
+    };
+    const folder = gui.addFolder("Resolution");
+    folder
+      .add(prop, "width", 2, 1920)
+      .step(1)
+      .onChange(onChange);
+    folder
+      .add(prop, "height", 2, 1080)
+      .step(1)
+      .onChange(onChange);
     folder.open();
   }
 

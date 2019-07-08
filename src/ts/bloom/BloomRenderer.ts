@@ -36,15 +36,11 @@ export class BloomRenderer extends PostProcessRenderer {
 
     this.bloom = new BloomComposer(renderer, renderPass);
     this.mix = new MixComposer(renderer, renderPass, this.bloom);
-  }
-
-  public setSize(w: number, h: number): void {
-    super.setSize(w, h);
-    this.mix.setSize(w, h);
-    this.bloom.setSize(w, h);
+    this.composers = [this.bloom, this.mix];
   }
 
   protected render(delta): void {
+    //実行順が固定なため、super.renderの処理は継承しない。
     this.scene.traverse(this.darkenNonBloomed);
     this.bloom.render(delta);
     this.scene.traverse(this.restoreMaterial);
