@@ -50,11 +50,12 @@ export class Study {
     const helper = new PointLightHelper(spot, 2, 0);
     scene.add(helper);
 
-    const geo = new SphereGeometry(10, 32, 32);
+    const geo = new SphereGeometry(10, 6, 6);
     const mat = new MeshLambertMaterial({
       fog: scene.fog !== undefined
     });
     mat.color = new Color(0xff6666);
+    mat.wireframe = true;
     this.center = new Mesh(geo, mat);
     scene.add(this.center);
 
@@ -82,7 +83,9 @@ export class Study {
 
   private initGUIResolution(gui, pass: ChromaticAberrationPass): void {
     const folder = gui.addFolder("Chromatic Aberration");
-    folder.add(pass, "rate", 0.0, 1.0);
+    folder.add(pass, "rate", 0.0, 3.0);
+    folder.add(pass, "radiusInner", 0.0, 3.0);
+    folder.add(pass, "radiusOuter", 0.0, 3.0);
     folder.open();
   }
 }

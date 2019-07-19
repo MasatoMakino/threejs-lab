@@ -9,6 +9,20 @@ export class ChromaticAberrationPass extends ShaderPass {
     this.uniforms["rate"].value = value;
   }
 
+  get radiusInner(): number {
+    return this.uniforms["radiusInner"].value;
+  }
+  set radiusInner(value: number) {
+    this.uniforms["radiusInner"].value = value;
+  }
+
+  get radiusOuter(): number {
+    return this.uniforms["radiusOuter"].value;
+  }
+  set radiusOuter(value: number) {
+    this.uniforms["radiusOuter"].value = value;
+  }
+
   constructor() {
     super(new ChromaticAberrationShader());
   }

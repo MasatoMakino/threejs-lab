@@ -3,11 +3,15 @@ export default () => {
 
 uniform sampler2D tDiffuse;
 uniform float rate;
+uniform float radiusInner;
+uniform float radiusOuter;
 
 varying vec2 vUv;
 
 void main() {
-  float shift = rate * 0.01;
+  float distance = length( vUv - 0.5 )*2.0;
+  distance = smoothstep( radiusInner, radiusOuter, distance);
+  float shift = rate * distance * 0.01;
 
   float r = texture2D( tDiffuse, vUv + vec2( shift, 0.0 ) ).r;
   float g = texture2D( tDiffuse, vUv ).g;

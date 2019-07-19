@@ -13,7 +13,9 @@ export class ChromaticAberrationShader extends PostProcessShader {
     this.uniforms = UniformsUtils.merge([
       this.uniforms,
       {
-        rate: { value: 0.5 }
+        rate: { value: 1.0 },
+        radiusInner: { value: 0.25 },
+        radiusOuter: { value: Math.sqrt(2.0) }
       }
     ]);
   }
