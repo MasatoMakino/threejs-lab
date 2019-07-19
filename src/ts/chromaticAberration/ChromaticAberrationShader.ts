@@ -10,7 +10,11 @@ export class ChromaticAberrationShader extends PostProcessShader {
 
   protected initUniform() {
     super.initUniform();
-
-    this.uniforms = UniformsUtils.merge([this.uniforms, {}]);
+    this.uniforms = UniformsUtils.merge([
+      this.uniforms,
+      {
+        rate: { value: 0.5 }
+      }
+    ]);
   }
 }

@@ -1,26 +1,22 @@
 import {
-  Scene,
-  Mesh,
+  Color,
   Fog,
+  Mesh,
+  MeshLambertMaterial,
   PointLight,
   PointLightHelper,
-  Color,
-  SphereGeometry,
-  MeshLambertMaterial
+  Scene,
+  SphereGeometry
 } from "three";
 import { Common } from "ts/Common";
-import { BloomRenderer } from "ts/bloom/BloomRenderer";
 import * as dat from "dat.gui";
-import { AntiAliasingType } from "ts/aa/AntiAliasingType";
 import { PostProcessRenderer } from "ts/postprocess/PostProcessRenderer";
-import { ChromaticAberrationShader } from "ts/chromaticAberration/ChromaticAberrationShader";
-import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass";
+import { ChromaticAberrationPass } from "ts/chromaticAberration/ChromaticAberrationPass";
 
 export class Study {
   public static readonly W = 640;
   public static readonly H = 480;
 
-  // public bloomRenderer: BloomRenderer;
   public render: PostProcessRenderer;
   private center: Mesh;
   private satellite: Mesh;
@@ -35,10 +31,8 @@ export class Study {
     Common.initHelper(scene);
     this.initObject(scene);
 
-    // this.bloomRenderer = new BloomRenderer(scene, camera, renderer);
     this.render = new PostProcessRenderer(scene, camera, renderer);
-    const chromatic = new ChromaticAberrationShader();
-    const pass = new ShaderPass(chromatic);
+    const pass = new ChromaticAberrationPass();
     this.render.initComposer([pass], renderer);
 
     this.render.onBeforeRequestAnimationFrame = () => {
@@ -46,7 +40,7 @@ export class Study {
     };
     this.render.start();
 
-    this.initGUI();
+    this.initGUI(pass);
   }
 
   private initObject(scene: Scene): void {
@@ -62,7 +56,6 @@ export class Study {
     });
     mat.color = new Color(0xff6666);
     this.center = new Mesh(geo, mat);
-    this.center.layers.enable(BloomRenderer.BLOOM);
     scene.add(this.center);
 
     this.satellite = new Mesh(geo, mat.clone());
@@ -74,36 +67,10 @@ export class Study {
     scene.add(satellite02);
   }
 
-  public initGUI(): void {
+  public initGUI(pass: ChromaticAberrationPass): void {
     const gui = new dat.GUI();
-    this.initGULBloom(gui);
     this.initGUISatellite(gui);
-    this.initRenderGUI(gui);
-    this.initGUIResolution(gui);
-    this.initGUI_AAType(gui);
-  }
-
-  private initGULBloom(gui): void {
-    const prop = {
-      bloomCenter: true,
-      bloomSatellite: false
-    };
-    const switchBloom = (target: Mesh, isBloom: boolean) => {
-      if (isBloom) {
-        target.layers.enable(BloomRenderer.BLOOM);
-      } else {
-        target.layers.disable(BloomRenderer.BLOOM);
-      }
-    };
-
-    const folder = gui.addFolder("bloom");
-    folder.add(prop, "bloomCenter").onChange(val => {
-      switchBloom(this.center, val);
-    });
-    folder.add(prop, "bloomSatellite").onChange(val => {
-      switchBloom(this.satellite, val);
-    });
-    folder.open();
+    this.initGUIResolution(gui, pass);
   }
 
   private initGUISatellite(gui): void {
@@ -113,43 +80,9 @@ export class Study {
     folder.open();
   }
 
-  private initRenderGUI(gui): void {
-    const folder = gui.addFolder("renderer");
-    // folder.add(this.bloomRenderer, "threshold", 0.0, 1.0);
-    // folder.add(this.bloomRenderer, "strength", 0.0, 4.0);
-    // folder.add(this.bloomRenderer, "radius", 0.0, 1.0);
-    folder.open();
-  }
-
-  private initGUIResolution(gui): void {
-    // const size = this.bloomRenderer.getSize();
-    // const prop = {
-    //   width: size.width,
-    //   height: size.height
-    // };
-
-    const onChange = () => {
-      // this.bloomRenderer.setSize(prop.width, prop.height);
-    };
-    const folder = gui.addFolder("Resolution");
-    // folder
-    //   .add(prop, "width", 2, 1920)
-    //   .step(1)
-    //   .onChange(onChange);
-    // folder
-    //   .add(prop, "height", 2, 1080)
-    //   .step(1)
-    //   .onChange(onChange);
-    folder.open();
-  }
-
-  private initGUI_AAType(gui): void {
-    const folder = gui.addFolder("AA Type");
-    // folder.add(this.bloomRenderer, "antiAliasingType", {
-    //   None: AntiAliasingType.None,
-    //   FXAA: AntiAliasingType.FXAA,
-    //   SMAA: AntiAliasingType.SMAA
-    // });
+  private initGUIResolution(gui, pass: ChromaticAberrationPass): void {
+    const folder = gui.addFolder("Chromatic Aberration");
+    folder.add(pass, "rate", 0.0, 1.0);
     folder.open();
   }
 }
