@@ -38,10 +38,7 @@ export class PostProcessRenderer {
    * シェーダーパスを挟んだEffectComposerを初期化する。
    * @param renderer
    */
-  protected initComposer(
-    passes: Pass[],
-    renderer: WebGLRenderer
-  ): EffectComposer {
+  public initComposer(passes: Pass[], renderer: WebGLRenderer): EffectComposer {
     const renderPass = this.getRenderPass();
     const composer = new EffectComposer(renderer);
     composer.addPass(renderPass);
