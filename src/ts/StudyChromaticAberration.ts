@@ -70,18 +70,10 @@ export class Study {
 
   public initGUI(pass: ChromaticAberrationPass): void {
     const gui = new dat.GUI();
-    this.initGUISatellite(gui);
-    this.initGUIResolution(gui, pass);
+    this.initGUIPass(gui, pass);
   }
 
-  private initGUISatellite(gui): void {
-    const folder = gui.addFolder("Satellite");
-    folder.add(this.satellite.material, "transparent");
-    folder.add(this.satellite.material, "opacity", 0.0, 1.0);
-    folder.open();
-  }
-
-  private initGUIResolution(gui, pass: ChromaticAberrationPass): void {
+  private initGUIPass(gui, pass: ChromaticAberrationPass): void {
     const folder = gui.addFolder("Chromatic Aberration");
     folder.add(pass, "rate", 0.0, 3.0);
     folder.add(pass, "radiusInner", 0.0, 3.0);

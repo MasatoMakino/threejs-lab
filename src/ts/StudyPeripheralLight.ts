@@ -65,22 +65,14 @@ export class Study {
 
   public initGUI(pass: PeripheralLightPass): void {
     const gui = new dat.GUI();
-    this.initGUISatellite(gui);
-    this.initGUIResolution(gui, pass);
+    this.initGUIEffect(gui, pass);
   }
 
-  private initGUISatellite(gui): void {
-    const folder = gui.addFolder("Satellite");
-    folder.add(this.satellite.material, "transparent");
-    folder.add(this.satellite.material, "opacity", 0.0, 1.0);
-    folder.open();
-  }
-
-  private initGUIResolution(gui, pass: PeripheralLightPass): void {
+  private initGUIEffect(gui, pass: PeripheralLightPass): void {
     const prop = {
       color: pass.color.getHex()
     };
-    const folder = gui.addFolder("Chromatic Aberration");
+    const folder = gui.addFolder("PeripheralLightPass");
     folder.add(pass, "rate", 0.0, 10.0);
     folder.add(pass, "radiusInner", 0.0, 3.0);
     folder.add(pass, "radiusOuter", 0.0, 3.0);
