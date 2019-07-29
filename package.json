@@ -19,6 +19,7 @@
     "pretty-quick": "^1.11.1",
     "stats.js": "https://github.com/mrdoob/stats.js.git",
     "three": "^0.106.2",
+    "three-nebula": "^5.0.0-alpha",
     "threejs-shader-materials": "https://github.com/MasatoMakino/threejs-shader-materials.git",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.3",
