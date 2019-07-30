@@ -28,6 +28,10 @@ export class Study {
   private emitter: Emitter;
   private range: RadialVelocity;
   private radius: Radius;
+  private life: Life;
+  private alpha: Alpha;
+  private scale: Scale;
+  private color: NeburaColor;
 
   constructor() {
     const scene = Common.initScene();
@@ -53,6 +57,11 @@ export class Study {
 
     this.range = new RadialVelocity(45, new Vector3D(0, 1, 0), 180);
     this.radius = new Radius(6, 12);
+    this.life = new Life(6);
+
+    this.alpha = new Alpha(1, 0);
+    this.scale = new Scale(0.1, 1.0);
+    this.color = new NeburaColor(new Color(0x00ff00), new Color(0x00ff00));
 
     this.emitter
       .setRate(new Rate(new Span(4, 16), 0.1))
@@ -60,14 +69,10 @@ export class Study {
         new Position(new PointZone(0, 0)),
         new Mass(1),
         this.radius,
-        new Life(6),
+        this.life,
         this.range
       ])
-      .setBehaviours([
-        new Alpha(1, 0),
-        new Scale(0.1, 1.0),
-        new NeburaColor(new Color(0x00ff00), new Color(0x00ff00))
-      ])
+      .setBehaviours([this.alpha, this.scale, this.color])
       .emit();
 
     this.system.addEmitter(this.emitter).addRenderer(renderer);
@@ -82,9 +87,12 @@ export class Study {
     this.initGUIRate(folder);
     this.initGUIRange(folder);
     this.initGUIRadius(folder);
-    this.initGUIInitializers(folder);
+    this.initGUILife(folder);
 
     const folderBehaviour = gui.addFolder("Behaviour");
+    this.initGUIAlpha(folderBehaviour);
+    this.initGUIScale(folderBehaviour);
+    this.initGUIColor(folderBehaviour);
     folderBehaviour.open();
   }
 
@@ -198,8 +206,96 @@ export class Study {
     folder.open();
   }
 
-  private initGUIInitializers(gui): void {
-    console.log(this.emitter.initializers);
+  /**
+   * Spriteのサイズを制御するパネル
+   * @param gui
+   */
+  private initGUILife(gui): void {
+    //spanクラスはmin, maxの２つの値をセットにした範囲を指定する型
+    const span: Span = this.life.lifePan;
+    const prop = {
+      min: span.a,
+      max: span.b
+    };
+
+    const folder = gui.addFolder("Life");
+    folder
+      .add(prop, "min", 0.0, 12.0)
+      .step(0.1)
+      .onChange(val => {
+        span.a = val;
+      });
+    folder
+      .add(prop, "max", 0.0, 24.0)
+      .step(0.1)
+      .onChange(val => {
+        span.b = val;
+      });
+    folder.open();
+  }
+
+  private initGUIAlpha(gui): void {
+    //spanクラスはmin, maxの２つの値をセットにした範囲を指定する型
+    const prop = {
+      start: this.alpha.alphaA.a,
+      end: this.alpha.alphaB.a
+    };
+
+    const folder = gui.addFolder("Alpha");
+    folder
+      .add(prop, "start", 0.0, 1.0)
+      .step(0.1)
+      .onChange(val => {
+        this.alpha.alphaA.a = val;
+      });
+    folder
+      .add(prop, "end", 0.0, 1.0)
+      .step(0.1)
+      .onChange(val => {
+        this.alpha.alphaB.a = val;
+      });
+    folder.open();
+  }
+
+  private initGUIScale(gui): void {
+    const prop = {
+      start: this.scale.scaleA.a,
+      end: this.scale.scaleB.a
+    };
+    const folder = gui.addFolder("Scale");
+    folder
+      .add(prop, "start", 0.0, 3.0)
+      .step(0.1)
+      .onChange(val => {
+        this.scale.scaleA.a = val;
+      });
+    folder
+      .add(prop, "end", 0.0, 3.0)
+      .step(0.1)
+      .onChange(val => {
+        this.scale.scaleB.a = val;
+      });
+    folder.open();
+  }
+
+  private initGUIColor(gui): void {
+    const col = this.color;
+    const prop = {
+      start: col.colorA.colors[0].getHex(),
+      end: col.colorB.colors[0].getHex()
+    };
+
+    const onChange = (colorPan, val) => {
+      colorPan.colors[0].setHex(val);
+    };
+    const folder = gui.addFolder("Color");
+    folder.addColor(prop, "start").onChange(val => {
+      onChange(col.colorA, val);
+    });
+    folder.addColor(prop, "end").onChange(val => {
+      onChange(col.colorB, val);
+    });
+    folder.open();
   }
 }
 
