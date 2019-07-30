@@ -4301,6 +4301,12 @@ sha.js@^2.4.0, sha.js@^2.4.8:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
+"shader-particle-engine@https://github.com/squarefeet/ShaderParticleEngine.git":
+  version "1.0.6"
+  resolved "https://github.com/squarefeet/ShaderParticleEngine.git#ecc2886ce952d8f0ae0739f031bead671445f8a9"
+  dependencies:
+    three "^0.84.0"
+
 shebang-command@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/shebang-command/-/shebang-command-1.2.0.tgz#44aac65b695b03398968c39f363fee5deafdf1ea"
@@ -4751,6 +4757,11 @@ three@^0.106.2:
   version "0.106.2"
   resolved "https://registry.yarnpkg.com/three/-/three-0.106.2.tgz#6752d304c470e4df230944ecd45325e7bf79e1f8"
   integrity sha512-4Tlx43uoxnIaZFW2Bzkd1rXsatvVHEWAZJy8LuE+s6Q8c66ogNnhfq1bHiBKPAnXP230LD11H/ScIZc2LZMviA==
+
+three@^0.84.0:
+  version "0.84.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.84.0.tgz#95be85a55a0fa002aa625ed559130957dcffd918"
+  integrity sha1-lb6FpVoPoAKqYl7VWRMJV9z/2Rg=
 
 "threejs-shader-materials@https://github.com/MasatoMakino/threejs-shader-materials.git":
   version "0.1.0"
