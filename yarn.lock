@@ -18,6 +18,11 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
+"@types/dat.gui@^0.7.3":
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/@types/dat.gui/-/dat.gui-0.7.3.tgz#105bf21b31ab07d9b11684b9b48c76034aeea5a4"
+  integrity sha512-uU5tYMquFLLk2Yq6p2jjbR/iZkcM0cp7V67eGA8gDVgkcGBStJNRF13mV9S9K1X7qNRKSUkVmspa6CBCFUsHqw==
+
 "@types/hls.js@^0.12.4":
   version "0.12.4"
   resolved "https://registry.yarnpkg.com/@types/hls.js/-/hls.js-0.12.4.tgz#6f78acfe2ad6a71ca5df277984a7d2d2a1580a93"
@@ -4301,12 +4306,6 @@ sha.js@^2.4.0, sha.js@^2.4.8:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-"shader-particle-engine@https://github.com/squarefeet/ShaderParticleEngine.git":
-  version "1.0.6"
-  resolved "https://github.com/squarefeet/ShaderParticleEngine.git#ecc2886ce952d8f0ae0739f031bead671445f8a9"
-  dependencies:
-    three "^0.84.0"
-
 shebang-command@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/shebang-command/-/shebang-command-1.2.0.tgz#44aac65b695b03398968c39f363fee5deafdf1ea"
@@ -4757,11 +4756,6 @@ three@^0.106.2:
   version "0.106.2"
   resolved "https://registry.yarnpkg.com/three/-/three-0.106.2.tgz#6752d304c470e4df230944ecd45325e7bf79e1f8"
   integrity sha512-4Tlx43uoxnIaZFW2Bzkd1rXsatvVHEWAZJy8LuE+s6Q8c66ogNnhfq1bHiBKPAnXP230LD11H/ScIZc2LZMviA==
-
-three@^0.84.0:
-  version "0.84.0"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.84.0.tgz#95be85a55a0fa002aa625ed559130957dcffd918"
-  integrity sha1-lb6FpVoPoAKqYl7VWRMJV9z/2Rg=
 
 "threejs-shader-materials@https://github.com/MasatoMakino/threejs-shader-materials.git":
   version "0.1.0"
