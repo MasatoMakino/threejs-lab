@@ -19,4 +19,4 @@ Studies for three.js.
 
 [Water Plane](https://masatomakino.github.io/threejs-lab/water)
 
-[Flame using particle engine](https://masatomakino.github.io/threejs-lab/nebulaFire)
+[Flame using particle engine](https://masatomakino.github.io/threejs-lab/nebulaFire.html)
