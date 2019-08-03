@@ -1,8 +1,14 @@
-import * as THREE from "three";
+import {
+  AdditiveBlending,
+  Color,
+  Sprite,
+  SpriteMaterial,
+  TextureLoader
+} from "three";
 
 import {
   Alpha,
-  BodySprite,
+  Body,
   Color as NeburaColor,
   Emitter,
   Life,
@@ -15,13 +21,8 @@ import {
   SphereZone,
   Vector3D
 } from "three-nebula";
-import { Color } from "three";
-import { TextureLoader } from "three";
 
 export class FireEmitter extends Emitter {
-  get bodyInitializer(): BodySprite {
-    return this._body;
-  }
   get colorBehaviour(): NeburaColor {
     return this._color;
   }
@@ -46,7 +47,7 @@ export class FireEmitter extends Emitter {
   private _alpha: Alpha;
   private _scale: Scale;
   private _color: NeburaColor;
-  private _body: BodySprite;
+  private _body: Body;
 
   constructor(option: FireEmitterOption) {
     super();
@@ -62,17 +63,27 @@ export class FireEmitter extends Emitter {
     this._scale = new Scale(1.2, 0.6);
     this._color = new NeburaColor(new Color(0x994422), new Color(0x110000));
 
+    this.initOnLoadedTexture(option);
+  }
+
+  private initBody(urlArray: string[]): void {
     const loader = new TextureLoader();
-    loader.load(option.url, map => {
-      this.initOnLoadedTexture(option);
+    const sprites = urlArray.map(url => {
+      return new Sprite(
+        new SpriteMaterial({
+          map: loader.load(url),
+          blending: AdditiveBlending
+        })
+      );
     });
+    this._body = new Body(sprites);
   }
 
   private initOnLoadedTexture(option: FireEmitterOption): void {
-    this._body = new BodySprite(THREE, option.url);
+    this.initBody(option.maps);
 
     // @ts-ignore
-    this.setRate(new Rate(new Span(1, 2), 0.06))
+    this.setRate(new Rate(new Span(2, 7), 0.06))
       .setInitializers([
         new Position(new SphereZone(0, 0, 0.0, 6.0)),
         this._radius,
@@ -89,5 +100,5 @@ export class FireEmitter extends Emitter {
 }
 
 export class FireEmitterOption {
-  url: string;
+  maps: string[];
 }

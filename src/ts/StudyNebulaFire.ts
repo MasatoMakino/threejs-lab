@@ -16,7 +16,7 @@ export class Study {
   public static readonly H = 480;
 
   private system: System;
-  private emitters: FireEmitter[];
+  private emitter: FireEmitter;
 
   constructor() {
     const scene = Common.initScene();
@@ -37,25 +37,17 @@ export class Study {
 
   private initObject(scene: Scene): void {
     this.system = new System();
-    this.emitters = [
-      new FireEmitter({
-        url: "./textures/fire01.png"
-      }),
-      new FireEmitter({
-        url: "./textures/fire02.png"
-      }),
-      new FireEmitter({
-        url: "./textures/fire03.png"
-      }),
-      new FireEmitter({
-        url: "./textures/fire04.png"
-      })
-    ];
+    this.emitter = new FireEmitter({
+      maps: [
+        "./textures/fire01.png",
+        "./textures/fire02.png",
+        "./textures/fire03.png",
+        "./textures/fire04.png"
+      ]
+    });
     const renderer = new SpriteRenderer(scene, THREE);
 
-    this.emitters.forEach(val => {
-      this.system.addEmitter(val);
-    });
+    this.system.addEmitter(this.emitter);
     this.system.addRenderer(renderer);
   }
 
@@ -64,46 +56,16 @@ export class Study {
 
     const folder = gui.addFolder("Emitter");
     folder.open();
-    NebulaGUI.initEmitterPosition(folder, this.emitters);
-    NebulaGUI.initEmitterRate(folder, this.emitters);
-    NebulaGUI.initRange(
-      folder,
-      this.emitters.map(val => {
-        return val.rangeInitializer;
-      })
-    );
-    NebulaGUI.initRadius(
-      folder,
-      this.emitters.map(val => {
-        return val.radiusInitializer;
-      })
-    );
-    NebulaGUI.initLife(
-      folder,
-      this.emitters.map(val => {
-        return val.lifeInitializer;
-      })
-    );
+    NebulaGUI.initEmitterPosition(folder, [this.emitter]);
+    NebulaGUI.initEmitterRate(folder, [this.emitter]);
+    NebulaGUI.initRange(folder, [this.emitter.rangeInitializer]);
+    NebulaGUI.initRadius(folder, [this.emitter.radiusInitializer]);
+    NebulaGUI.initLife(folder, [this.emitter.lifeInitializer]);
 
     const folderBehaviour = gui.addFolder("Behaviour");
-    NebulaGUI.initAlpha(
-      folderBehaviour,
-      this.emitters.map(val => {
-        return val.alphaBehaviour;
-      })
-    );
-    NebulaGUI.initScale(
-      folderBehaviour,
-      this.emitters.map(val => {
-        return val.scaleBehaviour;
-      })
-    );
-    NebulaGUI.initColor(
-      folderBehaviour,
-      this.emitters.map(val => {
-        return val.colorBehaviour;
-      })
-    );
+    NebulaGUI.initAlpha(folderBehaviour, [this.emitter.alphaBehaviour]);
+    NebulaGUI.initScale(folderBehaviour, [this.emitter.scaleBehaviour]);
+    NebulaGUI.initColor(folderBehaviour, [this.emitter.colorBehaviour]);
     folderBehaviour.open();
   }
 }
