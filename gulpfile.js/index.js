@@ -5,10 +5,9 @@ const { series, parallel, src, dest, watch } = require("gulp");
 const server = require("gulptask-dev-server")("./docs");
 exports.server = server;
 
-const {
-  bundleProduction,
-  watchBundle
-} = require("gulptask-webpack")("./webpack.config.js");
+const { bundleProduction, watchBundle } = require("gulptask-webpack")(
+  "./webpack.config.js"
+);
 
 const copyGlob = "./src/html/*.html";
 const copy = () => {
