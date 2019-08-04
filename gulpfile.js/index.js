@@ -5,10 +5,10 @@ const { series, parallel, src, dest, watch } = require("gulp");
 const server = require("gulptask-dev-server")("./docs");
 exports.server = server;
 
-const { bundleDevelopment, watchBundle } = require("gulptask-webpack")(
-  "./webpack.config.js"
-);
-exports.bundleDevelopment = bundleDevelopment;
+const {
+  bundleProduction,
+  watchBundle
+} = require("gulptask-webpack")("./webpack.config.js");
 
 const copyGlob = "./src/html/*.html";
 const copy = () => {
@@ -30,4 +30,4 @@ exports.watchTasks = watchTasks;
 
 exports.start_dev = series(watchTasks, server);
 
-exports.build = parallel(bundleDevelopment, copy, copyTextures);
+exports.build = parallel(bundleProduction, copy, copyTextures);
