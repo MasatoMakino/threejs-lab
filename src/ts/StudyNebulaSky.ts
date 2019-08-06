@@ -1,36 +1,44 @@
 import { Common } from "ts/Common";
-import { Color, Scene } from "three";
+import { NebulaGUI } from "ts/NebulaGUI";
+
+import {
+  Color,
+  CubeTextureLoader,
+  Scene,
+  Sprite,
+  SpriteMaterial,
+  TextureLoader
+} from "three";
 import * as THREE from "three";
 
 import System, {
   Alpha,
+  Body,
   Color as NebulaColor,
   Emitter,
   Life,
   Mass,
-  PointZone,
-  SphereZone,
   Position,
   RadialVelocity,
   Radius,
   Rate,
   Scale,
   Span,
+  SphereZone,
   SpriteRenderer,
-  Vector3D,
-  Body
+  Vector3D
 } from "three-nebula";
 import * as dat from "dat.gui";
-import { NebulaGUI } from "ts/NebulaGUI";
-import {
-  CubeTextureLoader,
-  TextureLoader,
-  SpriteMaterial,
-  Sprite,
-  MultiplyBlending,
-  AdditiveBlending
-} from "three";
 
+/**
+ * パーティクルエンジンによる雲表現の習作
+ *
+ * SkyBox textures : Three.js
+ * https://github.com/mrdoob/three.js/tree/master/examples/textures/cube/skybox
+ *
+ * Cloud textures : textures4photoshop
+ * http://www.textures4photoshop.com/tex/clouds-and-sky/free-clouds-sky-overlay-png-for-photoshop.aspx
+ */
 export class Study {
   public static readonly W = 640;
   public static readonly H = 480;
