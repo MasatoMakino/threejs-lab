@@ -4754,11 +4754,6 @@ three-nebula@^5.0.0-alpha:
     lodash "^4.17.11"
     uuid "^3.3.2"
 
-three@^0.106.2:
-  version "0.106.2"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.106.2.tgz#6752d304c470e4df230944ecd45325e7bf79e1f8"
-  integrity sha512-4Tlx43uoxnIaZFW2Bzkd1rXsatvVHEWAZJy8LuE+s6Q8c66ogNnhfq1bHiBKPAnXP230LD11H/ScIZc2LZMviA==
-
 three@^0.107.0:
   version "0.107.0"
   resolved "https://registry.yarnpkg.com/three/-/three-0.107.0.tgz#0c862c348d61bd3f22058e01f5e771c1294315a1"
@@ -4766,9 +4761,9 @@ three@^0.107.0:
 
 "threejs-shader-materials@https://github.com/MasatoMakino/threejs-shader-materials.git":
   version "0.1.0"
-  resolved "https://github.com/MasatoMakino/threejs-shader-materials.git#ccf72d7d7e827be6081a5bb17a807066f02ba01d"
+  resolved "https://github.com/MasatoMakino/threejs-shader-materials.git#a43c18ad79d12dcad3e52290b2ab9665ae9e6f0e"
   dependencies:
-    three "^0.106.2"
+    three "^0.107.0"
 
 through2-filter@^3.0.0:
   version "3.0.0"
