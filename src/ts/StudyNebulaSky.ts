@@ -29,6 +29,7 @@ import System, {
   Vector3D
 } from "three-nebula";
 import * as dat from "dat.gui";
+import { Fog } from "three";
 
 /**
  * パーティクルエンジンによる雲表現の習作
@@ -56,15 +57,14 @@ export class Study {
     const scene = Common.initScene();
     this.initSkyBox(scene);
     Common.initLight(scene);
-    const camera = Common.initCamera(scene, Study.W, Study.H);
+    scene.fog = new Fog(0x998877, 60, 3000);
+    const camera = Common.initCamera(scene, Study.W, Study.H, 1, 3000);
     const renderer = Common.initRenderer(Study.W, Study.H);
     const control = Common.initControl(camera, renderer);
     Common.initHelper(scene);
     this.initObject(scene);
     Common.render(control, renderer, scene, camera, () => {
-      //if (this.system) {
       //this.system.update();
-      //}
     });
 
     this.initGUI();
@@ -104,7 +104,8 @@ export class Study {
       return new Sprite(
         new SpriteMaterial({
           map: loader.load(url),
-          transparent: true
+          transparent: true,
+          fog: scene.fog !== undefined
           // blending:THREE.AdditiveBlending
         })
       );
@@ -113,7 +114,7 @@ export class Study {
 
     this.alpha = new Alpha(0.75, 0.0);
     this.scale = new Scale(1.0, 2.0);
-    this.color = new NebulaColor(new Color(0xcccccc), new Color(0xffffff));
+    this.color = new NebulaColor(new Color(0xbbb4aa), new Color(0xccc4bb));
 
     this.emitter
       .setRate(new Rate(new Span(1, 2), 0.33))
