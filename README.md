@@ -21,4 +21,4 @@ Studies for three.js.
 
 [Flame using particle engine](https://masatomakino.github.io/threejs-lab/nebulaFire.html)
 
-[Cloud using particle engine](https://masatomakino.github.io/threejs-lab/nebulasky.html)
+[Cloud using particle engine](https://masatomakino.github.io/threejs-lab/nebulasky)
