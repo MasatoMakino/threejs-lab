@@ -1,4 +1,3 @@
-import { Group } from "three";
 import { Mesh } from "three";
 import { Scene } from "three";
 import { PerspectiveCamera } from "three";
@@ -6,10 +5,7 @@ import { DirectionalLight } from "three";
 import { Plane } from "three";
 import { Vector3 } from "three";
 import { TorusKnotBufferGeometry } from "three";
-import { PlaneBufferGeometry } from "three";
 import { MeshStandardMaterial } from "three";
-import { NotEqualStencilFunc } from "three";
-import { ReplaceStencilOp } from "three";
 import { WebGLRenderer } from "three";
 import { Common } from "ts/Common";
 import { ClippingSurface } from "ts/clippingSurface/ClippingSurface";
@@ -21,7 +17,6 @@ export class Study {
   scene: Scene;
   camera: PerspectiveCamera;
   renderer: WebGLRenderer;
-  planeObjects: Mesh[];
   planes: Plane[];
 
   static initPlanes(): Plane[] {
@@ -62,80 +57,24 @@ export class Study {
     this.planes = Study.initPlanes();
 
     const geometry = new TorusKnotBufferGeometry(0.4, 0.15, 220, 60);
-    const object = new Group();
-    this.scene.add(object);
-
-    // Set up clip plane rendering
-    this.planeObjects = [];
-    const planeGeom = new PlaneBufferGeometry(4, 4);
 
     //トーラスジオメトリをコピーしたグループを作る。
-    this.planes.forEach((plane, i) => {
-      const stencilGroup = ClippingSurface.createPlaneStencilGroup(
-        geometry,
-        plane,
-        i + 1
-      );
-      object.add(stencilGroup);
-
-      // plane is clipped by the other clipping planes
-      const planeMat = new MeshStandardMaterial({
-        color: 0xe91e63,
-        metalness: 0.1,
-        roughness: 0.75,
-        clippingPlanes: this.planes.filter(p => p !== plane),
-        stencilWrite: true,
-        stencilRef: 0,
-        stencilFunc: NotEqualStencilFunc,
-        stencilFail: ReplaceStencilOp,
-        stencilZFail: ReplaceStencilOp,
-        stencilZPass: ReplaceStencilOp
-      });
-
-      //プレーンジオメトリオブジェクトを生成。
-      const po = new Mesh(planeGeom, planeMat);
-      po.onAfterRender = function(renderer) {
-        renderer.clearStencil();
-      };
-      po.renderOrder = i + 1.1;
-
-      const poGroup = new Group();
-      poGroup.add(po);
-      this.planeObjects.push(po);
-      this.scene.add(poGroup);
+    this.planes.forEach(plane => {
+      const group = new ClippingSurface(plane, this.planes, geometry);
+      this.scene.add(group);
     });
-
-    object.add(Study.initFrontFaceMesh(this.planes, geometry));
+    //フロントジオメトリを生成して追加。
+    // this.scene.add(Study.initFrontFaceMesh(this.planes, geometry));
 
     this.renderer = Common.initRenderer(Study.W, Study.H, 0x263238);
     this.renderer.localClippingEnabled = true;
 
     const controls = Common.initControl(this.camera, this.renderer);
-
-    Common.render(controls, this.renderer, this.scene, this.camera, () => {
-      this.updatePlanes();
-    });
+    Common.render(controls, this.renderer, this.scene, this.camera, () => {});
   }
-
-  updatePlanes = () => {
-    for (var i = 0; i < this.planeObjects.length; i++) {
-      var plane = this.planes[i];
-      var po = this.planeObjects[i];
-
-      //planeObjectにplaneの座標をコピー
-      plane.coplanarPoint(po.position);
-      po.lookAt(
-        po.position.x - plane.normal.x,
-        po.position.y - plane.normal.y,
-        po.position.z - plane.normal.z
-      );
-    }
-  };
 }
 
 window.onload = () => {
   const study = new Study();
-
   study.init();
-  // study.animate();
 };
