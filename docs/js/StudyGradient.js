@@ -1,1 +1,204 @@
-!function(e){function t(t){for(var r,a,c=t[0],l=t[1],s=t[2],d=0,p=[];d<c.length;d++)a=c[d],Object.prototype.hasOwnProperty.call(o,a)&&o[a]&&p.push(o[a][0]),o[a]=0;for(r in l)Object.prototype.hasOwnProperty.call(l,r)&&(e[r]=l[r]);for(u&&u(t);p.length;)p.shift()();return i.push.apply(i,s||[]),n()}function n(){for(var e,t=0;t<i.length;t++){for(var n=i[t],r=!0,c=1;c<n.length;c++){var l=n[c];0!==o[l]&&(r=!1)}r&&(i.splice(t--,1),e=a(a.s=n[0]))}return e}var r={},o={6:0},i=[];function a(t){if(r[t])return r[t].exports;var n=r[t]={i:t,l:!1,exports:{}};return e[t].call(n.exports,n,n.exports,a),n.l=!0,n.exports}a.m=e,a.c=r,a.d=function(e,t,n){a.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},a.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},a.t=function(e,t){if(1&t&&(e=a(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(a.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var r in e)a.d(n,r,function(t){return e[t]}.bind(null,r));return n},a.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return a.d(t,"a",t),t},a.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},a.p="/";var c=window.webpackJsonp=window.webpackJsonp||[],l=c.push.bind(c);c.push=t,c=c.slice();for(var s=0;s<c.length;s++)t(c[s]);var u=l;i.push([30,0]),n()}({1:function(e,t,n){"use strict";n.d(t,"a",function(){return i});var r=n(0),o=n(4);class i{static initScene(){return new r.Scene}static initLight(e){const t=new r.AmbientLight(16777215,1);return e.add(t),t}static initCamera(e,t,n,o=1,i=400){const a=new r.PerspectiveCamera(45,t/n,o,i);return a.position.set(0,0,100),a.updateMatrixWorld(!1),e.add(a),a}static initControl(e,t){let n;t&&(n=t.domElement);const r=new o.a(e,n);return r.update(),r}static initRenderer(e,t,n=0,o="webgl-canvas",i=!0){const a=new r.WebGLRenderer({canvas:document.getElementById(o),antialias:i});return a.setClearColor(new r.Color(n)),a.setSize(e,t),a.setPixelRatio(window.devicePixelRatio),a}static initHelper(e){const t=new r.AxesHelper(30);e.add(t)}static render(e,t,n,r,o){const i=()=>{o&&o(),e.update(),t.render(n,r),requestAnimationFrame(i)};i()}}},21:function(e,t){e.exports="varying vec3 vUv;\n\nvoid main() {\n\tvUv = position;\n\tvec4 worldPosition = modelMatrix * vec4( position, 1.0 );\n\tvec4 mvPosition =  viewMatrix * worldPosition;\n\tgl_Position = projectionMatrix * mvPosition;\n}"},22:function(e,t){e.exports="uniform float size;\nuniform vec3 colorA;\nuniform vec3 colorB;\nvarying vec3 vUv;\n\nvoid main() {\n\n    float y = vUv.y / size + 0.5;\n    gl_FragColor = vec4(mix(colorA, colorB, y ), 1.0);\n\n}"},30:function(e,t,n){"use strict";n.r(t),n.d(t,"StudyGradient",function(){return s});var r=n(1),o=n(0),i=n(21),a=n.n(i),c=n(22),l=n.n(c);class s{constructor(){const e=r.a.initScene();r.a.initLight(e);const t=r.a.initCamera(e,s.W,s.H),n=r.a.initRenderer(s.W,s.H),o=r.a.initControl(t);r.a.initHelper(e),this.initObject(e),r.a.render(o,n,e,t)}initObject(e){const t=new o.BoxGeometry(20,20,20),n={size:{type:"float",value:20},colorB:{type:"vec3",value:new o.Color(65280)},colorA:{type:"vec3",value:new o.Color(16711935)}},r=new o.ShaderMaterial({uniforms:n,vertexShader:a.a,fragmentShader:l.a}),i=new o.Mesh(t,r);i.rotation.set(0,0,-Math.PI/2),e.add(i)}}s.W=640,s.H=480,window.onload=()=>{new s}}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	function webpackJsonpCallback(data) {
+/******/ 		var chunkIds = data[0];
+/******/ 		var moreModules = data[1];
+/******/ 		var executeModules = data[2];
+/******/
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [];
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(Object.prototype.hasOwnProperty.call(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
+/******/
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 		// add entry modules from loaded chunk to deferred list
+/******/ 		deferredModules.push.apply(deferredModules, executeModules || []);
+/******/
+/******/ 		// run deferred modules when all chunks ready
+/******/ 		return checkDeferredModules();
+/******/ 	};
+/******/ 	function checkDeferredModules() {
+/******/ 		var result;
+/******/ 		for(var i = 0; i < deferredModules.length; i++) {
+/******/ 			var deferredModule = deferredModules[i];
+/******/ 			var fulfilled = true;
+/******/ 			for(var j = 1; j < deferredModule.length; j++) {
+/******/ 				var depId = deferredModule[j];
+/******/ 				if(installedChunks[depId] !== 0) fulfilled = false;
+/******/ 			}
+/******/ 			if(fulfilled) {
+/******/ 				deferredModules.splice(i--, 1);
+/******/ 				result = __webpack_require__(__webpack_require__.s = deferredModule[0]);
+/******/ 			}
+/******/ 		}
+/******/
+/******/ 		return result;
+/******/ 	}
+/******/
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// object to store loaded and loading chunks
+/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 	// Promise = chunk loading, 0 = chunk loaded
+/******/ 	var installedChunks = {
+/******/ 		"StudyGradient": 0
+/******/ 	};
+/******/
+/******/ 	var deferredModules = [];
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
+/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
+/******/ 	jsonpArray.push = webpackJsonpCallback;
+/******/ 	jsonpArray = jsonpArray.slice();
+/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
+/******/ 	var parentJsonpFunction = oldJsonpFunction;
+/******/
+/******/
+/******/ 	// add entry module to deferred list
+/******/ 	deferredModules.push(["./src/ts/StudyGradient.ts","vendor"]);
+/******/ 	// run deferred modules when ready
+/******/ 	return checkDeferredModules();
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/ts/Common.ts":
+/*!**************************!*\
+  !*** ./src/ts/Common.ts ***!
+  \**************************/
+/*! exports provided: Common */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Common\", function() { return Common; });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var three_examples_jsm_controls_OrbitControls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three/examples/jsm/controls/OrbitControls */ \"./node_modules/three/examples/jsm/controls/OrbitControls.js\");\n\n\nclass Common {\n    static initScene() {\n        const scene = new three__WEBPACK_IMPORTED_MODULE_0__[\"Scene\"]();\n        return scene;\n    }\n    static initLight(scene) {\n        const ambientLight = new three__WEBPACK_IMPORTED_MODULE_0__[\"AmbientLight\"](0xffffff, 1.0);\n        scene.add(ambientLight);\n        return ambientLight;\n    }\n    static initCamera(scene, W, H, near = 1, far = 400) {\n        const camera = new three__WEBPACK_IMPORTED_MODULE_0__[\"PerspectiveCamera\"](45, W / H, near, far);\n        camera.position.set(0, 0, 100);\n        camera.updateMatrixWorld(false);\n        scene.add(camera);\n        return camera;\n    }\n    static initControl(camera, render) {\n        let domElement;\n        if (render) {\n            domElement = render.domElement;\n        }\n        const control = new three_examples_jsm_controls_OrbitControls__WEBPACK_IMPORTED_MODULE_1__[\"OrbitControls\"](camera, domElement);\n        control.update();\n        return control;\n    }\n    static initRenderer(W, H, color = 0x000000, id = \"webgl-canvas\", antialias = true) {\n        const renderer = new three__WEBPACK_IMPORTED_MODULE_0__[\"WebGLRenderer\"]({\n            canvas: document.getElementById(id),\n            antialias: antialias\n        });\n        renderer.setClearColor(new three__WEBPACK_IMPORTED_MODULE_0__[\"Color\"](color));\n        renderer.setSize(W, H);\n        renderer.setPixelRatio(window.devicePixelRatio);\n        return renderer;\n    }\n    static initHelper(scene) {\n        const axesHelper = new three__WEBPACK_IMPORTED_MODULE_0__[\"AxesHelper\"](30);\n        scene.add(axesHelper);\n    }\n    static render(control, renderer, scene, camera, onBeforeRender) {\n        const rendering = () => {\n            if (onBeforeRender) {\n                onBeforeRender();\n            }\n            control.update();\n            renderer.render(scene, camera);\n            requestAnimationFrame(rendering);\n        };\n        rendering();\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/Common.ts?");
+
+/***/ }),
+
+/***/ "./src/ts/StudyGradient.ts":
+/*!*********************************!*\
+  !*** ./src/ts/StudyGradient.ts ***!
+  \*********************************/
+/*! exports provided: StudyGradient */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"StudyGradient\", function() { return StudyGradient; });\n/* harmony import */ var ts_Common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ts/Common */ \"./src/ts/Common.ts\");\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var ts_gradient_shader_vert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ts/gradient/shader.vert */ \"./src/ts/gradient/shader.vert\");\n/* harmony import */ var ts_gradient_shader_vert__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(ts_gradient_shader_vert__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var ts_gradient_shader_frag__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ts/gradient/shader.frag */ \"./src/ts/gradient/shader.frag\");\n/* harmony import */ var ts_gradient_shader_frag__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(ts_gradient_shader_frag__WEBPACK_IMPORTED_MODULE_3__);\n\n\n\n\n\n// @ts-ignore\n\n// @ts-ignore\n\nclass StudyGradient {\n    constructor() {\n        const scene = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initScene();\n        ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initLight(scene);\n        const camera = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initCamera(scene, StudyGradient.W, StudyGradient.H);\n        const renderer = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initRenderer(StudyGradient.W, StudyGradient.H);\n        const control = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initControl(camera);\n        ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initHelper(scene);\n        this.initObject(scene);\n        ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].render(control, renderer, scene, camera);\n    }\n    initObject(scene) {\n        const size = 20.0;\n        const geo = new three__WEBPACK_IMPORTED_MODULE_1__[\"BoxGeometry\"](size, size, size);\n        const uniforms = {\n            size: { type: \"float\", value: size },\n            colorB: { type: \"vec3\", value: new three__WEBPACK_IMPORTED_MODULE_1__[\"Color\"](0x00ff00) },\n            colorA: { type: \"vec3\", value: new three__WEBPACK_IMPORTED_MODULE_1__[\"Color\"](0xff00ff) }\n        };\n        const mat = new three__WEBPACK_IMPORTED_MODULE_1__[\"ShaderMaterial\"]({\n            uniforms: uniforms,\n            vertexShader: ts_gradient_shader_vert__WEBPACK_IMPORTED_MODULE_2___default.a,\n            fragmentShader: ts_gradient_shader_frag__WEBPACK_IMPORTED_MODULE_3___default.a\n        });\n        const mesh = new three__WEBPACK_IMPORTED_MODULE_1__[\"Mesh\"](geo, mat);\n        mesh.rotation.set(0, 0, -Math.PI / 2);\n        scene.add(mesh);\n    }\n}\nStudyGradient.W = 640;\nStudyGradient.H = 480;\nwindow.onload = () => {\n    const study = new StudyGradient();\n};\n\n\n//# sourceURL=webpack:///./src/ts/StudyGradient.ts?");
+
+/***/ }),
+
+/***/ "./src/ts/gradient/shader.frag":
+/*!*************************************!*\
+  !*** ./src/ts/gradient/shader.frag ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = \"uniform float size;\\nuniform vec3 colorA;\\nuniform vec3 colorB;\\nvarying vec3 vUv;\\n\\nvoid main() {\\n\\n    float y = vUv.y / size + 0.5;\\n    gl_FragColor = vec4(mix(colorA, colorB, y ), 1.0);\\n\\n}\"\n\n//# sourceURL=webpack:///./src/ts/gradient/shader.frag?");
+
+/***/ }),
+
+/***/ "./src/ts/gradient/shader.vert":
+/*!*************************************!*\
+  !*** ./src/ts/gradient/shader.vert ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = \"varying vec3 vUv;\\n\\nvoid main() {\\n\\tvUv = position;\\n\\tvec4 worldPosition = modelMatrix * vec4( position, 1.0 );\\n\\tvec4 mvPosition =  viewMatrix * worldPosition;\\n\\tgl_Position = projectionMatrix * mvPosition;\\n}\"\n\n//# sourceURL=webpack:///./src/ts/gradient/shader.vert?");
+
+/***/ })
+
+/******/ });

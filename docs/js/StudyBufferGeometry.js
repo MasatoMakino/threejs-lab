@@ -1,1 +1,182 @@
-!function(e){function t(t){for(var r,s,a=t[0],u=t[1],c=t[2],h=0,l=[];h<a.length;h++)s=a[h],Object.prototype.hasOwnProperty.call(i,s)&&i[s]&&l.push(i[s][0]),i[s]=0;for(r in u)Object.prototype.hasOwnProperty.call(u,r)&&(e[r]=u[r]);for(d&&d(t);l.length;)l.shift()();return o.push.apply(o,c||[]),n()}function n(){for(var e,t=0;t<o.length;t++){for(var n=o[t],r=!0,a=1;a<n.length;a++){var u=n[a];0!==i[u]&&(r=!1)}r&&(o.splice(t--,1),e=s(s.s=n[0]))}return e}var r={},i={3:0},o=[];function s(t){if(r[t])return r[t].exports;var n=r[t]={i:t,l:!1,exports:{}};return e[t].call(n.exports,n,n.exports,s),n.l=!0,n.exports}s.m=e,s.c=r,s.d=function(e,t,n){s.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},s.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},s.t=function(e,t){if(1&t&&(e=s(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(s.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var r in e)s.d(n,r,function(t){return e[t]}.bind(null,r));return n},s.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return s.d(t,"a",t),t},s.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},s.p="/";var a=window.webpackJsonp=window.webpackJsonp||[],u=a.push.bind(a);a.push=t,a=a.slice();for(var c=0;c<a.length;c++)t(a[c]);var d=u;o.push([28,0]),n()}({1:function(e,t,n){"use strict";n.d(t,"a",function(){return o});var r=n(0),i=n(4);class o{static initScene(){return new r.Scene}static initLight(e){const t=new r.AmbientLight(16777215,1);return e.add(t),t}static initCamera(e,t,n,i=1,o=400){const s=new r.PerspectiveCamera(45,t/n,i,o);return s.position.set(0,0,100),s.updateMatrixWorld(!1),e.add(s),s}static initControl(e,t){let n;t&&(n=t.domElement);const r=new i.a(e,n);return r.update(),r}static initRenderer(e,t,n=0,i="webgl-canvas",o=!0){const s=new r.WebGLRenderer({canvas:document.getElementById(i),antialias:o});return s.setClearColor(new r.Color(n)),s.setSize(e,t),s.setPixelRatio(window.devicePixelRatio),s}static initHelper(e){const t=new r.AxesHelper(30);e.add(t)}static render(e,t,n,r,i){const o=()=>{i&&i(),e.update(),t.render(n,r),requestAnimationFrame(o)};o()}}},28:function(e,t,n){"use strict";n.r(t),n.d(t,"StudyBufferGeometry",function(){return a});var r=n(0),i=n(1),o=n(18),s=n(6);class a{constructor(){this.initStats(),this.initGUI();const e=i.a.initScene();e.fog=new r.Fog(0,80,160),i.a.initLight(e);const t=i.a.initCamera(e,a.W,a.H),n=i.a.initRenderer(a.W,a.H),o=i.a.initControl(t,n);i.a.initHelper(e),this.initPointLight(e),this.initMesh(e),this.refreshGeometry(),this.render(o,n,e,t)}initStats(){this.stats=new o.a,this.stats.showPanel(1),document.body.appendChild(this.stats.dom),this.geoStats=this.stats.addPanel(new o.a.Panel("ms, geo init","#ff8","#221"))}initGUI(){this.params={isBufferGeometry:!0,updateGeometry:!0};const e=new s.a;e.add(this.params,"isBufferGeometry").onChange(()=>{this.refreshGeometry()}),e.add(this.params,"updateGeometry").onChange(()=>{this.refreshGeometry()})}initPointLight(e){const t=new r.PointLight(16777215,3,0,2);t.position.set(10,20,30),e.add(t);const n=new r.PointLightHelper(t);e.add(n)}initMesh(e){this.mat=new r.MeshLambertMaterial,this.mat.color=new r.Color(16737894),this.mesh=new r.Mesh,this.mesh.material=this.mat,e.add(this.mesh)}refreshGeometry(){const e=performance.now(),t=Math.pow(2,8);let n;n=this.params.isBufferGeometry?new r.SphereBufferGeometry(10,t,t):new r.SphereGeometry(10,t,t),this.mesh.geometry=n;const i=performance.now();this.geoStats.update(i-e,1e3)}render(e,t,n,r){const i=()=>{this.stats.begin(),e.update(),this.params.updateGeometry&&this.refreshGeometry(),t.render(n,r),this.stats.end(),requestAnimationFrame(i)};i()}}a.W=640,a.H=480,window.onload=()=>{new a}}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	function webpackJsonpCallback(data) {
+/******/ 		var chunkIds = data[0];
+/******/ 		var moreModules = data[1];
+/******/ 		var executeModules = data[2];
+/******/
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [];
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(Object.prototype.hasOwnProperty.call(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
+/******/
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 		// add entry modules from loaded chunk to deferred list
+/******/ 		deferredModules.push.apply(deferredModules, executeModules || []);
+/******/
+/******/ 		// run deferred modules when all chunks ready
+/******/ 		return checkDeferredModules();
+/******/ 	};
+/******/ 	function checkDeferredModules() {
+/******/ 		var result;
+/******/ 		for(var i = 0; i < deferredModules.length; i++) {
+/******/ 			var deferredModule = deferredModules[i];
+/******/ 			var fulfilled = true;
+/******/ 			for(var j = 1; j < deferredModule.length; j++) {
+/******/ 				var depId = deferredModule[j];
+/******/ 				if(installedChunks[depId] !== 0) fulfilled = false;
+/******/ 			}
+/******/ 			if(fulfilled) {
+/******/ 				deferredModules.splice(i--, 1);
+/******/ 				result = __webpack_require__(__webpack_require__.s = deferredModule[0]);
+/******/ 			}
+/******/ 		}
+/******/
+/******/ 		return result;
+/******/ 	}
+/******/
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// object to store loaded and loading chunks
+/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 	// Promise = chunk loading, 0 = chunk loaded
+/******/ 	var installedChunks = {
+/******/ 		"StudyBufferGeometry": 0
+/******/ 	};
+/******/
+/******/ 	var deferredModules = [];
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
+/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
+/******/ 	jsonpArray.push = webpackJsonpCallback;
+/******/ 	jsonpArray = jsonpArray.slice();
+/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
+/******/ 	var parentJsonpFunction = oldJsonpFunction;
+/******/
+/******/
+/******/ 	// add entry module to deferred list
+/******/ 	deferredModules.push(["./src/ts/StudyBufferGeometry.ts","vendor"]);
+/******/ 	// run deferred modules when ready
+/******/ 	return checkDeferredModules();
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/ts/Common.ts":
+/*!**************************!*\
+  !*** ./src/ts/Common.ts ***!
+  \**************************/
+/*! exports provided: Common */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Common\", function() { return Common; });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var three_examples_jsm_controls_OrbitControls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three/examples/jsm/controls/OrbitControls */ \"./node_modules/three/examples/jsm/controls/OrbitControls.js\");\n\n\nclass Common {\n    static initScene() {\n        const scene = new three__WEBPACK_IMPORTED_MODULE_0__[\"Scene\"]();\n        return scene;\n    }\n    static initLight(scene) {\n        const ambientLight = new three__WEBPACK_IMPORTED_MODULE_0__[\"AmbientLight\"](0xffffff, 1.0);\n        scene.add(ambientLight);\n        return ambientLight;\n    }\n    static initCamera(scene, W, H, near = 1, far = 400) {\n        const camera = new three__WEBPACK_IMPORTED_MODULE_0__[\"PerspectiveCamera\"](45, W / H, near, far);\n        camera.position.set(0, 0, 100);\n        camera.updateMatrixWorld(false);\n        scene.add(camera);\n        return camera;\n    }\n    static initControl(camera, render) {\n        let domElement;\n        if (render) {\n            domElement = render.domElement;\n        }\n        const control = new three_examples_jsm_controls_OrbitControls__WEBPACK_IMPORTED_MODULE_1__[\"OrbitControls\"](camera, domElement);\n        control.update();\n        return control;\n    }\n    static initRenderer(W, H, color = 0x000000, id = \"webgl-canvas\", antialias = true) {\n        const renderer = new three__WEBPACK_IMPORTED_MODULE_0__[\"WebGLRenderer\"]({\n            canvas: document.getElementById(id),\n            antialias: antialias\n        });\n        renderer.setClearColor(new three__WEBPACK_IMPORTED_MODULE_0__[\"Color\"](color));\n        renderer.setSize(W, H);\n        renderer.setPixelRatio(window.devicePixelRatio);\n        return renderer;\n    }\n    static initHelper(scene) {\n        const axesHelper = new three__WEBPACK_IMPORTED_MODULE_0__[\"AxesHelper\"](30);\n        scene.add(axesHelper);\n    }\n    static render(control, renderer, scene, camera, onBeforeRender) {\n        const rendering = () => {\n            if (onBeforeRender) {\n                onBeforeRender();\n            }\n            control.update();\n            renderer.render(scene, camera);\n            requestAnimationFrame(rendering);\n        };\n        rendering();\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/Common.ts?");
+
+/***/ }),
+
+/***/ "./src/ts/StudyBufferGeometry.ts":
+/*!***************************************!*\
+  !*** ./src/ts/StudyBufferGeometry.ts ***!
+  \***************************************/
+/*! exports provided: StudyBufferGeometry */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"StudyBufferGeometry\", function() { return StudyBufferGeometry; });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var ts_Common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ts/Common */ \"./src/ts/Common.ts\");\n/* harmony import */ var stats_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! stats.js */ \"./node_modules/stats.js/build/stats.module.js\");\n/* harmony import */ var dat_gui__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! dat.gui */ \"./node_modules/dat.gui/build/dat.gui.module.js\");\n\n\n\n\n\n\n\n/**\n * BufferGeometryとGeometryの生成処理時間の比較を行う\n */\nclass StudyBufferGeometry {\n    constructor() {\n        this.initStats();\n        this.initGUI();\n        const scene = ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initScene();\n        scene.fog = new three__WEBPACK_IMPORTED_MODULE_0__[\"Fog\"](0x000000, 80, 160);\n        ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initLight(scene);\n        const camera = ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initCamera(scene, StudyBufferGeometry.W, StudyBufferGeometry.H);\n        const renderer = ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initRenderer(StudyBufferGeometry.W, StudyBufferGeometry.H);\n        const control = ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initControl(camera, renderer);\n        ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initHelper(scene);\n        this.initPointLight(scene);\n        this.initMesh(scene);\n        this.refreshGeometry();\n        this.render(control, renderer, scene, camera);\n    }\n    initStats() {\n        this.stats = new stats_js__WEBPACK_IMPORTED_MODULE_2__[\"default\"]();\n        this.stats.showPanel(1);\n        document.body.appendChild(this.stats.dom);\n        this.geoStats = this.stats.addPanel(new stats_js__WEBPACK_IMPORTED_MODULE_2__[\"default\"].Panel(\"ms, geo init\", \"#ff8\", \"#221\"));\n    }\n    initGUI() {\n        this.params = {\n            isBufferGeometry: true,\n            updateGeometry: true\n        };\n        const gui = new dat_gui__WEBPACK_IMPORTED_MODULE_3__[\"GUI\"]();\n        gui.add(this.params, \"isBufferGeometry\").onChange(() => {\n            this.refreshGeometry();\n        });\n        gui.add(this.params, \"updateGeometry\").onChange(() => {\n            this.refreshGeometry();\n        });\n    }\n    initPointLight(scene) {\n        const spot = new three__WEBPACK_IMPORTED_MODULE_0__[\"PointLight\"](0xffffff, 3, 0, 2);\n        spot.position.set(10, 20, 30);\n        scene.add(spot);\n        const helper = new three__WEBPACK_IMPORTED_MODULE_0__[\"PointLightHelper\"](spot);\n        scene.add(helper);\n    }\n    initMesh(scene) {\n        this.mat = new three__WEBPACK_IMPORTED_MODULE_0__[\"MeshLambertMaterial\"]();\n        this.mat.color = new three__WEBPACK_IMPORTED_MODULE_0__[\"Color\"](0xff6666);\n        this.mesh = new three__WEBPACK_IMPORTED_MODULE_0__[\"Mesh\"]();\n        this.mesh.material = this.mat;\n        scene.add(this.mesh);\n    }\n    refreshGeometry() {\n        const now = performance.now();\n        const seg = Math.pow(2, 8);\n        let geo;\n        if (this.params.isBufferGeometry) {\n            geo = new three__WEBPACK_IMPORTED_MODULE_0__[\"SphereBufferGeometry\"](10, seg, seg);\n        }\n        else {\n            geo = new three__WEBPACK_IMPORTED_MODULE_0__[\"SphereGeometry\"](10, seg, seg);\n        }\n        this.mesh.geometry = geo;\n        const onGeo = performance.now();\n        this.geoStats.update(onGeo - now, 1000);\n    }\n    render(control, renderer, scene, camera) {\n        const rendering = () => {\n            this.stats.begin();\n            control.update();\n            if (this.params.updateGeometry) {\n                this.refreshGeometry();\n            }\n            renderer.render(scene, camera);\n            this.stats.end();\n            requestAnimationFrame(rendering);\n        };\n        rendering();\n    }\n}\nStudyBufferGeometry.W = 640;\nStudyBufferGeometry.H = 480;\nwindow.onload = () => {\n    const study = new StudyBufferGeometry();\n};\n\n\n//# sourceURL=webpack:///./src/ts/StudyBufferGeometry.ts?");
+
+/***/ })
+
+/******/ });

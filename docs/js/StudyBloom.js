@@ -1,1 +1,288 @@
-!function(e){function t(t){for(var i,a,o=t[0],l=t[1],d=t[2],u=0,c=[];u<o.length;u++)a=o[u],Object.prototype.hasOwnProperty.call(n,a)&&n[a]&&c.push(n[a][0]),n[a]=0;for(i in l)Object.prototype.hasOwnProperty.call(l,i)&&(e[i]=l[i]);for(h&&h(t);c.length;)c.shift()();return r.push.apply(r,d||[]),s()}function s(){for(var e,t=0;t<r.length;t++){for(var s=r[t],i=!0,o=1;o<s.length;o++){var l=s[o];0!==n[l]&&(i=!1)}i&&(r.splice(t--,1),e=a(a.s=s[0]))}return e}var i={},n={2:0},r=[];function a(t){if(i[t])return i[t].exports;var s=i[t]={i:t,l:!1,exports:{}};return e[t].call(s.exports,s,s.exports,a),s.l=!0,s.exports}a.m=e,a.c=i,a.d=function(e,t,s){a.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:s})},a.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},a.t=function(e,t){if(1&t&&(e=a(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var s=Object.create(null);if(a.r(s),Object.defineProperty(s,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var i in e)a.d(s,i,function(t){return e[t]}.bind(null,i));return s},a.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return a.d(t,"a",t),t},a.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},a.p="/";var o=window.webpackJsonp=window.webpackJsonp||[],l=o.push.bind(o);o.push=t,o=o.slice();for(var d=0;d<o.length;d++)t(o[d]);var h=l;r.push([35,0]),s()}({1:function(e,t,s){"use strict";s.d(t,"a",function(){return r});var i=s(0),n=s(4);class r{static initScene(){return new i.Scene}static initLight(e){const t=new i.AmbientLight(16777215,1);return e.add(t),t}static initCamera(e,t,s,n=1,r=400){const a=new i.PerspectiveCamera(45,t/s,n,r);return a.position.set(0,0,100),a.updateMatrixWorld(!1),e.add(a),a}static initControl(e,t){let s;t&&(s=t.domElement);const i=new n.a(e,s);return i.update(),i}static initRenderer(e,t,s=0,n="webgl-canvas",r=!0){const a=new i.WebGLRenderer({canvas:document.getElementById(n),antialias:r});return a.setClearColor(new i.Color(s)),a.setSize(e,t),a.setPixelRatio(window.devicePixelRatio),a}static initHelper(e){const t=new i.AxesHelper(30);e.add(t)}static render(e,t,s,i,n){const r=()=>{n&&n(),e.update(),t.render(s,i),requestAnimationFrame(r)};r()}}},10:function(e,t,s){"use strict";s.d(t,"a",function(){return a});var i=s(0),n=s(11),r=s(9);class a{constructor(e,t,s){this.composers=[],this.onRequestAnimationFrame=e=>{null==this.lastUpdateTimestamp&&(this.lastUpdateTimestamp=e);const t=e-this.lastUpdateTimestamp;this.onBeforeRequestAnimationFrame&&this.onBeforeRequestAnimationFrame(e),this.render(t),this.lastUpdateTimestamp=e,this.id=requestAnimationFrame(this.onRequestAnimationFrame)},this.renderer=s,this.scene=e,this.camera=t}getRenderPass(){return new n.a(this.scene,this.camera,void 0,void 0,void 0)}initComposer(e,t){const s=this.getRenderPass(),i=new r.a(t);return i.addPass(s),e.forEach(e=>{i.addPass(e)}),this.composers.push(i),i}start(){null==this.id&&(this.id=requestAnimationFrame(this.onRequestAnimationFrame))}stop(){null!=this.id&&(cancelAnimationFrame(this.id),this.lastUpdateTimestamp=null)}setSize(e,t){this.camera.aspect=e/t,this.camera.updateProjectionMatrix(),this.renderer.setPixelRatio(window.devicePixelRatio),this.renderer.setSize(e,t),this.composers.forEach(s=>{s.setSize(e,t)})}getSize(){return this.renderer.getSize(new i.Vector2)}render(e){this.composers.forEach(t=>{t.render(e)})}}},13:function(e,t,s){"use strict";s.d(t,"a",function(){return a});var i=s(8),n=s(16),r=s(0);class a extends i.a{constructor(e){super(n.a),this.renderer=e,this.updateSize()}updateSize(){const e=this.renderer.getSize(new r.Vector2),t=this.renderer.getPixelRatio();this.setSize(e.width*t,e.height*t)}setSize(e,t){super.setSize(e,t);const s=this.material.uniforms;s.resolution.value.x=1/e,s.resolution.value.y=1/t}}},19:function(e,t){e.exports="uniform sampler2D baseTexture;\nuniform sampler2D bloomTexture;\nvarying vec2 vUv;\nvec4 getTexture( sampler2D texture ) {\n    return mapTexelToLinear( texture2D( texture , vUv ) );\n}\nvoid main() {\n    gl_FragColor = ( getTexture( baseTexture ) + vec4( 1.0 ) * getTexture( bloomTexture ) );\n}"},20:function(e,t){e.exports="varying vec2 vUv;\nvoid main() {\n    vUv = uv;\n    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\n}"},35:function(e,t,s){"use strict";s.r(t);var i=s(0),n=s(1),r=s(9),a=s(27);class o extends r.a{constructor(e,t){super(e);const s=e.getSize(new i.Vector2);this.bloomPass=new a.a(s,1.5,.4,.4),this.renderToScreen=!1,this.addPass(t),this.addPass(this.bloomPass)}}var l=s(17),d=s(8),h=s(19),u=s.n(h),c=s(20),m=s.n(c);class p extends d.a{constructor(e){super(new i.ShaderMaterial({uniforms:{baseTexture:{value:null},bloomTexture:{value:e.renderTarget2.texture}},vertexShader:m.a,fragmentShader:u.a,defines:{}}),p.TEXTURE_ID),this.needsSwap=!0}}p.TEXTURE_ID="baseTexture";var g=s(13),b=s(7);class f extends r.a{constructor(e,t,s){super(e),this.addPass(t),this.addPass(new p(s)),this.fxaaPass=new g.a(e),this.addPass(this.fxaaPass);const n=e.getSize(new i.Vector2);this.smaaPass=new l.a(n.width,n.height),this.addPass(this.smaaPass),this.type=b.a.SMAA}get type(){return this._type}set type(e){this._type=e,this.smaaPass.enabled=e==b.a.SMAA,this.fxaaPass.enabled=e==b.a.FXAA}}var v=s(10);class w extends v.a{constructor(e,t,s){super(e,t,s),this.darkenNonBloomed=e=>{if(!this.isDarken(e))return;null==e.userData.materialStorage&&(e.userData.materialStorage=new x);const t=e.userData.materialStorage;t.updateMaterial(e.material),e.material=t.darken},this.restoreMaterial=e=>{this.isDarken(e)&&(e.material=e.userData.materialStorage.original)};const n=this.getRenderPass();this.layers=new i.Layers,this.layers.set(w.BLOOM),this.bloom=new o(s,n),this.mix=new f(s,n,this.bloom),this.composers=[this.bloom,this.mix]}render(e){this.scene.traverse(this.darkenNonBloomed),this.bloom.render(e),this.scene.traverse(this.restoreMaterial),this.mix.render(e)}isDarken(e){return(null!=e.isMesh||null!=e.isLine)&&!this.layers.test(e.layers)}set threshold(e){this.bloom.bloomPass.threshold=e}get threshold(){return this.bloom.bloomPass.threshold}set strength(e){this.bloom.bloomPass.strength=e}get strength(){return this.bloom.bloomPass.strength}set radius(e){e>1&&console.warn("Bloomの半径が1を超えています。1以上ではメッシュにアウトラインが発生します。",e),this.bloom.bloomPass.radius=e}get radius(){return this.bloom.bloomPass.radius}set antiAliasingType(e){this.mix.type=e}get antiAliasingType(){return this.mix.type}}w.ENTIRE=0,w.BLOOM=30;class x{updateMaterial(e){this.original=e,null==this.darken||this.darken.type!==this.original.type?this.darken=this.original.clone():this.darken.copy(this.original),null!=this.darken.color&&this.darken.color.setHex(0),null!=this.darken.shininess&&(this.darken.shininess=0),null!=this.darken.specular&&this.darken.specular.setHex(0),null!=this.darken.emissive&&this.darken.emissive.setHex(0)}}var y=s(6);s.d(t,"StudyBloom",function(){return S});class S{constructor(){const e=n.a.initScene();e.fog=new i.Fog(0,80,160),n.a.initLight(e);const t=n.a.initCamera(e,S.W,S.H),s=n.a.initRenderer(S.W,S.H),r=n.a.initControl(t,s);n.a.initHelper(e),this.initObject(e),this.bloomRenderer=new w(e,t,s),this.bloomRenderer.onBeforeRequestAnimationFrame=()=>{r.update()},this.bloomRenderer.threshold=.4,this.bloomRenderer.start(),this.initGUI()}initObject(e){const t=new i.PointLight(16777215,3,0,2);t.position.set(0,0,0),e.add(t);const s=new i.PointLightHelper(t,2,0);e.add(s);const n=new i.SphereGeometry(10,32,32),r=new i.MeshLambertMaterial({fog:void 0!==e.fog});r.color=new i.Color(16737894),this.center=new i.Mesh(n,r),this.center.layers.enable(w.BLOOM),e.add(this.center),this.satellite=new i.Mesh(n,r.clone()),this.satellite.position.set(30,0,0),e.add(this.satellite);const a=new i.Mesh(n,r);a.position.set(-30,0,0),e.add(a)}initGUI(){const e=new y.a;this.initGULBloom(e),this.initGUISatellite(e),this.initRenderGUI(e),this.initGUIResolution(e),this.initGUI_AAType(e)}initGULBloom(e){const t={bloomCenter:!0,bloomSatellite:!1},s=(e,t)=>{t?e.layers.enable(w.BLOOM):e.layers.disable(w.BLOOM)},i=e.addFolder("bloom");i.add(t,"bloomCenter").onChange(e=>{s(this.center,e)}),i.add(t,"bloomSatellite").onChange(e=>{s(this.satellite,e)}),i.open()}initGUISatellite(e){const t=e.addFolder("Satellite");t.add(this.satellite.material,"transparent"),t.add(this.satellite.material,"opacity",0,1),t.open()}initRenderGUI(e){const t=e.addFolder("renderer");t.add(this.bloomRenderer,"threshold",0,1),t.add(this.bloomRenderer,"strength",0,4),t.add(this.bloomRenderer,"radius",0,1),t.open()}initGUIResolution(e){const t=this.bloomRenderer.getSize(),s={width:t.width,height:t.height},i=()=>{this.bloomRenderer.setSize(s.width,s.height)},n=e.addFolder("Resolution");n.add(s,"width",2,1920).step(1).onChange(i),n.add(s,"height",2,1080).step(1).onChange(i),n.open()}initGUI_AAType(e){const t=e.addFolder("AA Type");t.add(this.bloomRenderer,"antiAliasingType",{None:b.a.None,FXAA:b.a.FXAA,SMAA:b.a.SMAA}),t.open()}}S.W=640,S.H=480,window.onload=()=>{new S}},7:function(e,t,s){"use strict";var i;s.d(t,"a",function(){return i}),function(e){e[e.None=0]="None",e[e.SMAA=1]="SMAA",e[e.FXAA=2]="FXAA"}(i||(i={}))}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	function webpackJsonpCallback(data) {
+/******/ 		var chunkIds = data[0];
+/******/ 		var moreModules = data[1];
+/******/ 		var executeModules = data[2];
+/******/
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [];
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(Object.prototype.hasOwnProperty.call(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
+/******/
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 		// add entry modules from loaded chunk to deferred list
+/******/ 		deferredModules.push.apply(deferredModules, executeModules || []);
+/******/
+/******/ 		// run deferred modules when all chunks ready
+/******/ 		return checkDeferredModules();
+/******/ 	};
+/******/ 	function checkDeferredModules() {
+/******/ 		var result;
+/******/ 		for(var i = 0; i < deferredModules.length; i++) {
+/******/ 			var deferredModule = deferredModules[i];
+/******/ 			var fulfilled = true;
+/******/ 			for(var j = 1; j < deferredModule.length; j++) {
+/******/ 				var depId = deferredModule[j];
+/******/ 				if(installedChunks[depId] !== 0) fulfilled = false;
+/******/ 			}
+/******/ 			if(fulfilled) {
+/******/ 				deferredModules.splice(i--, 1);
+/******/ 				result = __webpack_require__(__webpack_require__.s = deferredModule[0]);
+/******/ 			}
+/******/ 		}
+/******/
+/******/ 		return result;
+/******/ 	}
+/******/
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// object to store loaded and loading chunks
+/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 	// Promise = chunk loading, 0 = chunk loaded
+/******/ 	var installedChunks = {
+/******/ 		"StudyBloom": 0
+/******/ 	};
+/******/
+/******/ 	var deferredModules = [];
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
+/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
+/******/ 	jsonpArray.push = webpackJsonpCallback;
+/******/ 	jsonpArray = jsonpArray.slice();
+/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
+/******/ 	var parentJsonpFunction = oldJsonpFunction;
+/******/
+/******/
+/******/ 	// add entry module to deferred list
+/******/ 	deferredModules.push(["./src/ts/StudyBloom.ts","vendor"]);
+/******/ 	// run deferred modules when ready
+/******/ 	return checkDeferredModules();
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/ts/Common.ts":
+/*!**************************!*\
+  !*** ./src/ts/Common.ts ***!
+  \**************************/
+/*! exports provided: Common */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Common\", function() { return Common; });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var three_examples_jsm_controls_OrbitControls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three/examples/jsm/controls/OrbitControls */ \"./node_modules/three/examples/jsm/controls/OrbitControls.js\");\n\n\nclass Common {\n    static initScene() {\n        const scene = new three__WEBPACK_IMPORTED_MODULE_0__[\"Scene\"]();\n        return scene;\n    }\n    static initLight(scene) {\n        const ambientLight = new three__WEBPACK_IMPORTED_MODULE_0__[\"AmbientLight\"](0xffffff, 1.0);\n        scene.add(ambientLight);\n        return ambientLight;\n    }\n    static initCamera(scene, W, H, near = 1, far = 400) {\n        const camera = new three__WEBPACK_IMPORTED_MODULE_0__[\"PerspectiveCamera\"](45, W / H, near, far);\n        camera.position.set(0, 0, 100);\n        camera.updateMatrixWorld(false);\n        scene.add(camera);\n        return camera;\n    }\n    static initControl(camera, render) {\n        let domElement;\n        if (render) {\n            domElement = render.domElement;\n        }\n        const control = new three_examples_jsm_controls_OrbitControls__WEBPACK_IMPORTED_MODULE_1__[\"OrbitControls\"](camera, domElement);\n        control.update();\n        return control;\n    }\n    static initRenderer(W, H, color = 0x000000, id = \"webgl-canvas\", antialias = true) {\n        const renderer = new three__WEBPACK_IMPORTED_MODULE_0__[\"WebGLRenderer\"]({\n            canvas: document.getElementById(id),\n            antialias: antialias\n        });\n        renderer.setClearColor(new three__WEBPACK_IMPORTED_MODULE_0__[\"Color\"](color));\n        renderer.setSize(W, H);\n        renderer.setPixelRatio(window.devicePixelRatio);\n        return renderer;\n    }\n    static initHelper(scene) {\n        const axesHelper = new three__WEBPACK_IMPORTED_MODULE_0__[\"AxesHelper\"](30);\n        scene.add(axesHelper);\n    }\n    static render(control, renderer, scene, camera, onBeforeRender) {\n        const rendering = () => {\n            if (onBeforeRender) {\n                onBeforeRender();\n            }\n            control.update();\n            renderer.render(scene, camera);\n            requestAnimationFrame(rendering);\n        };\n        rendering();\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/Common.ts?");
+
+/***/ }),
+
+/***/ "./src/ts/StudyBloom.ts":
+/*!******************************!*\
+  !*** ./src/ts/StudyBloom.ts ***!
+  \******************************/
+/*! exports provided: StudyBloom */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"StudyBloom\", function() { return StudyBloom; });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var ts_Common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ts/Common */ \"./src/ts/Common.ts\");\n/* harmony import */ var ts_bloom_BloomRenderer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ts/bloom/BloomRenderer */ \"./src/ts/bloom/BloomRenderer.ts\");\n/* harmony import */ var dat_gui__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! dat.gui */ \"./node_modules/dat.gui/build/dat.gui.module.js\");\n/* harmony import */ var ts_aa_AntiAliasingType__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ts/aa/AntiAliasingType */ \"./src/ts/aa/AntiAliasingType.ts\");\n\n\n\n\n\nclass StudyBloom {\n    constructor() {\n        const scene = ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initScene();\n        scene.fog = new three__WEBPACK_IMPORTED_MODULE_0__[\"Fog\"](0x000000, 80, 160);\n        ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initLight(scene);\n        const camera = ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initCamera(scene, StudyBloom.W, StudyBloom.H);\n        const renderer = ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initRenderer(StudyBloom.W, StudyBloom.H);\n        const control = ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initControl(camera, renderer);\n        ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initHelper(scene);\n        this.initObject(scene);\n        this.bloomRenderer = new ts_bloom_BloomRenderer__WEBPACK_IMPORTED_MODULE_2__[\"BloomRenderer\"](scene, camera, renderer);\n        this.bloomRenderer.onBeforeRequestAnimationFrame = () => {\n            control.update();\n        };\n        this.bloomRenderer.threshold = 0.4;\n        this.bloomRenderer.start();\n        this.initGUI();\n    }\n    initObject(scene) {\n        const spot = new three__WEBPACK_IMPORTED_MODULE_0__[\"PointLight\"](0xffffff, 3, 0, 2);\n        spot.position.set(0, 0, 0);\n        scene.add(spot);\n        const helper = new three__WEBPACK_IMPORTED_MODULE_0__[\"PointLightHelper\"](spot, 2, 0);\n        scene.add(helper);\n        const geo = new three__WEBPACK_IMPORTED_MODULE_0__[\"SphereGeometry\"](10, 32, 32);\n        const mat = new three__WEBPACK_IMPORTED_MODULE_0__[\"MeshLambertMaterial\"]({\n            fog: scene.fog !== undefined\n        });\n        mat.color = new three__WEBPACK_IMPORTED_MODULE_0__[\"Color\"](0xff6666);\n        this.center = new three__WEBPACK_IMPORTED_MODULE_0__[\"Mesh\"](geo, mat);\n        this.center.layers.enable(ts_bloom_BloomRenderer__WEBPACK_IMPORTED_MODULE_2__[\"BloomRenderer\"].BLOOM);\n        scene.add(this.center);\n        this.satellite = new three__WEBPACK_IMPORTED_MODULE_0__[\"Mesh\"](geo, mat.clone());\n        this.satellite.position.set(30, 0, 0);\n        scene.add(this.satellite);\n        const satellite02 = new three__WEBPACK_IMPORTED_MODULE_0__[\"Mesh\"](geo, mat);\n        satellite02.position.set(-30, 0, 0);\n        scene.add(satellite02);\n    }\n    initGUI() {\n        const gui = new dat_gui__WEBPACK_IMPORTED_MODULE_3__[\"GUI\"]();\n        this.initGULBloom(gui);\n        this.initGUISatellite(gui);\n        this.initRenderGUI(gui);\n        this.initGUIResolution(gui);\n        this.initGUI_AAType(gui);\n    }\n    initGULBloom(gui) {\n        const prop = {\n            bloomCenter: true,\n            bloomSatellite: false\n        };\n        const switchBloom = (target, isBloom) => {\n            if (isBloom) {\n                target.layers.enable(ts_bloom_BloomRenderer__WEBPACK_IMPORTED_MODULE_2__[\"BloomRenderer\"].BLOOM);\n            }\n            else {\n                target.layers.disable(ts_bloom_BloomRenderer__WEBPACK_IMPORTED_MODULE_2__[\"BloomRenderer\"].BLOOM);\n            }\n        };\n        const folder = gui.addFolder(\"bloom\");\n        folder.add(prop, \"bloomCenter\").onChange(val => {\n            switchBloom(this.center, val);\n        });\n        folder.add(prop, \"bloomSatellite\").onChange(val => {\n            switchBloom(this.satellite, val);\n        });\n        folder.open();\n    }\n    initGUISatellite(gui) {\n        const folder = gui.addFolder(\"Satellite\");\n        folder.add(this.satellite.material, \"transparent\");\n        folder.add(this.satellite.material, \"opacity\", 0.0, 1.0);\n        folder.open();\n    }\n    initRenderGUI(gui) {\n        const folder = gui.addFolder(\"renderer\");\n        folder.add(this.bloomRenderer, \"threshold\", 0.0, 1.0);\n        folder.add(this.bloomRenderer, \"strength\", 0.0, 4.0);\n        folder.add(this.bloomRenderer, \"radius\", 0.0, 1.0);\n        folder.open();\n    }\n    initGUIResolution(gui) {\n        const size = this.bloomRenderer.getSize();\n        const prop = {\n            width: size.width,\n            height: size.height\n        };\n        const onChange = () => {\n            this.bloomRenderer.setSize(prop.width, prop.height);\n        };\n        const folder = gui.addFolder(\"Resolution\");\n        folder\n            .add(prop, \"width\", 2, 1920)\n            .step(1)\n            .onChange(onChange);\n        folder\n            .add(prop, \"height\", 2, 1080)\n            .step(1)\n            .onChange(onChange);\n        folder.open();\n    }\n    initGUI_AAType(gui) {\n        const folder = gui.addFolder(\"AA Type\");\n        folder.add(this.bloomRenderer, \"antiAliasingType\", {\n            None: ts_aa_AntiAliasingType__WEBPACK_IMPORTED_MODULE_4__[\"AntiAliasingType\"].None,\n            FXAA: ts_aa_AntiAliasingType__WEBPACK_IMPORTED_MODULE_4__[\"AntiAliasingType\"].FXAA,\n            SMAA: ts_aa_AntiAliasingType__WEBPACK_IMPORTED_MODULE_4__[\"AntiAliasingType\"].SMAA\n        });\n        folder.open();\n    }\n}\nStudyBloom.W = 640;\nStudyBloom.H = 480;\nwindow.onload = () => {\n    const study = new StudyBloom();\n};\n\n\n//# sourceURL=webpack:///./src/ts/StudyBloom.ts?");
+
+/***/ }),
+
+/***/ "./src/ts/aa/AntiAliasingType.ts":
+/*!***************************************!*\
+  !*** ./src/ts/aa/AntiAliasingType.ts ***!
+  \***************************************/
+/*! exports provided: AntiAliasingType */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"AntiAliasingType\", function() { return AntiAliasingType; });\nvar AntiAliasingType;\n(function (AntiAliasingType) {\n    AntiAliasingType[AntiAliasingType[\"None\"] = 0] = \"None\";\n    AntiAliasingType[AntiAliasingType[\"SMAA\"] = 1] = \"SMAA\";\n    AntiAliasingType[AntiAliasingType[\"FXAA\"] = 2] = \"FXAA\";\n})(AntiAliasingType || (AntiAliasingType = {}));\n\n\n//# sourceURL=webpack:///./src/ts/aa/AntiAliasingType.ts?");
+
+/***/ }),
+
+/***/ "./src/ts/aa/FXAAShaderPass.ts":
+/*!*************************************!*\
+  !*** ./src/ts/aa/FXAAShaderPass.ts ***!
+  \*************************************/
+/*! exports provided: FXAAShaderPass */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"FXAAShaderPass\", function() { return FXAAShaderPass; });\n/* harmony import */ var three_examples_jsm_postprocessing_ShaderPass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three/examples/jsm/postprocessing/ShaderPass */ \"./node_modules/three/examples/jsm/postprocessing/ShaderPass.js\");\n/* harmony import */ var three_examples_jsm_shaders_FXAAShader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three/examples/jsm/shaders/FXAAShader */ \"./node_modules/three/examples/jsm/shaders/FXAAShader.js\");\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n\n\n\n/**\n * FXAAShaderを組み込み済みのShaderPass\n */\nclass FXAAShaderPass extends three_examples_jsm_postprocessing_ShaderPass__WEBPACK_IMPORTED_MODULE_0__[\"ShaderPass\"] {\n    /**\n     * コンストラクタ\n     * @param renderer\n     */\n    constructor(renderer) {\n        super(three_examples_jsm_shaders_FXAAShader__WEBPACK_IMPORTED_MODULE_1__[\"FXAAShader\"]);\n        this.renderer = renderer;\n        this.updateSize();\n    }\n    /**\n     * レンダリングサイズを更新する。\n     * サイズはコンストラクタで指定されたWebGLRendererに追従する。\n     */\n    updateSize() {\n        const size = this.renderer.getSize(new three__WEBPACK_IMPORTED_MODULE_2__[\"Vector2\"]());\n        const pixelRatio = this.renderer.getPixelRatio();\n        this.setSize(size.width * pixelRatio, size.height * pixelRatio);\n    }\n    setSize(width, height) {\n        super.setSize(width, height);\n        const uniforms = this.material.uniforms;\n        uniforms.resolution.value.x = 1 / width;\n        uniforms.resolution.value.y = 1 / height;\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/aa/FXAAShaderPass.ts?");
+
+/***/ }),
+
+/***/ "./src/ts/bloom/BloomComposer.ts":
+/*!***************************************!*\
+  !*** ./src/ts/bloom/BloomComposer.ts ***!
+  \***************************************/
+/*! exports provided: BloomComposer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"BloomComposer\", function() { return BloomComposer; });\n/* harmony import */ var three_examples_jsm_postprocessing_EffectComposer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three/examples/jsm/postprocessing/EffectComposer */ \"./node_modules/three/examples/jsm/postprocessing/EffectComposer.js\");\n/* harmony import */ var three_examples_jsm_postprocessing_UnrealBloomPass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three/examples/jsm/postprocessing/UnrealBloomPass */ \"./node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js\");\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n\n\n\nclass BloomComposer extends three_examples_jsm_postprocessing_EffectComposer__WEBPACK_IMPORTED_MODULE_0__[\"EffectComposer\"] {\n    constructor(renderer, renderPass) {\n        super(renderer);\n        const size = renderer.getSize(new three__WEBPACK_IMPORTED_MODULE_2__[\"Vector2\"]());\n        this.bloomPass = new three_examples_jsm_postprocessing_UnrealBloomPass__WEBPACK_IMPORTED_MODULE_1__[\"UnrealBloomPass\"](size, 1.5, 0.4, 0.4);\n        // @ts-ignore\n        this.renderToScreen = false;\n        this.addPass(renderPass);\n        this.addPass(this.bloomPass);\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/bloom/BloomComposer.ts?");
+
+/***/ }),
+
+/***/ "./src/ts/bloom/BloomRenderer.ts":
+/*!***************************************!*\
+  !*** ./src/ts/bloom/BloomRenderer.ts ***!
+  \***************************************/
+/*! exports provided: BloomRenderer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"BloomRenderer\", function() { return BloomRenderer; });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var ts_bloom_BloomComposer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ts/bloom/BloomComposer */ \"./src/ts/bloom/BloomComposer.ts\");\n/* harmony import */ var ts_bloom_mix_MixComposer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ts/bloom/mix/MixComposer */ \"./src/ts/bloom/mix/MixComposer.ts\");\n/* harmony import */ var ts_postprocess_PostProcessRenderer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ts/postprocess/PostProcessRenderer */ \"./src/ts/postprocess/PostProcessRenderer.ts\");\n\n\n\n\n/**\n * Bloomレンダリングを行うクラス。\n * Bloomのオフスクリーンレンダリング、通常レンダリングとの合成、FXAAアンチエイリアスを連続して行う。\n * アンチエイリアス処理はMixShaderPass内で行われる。\n * {@link https://github.com/mrdoob/three.js/blob/master/examples/webgl_postprocessing_unreal_bloom_selective.html reference}\n */\nclass BloomRenderer extends ts_postprocess_PostProcessRenderer__WEBPACK_IMPORTED_MODULE_3__[\"PostProcessRenderer\"] {\n    constructor(scene, camera, renderer) {\n        super(scene, camera, renderer);\n        /**\n         * bloomをマスクするオブジェクトの表示を切り替える。\n         * @param obj\n         */\n        this.darkenNonBloomed = (obj) => {\n            if (!this.isDarken(obj))\n                return;\n            if (obj.userData.materialStorage == null) {\n                obj.userData.materialStorage = new MaterialStorage();\n            }\n            const storage = obj.userData.materialStorage;\n            storage.updateMaterial(obj.material);\n            obj.material = storage.darken;\n        };\n        /**\n         * bloomマスクを元のマテリアルに戻す。\n         * @param obj\n         */\n        this.restoreMaterial = (obj) => {\n            if (!this.isDarken(obj))\n                return;\n            obj.material = obj.userData.materialStorage.original;\n        };\n        const renderPass = this.getRenderPass();\n        this.layers = new three__WEBPACK_IMPORTED_MODULE_0__[\"Layers\"]();\n        this.layers.set(BloomRenderer.BLOOM);\n        this.bloom = new ts_bloom_BloomComposer__WEBPACK_IMPORTED_MODULE_1__[\"BloomComposer\"](renderer, renderPass);\n        this.mix = new ts_bloom_mix_MixComposer__WEBPACK_IMPORTED_MODULE_2__[\"MixComposer\"](renderer, renderPass, this.bloom);\n        this.composers = [this.bloom, this.mix];\n    }\n    render(delta) {\n        //実行順が固定なため、super.renderの処理は継承しない。\n        this.scene.traverse(this.darkenNonBloomed);\n        this.bloom.render(delta);\n        this.scene.traverse(this.restoreMaterial);\n        this.mix.render(delta);\n    }\n    /**\n     * そのオブジェクトがbloomマスクの対象か否かを判定する。\n     * @param obj\n     */\n    isDarken(obj) {\n        if (obj.isMesh == null && obj.isLine == null)\n            return false;\n        if (this.layers.test(obj.layers))\n            return false;\n        return true;\n    }\n    /*\n     * BloomPassのプロパティを隠蔽するため、アクセサをBloomRenderer側に用意。\n     */\n    set threshold(value) {\n        this.bloom.bloomPass.threshold = value;\n    }\n    get threshold() {\n        return this.bloom.bloomPass.threshold;\n    }\n    set strength(value) {\n        this.bloom.bloomPass.strength = value;\n    }\n    get strength() {\n        return this.bloom.bloomPass.strength;\n    }\n    set radius(value) {\n        if (value > 1.0) {\n            console.warn(\"Bloomの半径が1を超えています。1以上ではメッシュにアウトラインが発生します。\", value);\n        }\n        this.bloom.bloomPass.radius = value;\n    }\n    get radius() {\n        return this.bloom.bloomPass.radius;\n    }\n    set antiAliasingType(value) {\n        this.mix.type = value;\n    }\n    get antiAliasingType() {\n        return this.mix.type;\n    }\n}\nBloomRenderer.ENTIRE = 0;\nBloomRenderer.BLOOM = 30;\n/**\n * Bloom設定に応じて、オリジナルのマテリアルを格納するためのオブジェクト。\n * Object3D.userData.materialStorageに格納される。\n */\nclass MaterialStorage {\n    updateMaterial(original) {\n        this.original = original;\n        if (this.darken == null || this.darken.type !== this.original.type) {\n            this.darken = this.original.clone();\n        }\n        else {\n            this.darken.copy(this.original);\n        }\n        if (this.darken[\"color\"] != null) {\n            this.darken[\"color\"].setHex(0);\n        }\n        if (this.darken[\"shininess\"] != null) {\n            this.darken[\"shininess\"] = 0;\n        }\n        if (this.darken[\"specular\"] != null) {\n            this.darken[\"specular\"].setHex(0);\n        }\n        if (this.darken[\"emissive\"] != null) {\n            this.darken[\"emissive\"].setHex(0);\n        }\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/bloom/BloomRenderer.ts?");
+
+/***/ }),
+
+/***/ "./src/ts/bloom/mix/MixComposer.ts":
+/*!*****************************************!*\
+  !*** ./src/ts/bloom/mix/MixComposer.ts ***!
+  \*****************************************/
+/*! exports provided: MixComposer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"MixComposer\", function() { return MixComposer; });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var three_examples_jsm_postprocessing_EffectComposer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three/examples/jsm/postprocessing/EffectComposer */ \"./node_modules/three/examples/jsm/postprocessing/EffectComposer.js\");\n/* harmony import */ var three_examples_jsm_postprocessing_SMAAPass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three/examples/jsm/postprocessing/SMAAPass */ \"./node_modules/three/examples/jsm/postprocessing/SMAAPass.js\");\n/* harmony import */ var ts_bloom_mix_MixShaderPass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ts/bloom/mix/MixShaderPass */ \"./src/ts/bloom/mix/MixShaderPass.ts\");\n/* harmony import */ var ts_aa_FXAAShaderPass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ts/aa/FXAAShaderPass */ \"./src/ts/aa/FXAAShaderPass.ts\");\n/* harmony import */ var ts_aa_AntiAliasingType__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ts/aa/AntiAliasingType */ \"./src/ts/aa/AntiAliasingType.ts\");\n\n\n\n\n\n\nclass MixComposer extends three_examples_jsm_postprocessing_EffectComposer__WEBPACK_IMPORTED_MODULE_1__[\"EffectComposer\"] {\n    constructor(renderer, renderPass, targetComposer) {\n        super(renderer);\n        this.addPass(renderPass);\n        this.addPass(new ts_bloom_mix_MixShaderPass__WEBPACK_IMPORTED_MODULE_3__[\"MixShaderPass\"](targetComposer));\n        this.fxaaPass = new ts_aa_FXAAShaderPass__WEBPACK_IMPORTED_MODULE_4__[\"FXAAShaderPass\"](renderer);\n        this.addPass(this.fxaaPass);\n        const size = renderer.getSize(new three__WEBPACK_IMPORTED_MODULE_0__[\"Vector2\"]());\n        this.smaaPass = new three_examples_jsm_postprocessing_SMAAPass__WEBPACK_IMPORTED_MODULE_2__[\"SMAAPass\"](size.width, size.height);\n        this.addPass(this.smaaPass);\n        this.type = ts_aa_AntiAliasingType__WEBPACK_IMPORTED_MODULE_5__[\"AntiAliasingType\"].SMAA;\n    }\n    get type() {\n        return this._type;\n    }\n    set type(value) {\n        this._type = value;\n        this.smaaPass.enabled = value == ts_aa_AntiAliasingType__WEBPACK_IMPORTED_MODULE_5__[\"AntiAliasingType\"].SMAA;\n        this.fxaaPass.enabled = value == ts_aa_AntiAliasingType__WEBPACK_IMPORTED_MODULE_5__[\"AntiAliasingType\"].FXAA;\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/bloom/mix/MixComposer.ts?");
+
+/***/ }),
+
+/***/ "./src/ts/bloom/mix/MixShaderPass.ts":
+/*!*******************************************!*\
+  !*** ./src/ts/bloom/mix/MixShaderPass.ts ***!
+  \*******************************************/
+/*! exports provided: MixShaderPass */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"MixShaderPass\", function() { return MixShaderPass; });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var three_examples_jsm_postprocessing_ShaderPass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three/examples/jsm/postprocessing/ShaderPass */ \"./node_modules/three/examples/jsm/postprocessing/ShaderPass.js\");\n/* harmony import */ var _mix_frag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mix.frag */ \"./src/ts/bloom/mix/mix.frag\");\n/* harmony import */ var _mix_frag__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mix_frag__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _mix_vert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./mix.vert */ \"./src/ts/bloom/mix/mix.vert\");\n/* harmony import */ var _mix_vert__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mix_vert__WEBPACK_IMPORTED_MODULE_3__);\n\n\n// @ts-ignore\n\n// @ts-ignore\n\n/**\n * 他のエフェクトコンポーザーの描画結果を受け取り、自身のレンダリング結果に乗算するShaderPass\n */\nclass MixShaderPass extends three_examples_jsm_postprocessing_ShaderPass__WEBPACK_IMPORTED_MODULE_1__[\"ShaderPass\"] {\n    constructor(targetComposer) {\n        super(new three__WEBPACK_IMPORTED_MODULE_0__[\"ShaderMaterial\"]({\n            uniforms: {\n                baseTexture: { value: null },\n                bloomTexture: { value: targetComposer.renderTarget2.texture }\n            },\n            vertexShader: _mix_vert__WEBPACK_IMPORTED_MODULE_3___default.a,\n            fragmentShader: _mix_frag__WEBPACK_IMPORTED_MODULE_2___default.a,\n            defines: {}\n        }), MixShaderPass.TEXTURE_ID);\n        this.needsSwap = true;\n    }\n}\nMixShaderPass.TEXTURE_ID = \"baseTexture\";\n\n\n//# sourceURL=webpack:///./src/ts/bloom/mix/MixShaderPass.ts?");
+
+/***/ }),
+
+/***/ "./src/ts/bloom/mix/mix.frag":
+/*!***********************************!*\
+  !*** ./src/ts/bloom/mix/mix.frag ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = \"uniform sampler2D baseTexture;\\nuniform sampler2D bloomTexture;\\nvarying vec2 vUv;\\nvec4 getTexture( sampler2D texture ) {\\n    return mapTexelToLinear( texture2D( texture , vUv ) );\\n}\\nvoid main() {\\n    gl_FragColor = ( getTexture( baseTexture ) + vec4( 1.0 ) * getTexture( bloomTexture ) );\\n}\"\n\n//# sourceURL=webpack:///./src/ts/bloom/mix/mix.frag?");
+
+/***/ }),
+
+/***/ "./src/ts/bloom/mix/mix.vert":
+/*!***********************************!*\
+  !*** ./src/ts/bloom/mix/mix.vert ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = \"varying vec2 vUv;\\nvoid main() {\\n    vUv = uv;\\n    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\\n}\"\n\n//# sourceURL=webpack:///./src/ts/bloom/mix/mix.vert?");
+
+/***/ }),
+
+/***/ "./src/ts/postprocess/PostProcessRenderer.ts":
+/*!***************************************************!*\
+  !*** ./src/ts/postprocess/PostProcessRenderer.ts ***!
+  \***************************************************/
+/*! exports provided: PostProcessRenderer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"PostProcessRenderer\", function() { return PostProcessRenderer; });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var three_examples_jsm_postprocessing_RenderPass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three/examples/jsm/postprocessing/RenderPass */ \"./node_modules/three/examples/jsm/postprocessing/RenderPass.js\");\n/* harmony import */ var three_examples_jsm_postprocessing_EffectComposer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three/examples/jsm/postprocessing/EffectComposer */ \"./node_modules/three/examples/jsm/postprocessing/EffectComposer.js\");\n\n\n\nclass PostProcessRenderer {\n    constructor(scene, camera, renderer) {\n        this.composers = [];\n        /**\n         * requestAnimationFrameハンドラ\n         * @param timestamp\n         */\n        this.onRequestAnimationFrame = (timestamp) => {\n            if (this.lastUpdateTimestamp == null) {\n                this.lastUpdateTimestamp = timestamp;\n            }\n            const delta = timestamp - this.lastUpdateTimestamp;\n            if (this.onBeforeRequestAnimationFrame) {\n                this.onBeforeRequestAnimationFrame(timestamp);\n            }\n            this.render(delta);\n            this.lastUpdateTimestamp = timestamp;\n            this.id = requestAnimationFrame(this.onRequestAnimationFrame);\n        };\n        this.renderer = renderer;\n        this.scene = scene;\n        this.camera = camera;\n    }\n    getRenderPass() {\n        return new three_examples_jsm_postprocessing_RenderPass__WEBPACK_IMPORTED_MODULE_1__[\"RenderPass\"](this.scene, this.camera, undefined, undefined, undefined);\n    }\n    /**\n     * シェーダーパスを挟んだEffectComposerを初期化する。\n     * @param renderer\n     */\n    initComposer(passes, renderer) {\n        const renderPass = this.getRenderPass();\n        const composer = new three_examples_jsm_postprocessing_EffectComposer__WEBPACK_IMPORTED_MODULE_2__[\"EffectComposer\"](renderer);\n        composer.addPass(renderPass);\n        passes.forEach(p => {\n            composer.addPass(p);\n        });\n        this.composers.push(composer);\n        return composer;\n    }\n    /**\n     * レンダリングを開始する。\n     */\n    start() {\n        if (this.id != null)\n            return;\n        this.id = requestAnimationFrame(this.onRequestAnimationFrame);\n    }\n    /**\n     * レンダリングを停止する。\n     */\n    stop() {\n        if (this.id == null)\n            return;\n        cancelAnimationFrame(this.id);\n        this.lastUpdateTimestamp = null;\n    }\n    setSize(w, h) {\n        this.camera.aspect = w / h;\n        this.camera.updateProjectionMatrix();\n        this.renderer.setPixelRatio(window.devicePixelRatio);\n        this.renderer.setSize(w, h);\n        this.composers.forEach(composer => {\n            composer.setSize(w, h);\n        });\n    }\n    getSize() {\n        return this.renderer.getSize(new three__WEBPACK_IMPORTED_MODULE_0__[\"Vector2\"]());\n    }\n    render(delta) {\n        this.composers.forEach(composer => {\n            composer.render(delta);\n        });\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/postprocess/PostProcessRenderer.ts?");
+
+/***/ })
+
+/******/ });
