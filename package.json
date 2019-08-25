@@ -30,7 +30,8 @@
     "start:dev": "gulp start_dev",
     "build": "npm run prettier:src && gulp build",
     "build:deploy": "npm run prettier:src && gulp build_production",
-    "prettier:src": "prettier --write './**/*.{js,ts,json}' "
+    "prettier:src": "prettier --write './**/*.{js,ts,json}' ",
+    "checkout:docs": "git checkout HEAD ./docs/"
   },
   "husky": {
     "hooks": {
