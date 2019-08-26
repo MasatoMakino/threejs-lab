@@ -1,4 +1,5 @@
 # threejs-lab
+
 Studies for three.js.
 
 ## Demo
@@ -22,3 +23,5 @@ Studies for three.js.
 [Flame using particle engine](https://masatomakino.github.io/threejs-lab/nebulaFire.html)
 
 [Cloud using particle engine](https://masatomakino.github.io/threejs-lab/nebulasky)
+
+[Loop animation using clipping plane](https://masatomakino.github.io/threejs-lab/loop)

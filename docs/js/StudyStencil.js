@@ -57,7 +57,7 @@
 /******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 	// Promise = chunk loading, 0 = chunk loaded
 /******/ 	var installedChunks = {
-/******/ 		"StudyLoopAnimation": 0
+/******/ 		"StudyStencil": 0
 /******/ 	};
 /******/
 /******/ 	var deferredModules = [];
@@ -148,7 +148,7 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push(["./src/ts/StudyLoopAnimation.ts","vendor"]);
+/******/ 	deferredModules.push(["./src/ts/StudyStencil.ts","vendor"]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
@@ -167,27 +167,15 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
-/***/ "./src/ts/CommonGUI.ts":
-/*!*****************************!*\
-  !*** ./src/ts/CommonGUI.ts ***!
-  \*****************************/
-/*! exports provided: CommonGUI */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"CommonGUI\", function() { return CommonGUI; });\nclass CommonGUI {\n    static initColorGUI(folder, mat, propName = \"color\") {\n        const prop = {};\n        const targetColor = mat[propName];\n        prop[propName] = targetColor.getHex();\n        folder.addColor(prop, propName).onChange(val => {\n            targetColor.setHex(val);\n        });\n    }\n    static initMaterialGUI(gui, mat, folderName = \"Material\") {\n        const folder = gui.addFolder(folderName);\n        this.initMaterialFolder(folder, mat);\n        if (mat.hasOwnProperty(\"emissive\")) {\n            this.initColorGUI(folder, mat, \"emissive\");\n        }\n        folder.open();\n        return folder;\n    }\n    static initMaterialFolder(folder, mat) {\n        this.initColorGUI(folder, mat);\n        folder.add(mat, \"transparent\");\n        folder.add(mat, \"opacity\", 0.0, 1.0);\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/CommonGUI.ts?");
-
-/***/ }),
-
-/***/ "./src/ts/StudyLoopAnimation.ts":
-/*!**************************************!*\
-  !*** ./src/ts/StudyLoopAnimation.ts ***!
-  \**************************************/
+/***/ "./src/ts/StudyStencil.ts":
+/*!********************************!*\
+  !*** ./src/ts/StudyStencil.ts ***!
+  \********************************/
 /*! exports provided: Study */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Study\", function() { return Study; });\n/* harmony import */ var ts_Common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ts/Common */ \"./src/ts/Common.ts\");\n/* harmony import */ var ts_CommonGUI__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ts/CommonGUI */ \"./src/ts/CommonGUI.ts\");\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var ts_clippingSurface_ClippingSurface__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ts/clippingSurface/ClippingSurface */ \"./src/ts/clippingSurface/ClippingSurface.ts\");\n/* harmony import */ var dat_gui__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! dat.gui */ \"./node_modules/dat.gui/build/dat.gui.module.js\");\n\n\n\n\n\nclass Study {\n    constructor() {\n        const scene = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initScene();\n        scene.fog = new three__WEBPACK_IMPORTED_MODULE_2__[\"Fog\"](0x000000, 160, 320);\n        ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initLight(scene);\n        const camera = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initCamera(scene, Study.W, Study.H);\n        const renderer = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initRenderer(Study.W, Study.H);\n        renderer.localClippingEnabled = true;\n        const control = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initControl(camera, renderer);\n        const surface = this.initObject(scene);\n        this.initGUI(surface);\n        ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].render(control, renderer, scene, camera, () => {\n            surface.rotation.x += 0.03;\n            surface.updatePlane();\n        });\n    }\n    initObject(scene) {\n        const spot = new three__WEBPACK_IMPORTED_MODULE_2__[\"PointLight\"](0xffffff, 3, 0, 2);\n        spot.position.set(10, 20, 30);\n        scene.add(spot);\n        const helper = new three__WEBPACK_IMPORTED_MODULE_2__[\"PointLightHelper\"](spot);\n        scene.add(helper);\n        const geo = new three__WEBPACK_IMPORTED_MODULE_2__[\"TorusKnotBufferGeometry\"](10, 3, 64, 32);\n        const plane = new three__WEBPACK_IMPORTED_MODULE_2__[\"Plane\"](new three__WEBPACK_IMPORTED_MODULE_2__[\"Vector3\"](0, 0, -1), 0);\n        const surface = new ts_clippingSurface_ClippingSurface__WEBPACK_IMPORTED_MODULE_3__[\"ClippingSurface\"](plane, geo, {\n            planeMaterial: new three__WEBPACK_IMPORTED_MODULE_2__[\"MeshBasicMaterial\"]({\n                color: new three__WEBPACK_IMPORTED_MODULE_2__[\"Color\"](0xffffff)\n            })\n        });\n        scene.add(surface);\n        return surface;\n    }\n    initGUI(surface) {\n        const gui = new dat_gui__WEBPACK_IMPORTED_MODULE_4__[\"GUI\"]();\n        ts_CommonGUI__WEBPACK_IMPORTED_MODULE_1__[\"CommonGUI\"].initMaterialGUI(gui, surface.planeObject.material, \"Clipping Surface\");\n        const frontFaceFolder = ts_CommonGUI__WEBPACK_IMPORTED_MODULE_1__[\"CommonGUI\"].initMaterialGUI(gui, surface.frontFace.material, \"FrontFace\");\n        frontFaceFolder.add(surface.frontFace, \"visible\");\n    }\n}\nStudy.W = 640;\nStudy.H = 480;\nwindow.onload = () => {\n    const study = new Study();\n};\n\n\n//# sourceURL=webpack:///./src/ts/StudyLoopAnimation.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Study\", function() { return Study; });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var ts_Common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ts/Common */ \"./src/ts/Common.ts\");\n/* harmony import */ var ts_clippingSurface_ClippingSurface__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ts/clippingSurface/ClippingSurface */ \"./src/ts/clippingSurface/ClippingSurface.ts\");\n\n\n\nclass Study {\n    static initPlanes() {\n        return [\n            new three__WEBPACK_IMPORTED_MODULE_0__[\"Plane\"](new three__WEBPACK_IMPORTED_MODULE_0__[\"Vector3\"](-1, 0, 0), 0),\n            new three__WEBPACK_IMPORTED_MODULE_0__[\"Plane\"](new three__WEBPACK_IMPORTED_MODULE_0__[\"Vector3\"](0, -1, 0), 0),\n            new three__WEBPACK_IMPORTED_MODULE_0__[\"Plane\"](new three__WEBPACK_IMPORTED_MODULE_0__[\"Vector3\"](0, 0, -1), 0)\n        ];\n    }\n    init() {\n        this.scene = new three__WEBPACK_IMPORTED_MODULE_0__[\"Scene\"]();\n        this.camera = ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initCamera(this.scene, Study.W, Study.H);\n        this.camera.position.set(2, 2, 2);\n        ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initLight(this.scene);\n        var dirLight = new three__WEBPACK_IMPORTED_MODULE_0__[\"DirectionalLight\"](0xffffff, 1);\n        dirLight.position.set(5, 10, 7.5);\n        this.scene.add(dirLight);\n        this.planes = Study.initPlanes();\n        const geometry = new three__WEBPACK_IMPORTED_MODULE_0__[\"TorusKnotBufferGeometry\"](0.4, 0.15, 220, 60);\n        const surfaces = [];\n        //トーラスジオメトリをコピーしたグループを作る。\n        this.planes.forEach(plane => {\n            const group = new ts_clippingSurface_ClippingSurface__WEBPACK_IMPORTED_MODULE_2__[\"ClippingSurface\"](plane, geometry, {\n                allPlanes: this.planes\n            });\n            this.scene.add(group);\n            surfaces.push(group);\n        });\n        this.renderer = ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initRenderer(Study.W, Study.H, 0x263238);\n        this.renderer.localClippingEnabled = true;\n        const controls = ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].initControl(this.camera, this.renderer);\n        ts_Common__WEBPACK_IMPORTED_MODULE_1__[\"Common\"].render(controls, this.renderer, this.scene, this.camera, () => {\n            surfaces.forEach(surface => {\n                surface.rotation.x += 0.01;\n                surface.updatePlane();\n            });\n        });\n    }\n}\nStudy.W = 640.0;\nStudy.H = 480.0;\nwindow.onload = () => {\n    const study = new Study();\n    study.init();\n};\n\n\n//# sourceURL=webpack:///./src/ts/StudyStencil.ts?");
 
 /***/ }),
 
