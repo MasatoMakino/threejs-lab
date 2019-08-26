@@ -1,13 +1,18 @@
 import { Common } from "ts/Common";
-import { Fog } from "three";
-import { Scene } from "three";
-import { PointLight } from "three";
-import { PointLightHelper } from "three";
-import { Mesh } from "three";
-import { TorusKnotBufferGeometry } from "three";
-import { MeshBasicMaterial } from "three";
-import { Color } from "three";
-import { BackSide } from "three";
+import { CommonGUI } from "ts/CommonGUI";
+import {
+  Fog,
+  Scene,
+  PointLight,
+  PointLightHelper,
+  TorusKnotBufferGeometry,
+  MeshBasicMaterial,
+  Color,
+  Plane,
+  Vector3
+} from "three";
+import { ClippingSurface } from "ts/clippingSurface/ClippingSurface";
+import * as dat from "dat.gui";
 
 export class Study {
   public static readonly W = 640;
@@ -15,35 +20,55 @@ export class Study {
 
   constructor() {
     const scene = Common.initScene();
-    // scene.fog = new Fog(0x000000, 80, 160);
+    scene.fog = new Fog(0x000000, 160, 320);
     Common.initLight(scene);
     const camera = Common.initCamera(scene, Study.W, Study.H);
     const renderer = Common.initRenderer(Study.W, Study.H);
+    renderer.localClippingEnabled = true;
 
     const control = Common.initControl(camera, renderer);
-    // Common.initHelper(scene);
-    this.initObject(scene);
-    // this.initGUI();
+    const surface = this.initObject(scene);
+    this.initGUI(surface);
 
-    Common.render(control, renderer, scene, camera);
+    Common.render(control, renderer, scene, camera, () => {
+      surface.rotation.x += 0.03;
+      surface.updatePlane();
+    });
   }
 
-  private initObject(scene: Scene): void {
+  private initObject(scene: Scene): ClippingSurface {
     const spot = new PointLight(0xffffff, 3, 0, 2);
     spot.position.set(10, 20, 30);
     scene.add(spot);
     const helper = new PointLightHelper(spot);
     scene.add(helper);
 
-    const geo = new TorusKnotBufferGeometry(10, 3, 100, 16);
-    const mat = new MeshBasicMaterial({
-      color: new Color(0xff00ff),
-      side: BackSide
+    const geo = new TorusKnotBufferGeometry(10, 3, 64, 32);
+
+    const plane = new Plane(new Vector3(0, 0, -1), 0);
+    const surface = new ClippingSurface(plane, geo, {
+      planeMaterial: new MeshBasicMaterial({
+        color: new Color(0xffffff)
+      })
     });
 
-    const mesh = new Mesh(geo, mat);
+    scene.add(surface);
+    return surface;
+  }
 
-    scene.add(mesh);
+  public initGUI(surface: ClippingSurface): void {
+    const gui = new dat.GUI();
+    CommonGUI.initMaterialGUI(
+      gui,
+      surface.planeObject.material,
+      "Clipping Surface"
+    );
+    const frontFaceFolder = CommonGUI.initMaterialGUI(
+      gui,
+      surface.frontFace.material,
+      "FrontFace"
+    );
+    frontFaceFolder.add(surface.frontFace, "visible");
   }
 }
 

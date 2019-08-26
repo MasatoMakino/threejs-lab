@@ -26,10 +26,10 @@ import {
  * 注意 : onBeforeRender関数やRenderループ内でstencilGroupの座標、スケール、回転を変更した場合、変更後にupdatePlane関数を明示的に呼び出してください。planeObjectの更新が行われず、表示が崩れます。
  */
 export class ClippingSurface extends Group {
-  protected planeObject: Mesh;
+  public planeObject: Mesh;
   protected plane: Plane;
   protected stencilGroup: Group;
-  protected frontFace: Mesh;
+  public frontFace: Mesh;
 
   /**
    *コンストラクタ
@@ -58,6 +58,7 @@ export class ClippingSurface extends Group {
     this.add(this.stencilGroup);
 
     this.planeObject = ClippingSurface.createPlane(
+      geometry,
       clippingPlane,
       option.allPlanes,
       i,
@@ -72,7 +73,7 @@ export class ClippingSurface extends Group {
       option.frontFaceMaterial
     );
     this.stencilGroup.add(this.frontFace);
-    this.frontFace.visible = true;
+    this.frontFace.visible = option.visibleSurface;
   }
 
   /**
@@ -82,12 +83,15 @@ export class ClippingSurface extends Group {
    * @param index
    */
   public static createPlane(
+    geo: Geometry | BufferGeometry,
     clippingPlane: Plane,
     otherPlanes: Plane[],
     index: number,
     mat?: Material
   ): Mesh {
-    const planeGeom = new PlaneBufferGeometry(4, 4);
+    geo.computeBoundingSphere();
+    const rad = geo.boundingSphere.radius;
+    const planeGeom = new PlaneBufferGeometry(rad * 2, rad * 2);
 
     if (mat == null) {
       mat = new MeshStandardMaterial({
@@ -256,6 +260,7 @@ class ClippingSurfaceOption {
   planeMaterial?: Material;
   frontFaceMaterial?: Material;
   allPlanes?: Plane[];
+  visibleSurface?: boolean;
 
   static init(
     option: ClippingSurfaceOption,
@@ -264,6 +269,9 @@ class ClippingSurfaceOption {
     if (option == null) option = {};
     if (option.allPlanes == null || option.allPlanes.length === 0) {
       option.allPlanes = [plane];
+    }
+    if (option.visibleSurface == null) {
+      option.visibleSurface = false;
     }
     return option;
   }
