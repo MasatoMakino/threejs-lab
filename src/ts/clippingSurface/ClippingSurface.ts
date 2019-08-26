@@ -16,9 +16,15 @@ import {
   PlaneBufferGeometry,
   ReplaceStencilOp,
   Side,
-  StencilOp
+  StencilOp,
+  Euler
 } from "three";
 
+/**
+ * ClippingPlaneにより切断したジオメトリの、切断面を描画するためのクラスです。
+ *
+ * 注意 : onBeforeRender関数やRenderループ内でstencilGroupの座標、スケール、回転を変更した場合、変更後にupdatePlane関数を明示的に呼び出してください。planeObjectの更新が行われず、表示が崩れます。
+ */
 export class ClippingSurface extends Group {
   protected planeObject: Mesh;
   protected plane: Plane;
@@ -65,8 +71,8 @@ export class ClippingSurface extends Group {
       geometry,
       option.frontFaceMaterial
     );
-    this.add(this.frontFace);
-    this.frontFace.visible = false;
+    this.stencilGroup.add(this.frontFace);
+    this.frontFace.visible = true;
   }
 
   /**
@@ -117,6 +123,13 @@ export class ClippingSurface extends Group {
       this.planeObject.position.z - this.plane.normal.z
     );
   };
+
+  get rotation(): Euler {
+    return this.stencilGroup.rotation;
+  }
+  set rotation(val: Euler) {
+    this.stencilGroup.rotation = val;
+  }
 }
 
 class ClippingSurfaceUtil {

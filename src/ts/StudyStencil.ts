@@ -41,19 +41,26 @@ export class Study {
 
     const geometry = new TorusKnotBufferGeometry(0.4, 0.15, 220, 60);
 
+    const surfaces: ClippingSurface[] = [];
     //トーラスジオメトリをコピーしたグループを作る。
     this.planes.forEach(plane => {
       const group = new ClippingSurface(plane, geometry, {
         allPlanes: this.planes
       });
       this.scene.add(group);
+      surfaces.push(group);
     });
 
     this.renderer = Common.initRenderer(Study.W, Study.H, 0x263238);
     this.renderer.localClippingEnabled = true;
 
     const controls = Common.initControl(this.camera, this.renderer);
-    Common.render(controls, this.renderer, this.scene, this.camera, () => {});
+    Common.render(controls, this.renderer, this.scene, this.camera, () => {
+      surfaces.forEach(surface => {
+        surface.rotation.x += 0.01;
+        surface.updatePlane();
+      });
+    });
   }
 }
 
