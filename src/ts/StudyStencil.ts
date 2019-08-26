@@ -1,12 +1,12 @@
-import { Mesh } from "three";
-import { Scene } from "three";
-import { PerspectiveCamera } from "three";
-import { DirectionalLight } from "three";
-import { Plane } from "three";
-import { Vector3 } from "three";
-import { TorusKnotBufferGeometry } from "three";
-import { MeshStandardMaterial } from "three";
-import { WebGLRenderer } from "three";
+import {
+  DirectionalLight,
+  PerspectiveCamera,
+  Plane,
+  Scene,
+  TorusKnotBufferGeometry,
+  Vector3,
+  WebGLRenderer
+} from "three";
 import { Common } from "ts/Common";
 import { ClippingSurface } from "ts/clippingSurface/ClippingSurface";
 
@@ -27,23 +27,6 @@ export class Study {
     ];
   }
 
-  static initFrontFaceMesh(planes, geometry): Mesh {
-    const material = new MeshStandardMaterial({
-      color: 0xffc107,
-      metalness: 0.1,
-      roughness: 0.75,
-      clippingPlanes: planes
-      // clipShadows: true,
-      // shadowSide: DoubleSide
-    });
-
-    // 切り取られたジオメトリの表面を描画するためのオブジェクト
-    const clippedColorFront = new Mesh(geometry, material);
-    // clippedColorFront.castShadow = true;
-    clippedColorFront.renderOrder = 6;
-    return clippedColorFront;
-  }
-
   init() {
     this.scene = new Scene();
     this.camera = Common.initCamera(this.scene, Study.W, Study.H);
@@ -60,11 +43,11 @@ export class Study {
 
     //トーラスジオメトリをコピーしたグループを作る。
     this.planes.forEach(plane => {
-      const group = new ClippingSurface(plane, this.planes, geometry);
+      const group = new ClippingSurface(plane, geometry, {
+        allPlanes: this.planes
+      });
       this.scene.add(group);
     });
-    //フロントジオメトリを生成して追加。
-    // this.scene.add(Study.initFrontFaceMesh(this.planes, geometry));
 
     this.renderer = Common.initRenderer(Study.W, Study.H, 0x263238);
     this.renderer.localClippingEnabled = true;
