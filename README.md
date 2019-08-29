@@ -8,10 +8,6 @@ Studies for three.js.
 
 [Bloom](https://masatomakino.github.io/threejs-lab/bloom)
 
-[Chromatic Aberration](https://masatomakino.github.io/threejs-lab/chromatic)
-
-[Peripheral Light](https://masatomakino.github.io/threejs-lab/peripheral)
-
 [Depth setting test](https://masatomakino.github.io/threejs-lab/depthTest)
 
 [Streaming Video Texture](https://masatomakino.github.io/threejs-lab/streamVideoHLS)

@@ -2,9 +2,9 @@ import { WebGLRenderer, Vector2 } from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass";
-import { MixShaderPass } from "ts/bloom/mix/MixShaderPass";
 import { FXAAShaderPass } from "ts/aa/FXAAShaderPass";
 import { AntiAliasingType } from "ts/aa/AntiAliasingType";
+import { MixShaderPass } from "threejs-postprocess";
 
 export class MixComposer extends EffectComposer {
   private _type: AntiAliasingType;
@@ -18,7 +18,7 @@ export class MixComposer extends EffectComposer {
   ) {
     super(renderer);
     this.addPass(renderPass);
-    this.addPass(new MixShaderPass(targetComposer));
+    this.addPass(new MixShaderPass(targetComposer.renderTarget2.texture));
 
     this.fxaaPass = new FXAAShaderPass(renderer);
     this.addPass(this.fxaaPass);

@@ -21,6 +21,7 @@
     "stats.js": "https://github.com/mrdoob/stats.js.git",
     "three": "^0.107.0",
     "three-nebula": "^5.0.0-alpha",
+    "threejs-postprocess": "file:../threejs-postprocess",
     "threejs-shader-materials": "https://github.com/MasatoMakino/threejs-shader-materials.git",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.3",

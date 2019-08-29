@@ -179,39 +179,14 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
-/***/ "./src/ts/chromaticAberration/ChromaticAberration.frag.glsl.ts":
-/*!*********************************************************************!*\
-  !*** ./src/ts/chromaticAberration/ChromaticAberration.frag.glsl.ts ***!
-  \*********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (() => {\n    return `\n\nuniform sampler2D tDiffuse;\nuniform float rate;\nuniform float radiusInner;\nuniform float radiusOuter;\n\nvarying vec2 vUv;\n\nvoid main() {\n  float distance = length( vUv - 0.5 )*2.0;\n  distance = smoothstep( radiusInner, radiusOuter, distance);\n  float shift = rate * distance * 0.01;\n\n  float r = texture2D( tDiffuse, vUv + vec2( shift, 0.0 ) ).r;\n  float g = texture2D( tDiffuse, vUv ).g;\n  float b = texture2D( tDiffuse, vUv - vec2( shift, 0.0 ) ).b;\n\n  gl_FragColor = vec4( vec3(r, g, b) , 1.0 );\n}\n  `;\n});\n\n\n//# sourceURL=webpack:///./src/ts/chromaticAberration/ChromaticAberration.frag.glsl.ts?");
-
-/***/ }),
-
 /***/ "./src/ts/chromaticAberration/ChromaticAberrationPass.ts":
 /*!***************************************************************!*\
   !*** ./src/ts/chromaticAberration/ChromaticAberrationPass.ts ***!
   \***************************************************************/
 /*! exports provided: ChromaticAberrationPass */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"ChromaticAberrationPass\", function() { return ChromaticAberrationPass; });\n/* harmony import */ var three_examples_jsm_postprocessing_ShaderPass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three/examples/jsm/postprocessing/ShaderPass */ \"./node_modules/three/examples/jsm/postprocessing/ShaderPass.js\");\n/* harmony import */ var ts_chromaticAberration_ChromaticAberrationShader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ts/chromaticAberration/ChromaticAberrationShader */ \"./src/ts/chromaticAberration/ChromaticAberrationShader.ts\");\n\n\nclass ChromaticAberrationPass extends three_examples_jsm_postprocessing_ShaderPass__WEBPACK_IMPORTED_MODULE_0__[\"ShaderPass\"] {\n    get rate() {\n        return this.uniforms[\"rate\"].value;\n    }\n    set rate(value) {\n        this.uniforms[\"rate\"].value = value;\n    }\n    get radiusInner() {\n        return this.uniforms[\"radiusInner\"].value;\n    }\n    set radiusInner(value) {\n        this.uniforms[\"radiusInner\"].value = value;\n    }\n    get radiusOuter() {\n        return this.uniforms[\"radiusOuter\"].value;\n    }\n    set radiusOuter(value) {\n        this.uniforms[\"radiusOuter\"].value = value;\n    }\n    constructor() {\n        super(new ts_chromaticAberration_ChromaticAberrationShader__WEBPACK_IMPORTED_MODULE_1__[\"ChromaticAberrationShader\"]());\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/chromaticAberration/ChromaticAberrationPass.ts?");
-
-/***/ }),
-
-/***/ "./src/ts/chromaticAberration/ChromaticAberrationShader.ts":
-/*!*****************************************************************!*\
-  !*** ./src/ts/chromaticAberration/ChromaticAberrationShader.ts ***!
-  \*****************************************************************/
-/*! exports provided: ChromaticAberrationShader */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"ChromaticAberrationShader\", function() { return ChromaticAberrationShader; });\n/* harmony import */ var ts_postprocess_PostProcessShader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ts/postprocess/PostProcessShader */ \"./src/ts/postprocess/PostProcessShader.ts\");\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var _ChromaticAberration_frag_glsl__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ChromaticAberration.frag.glsl */ \"./src/ts/chromaticAberration/ChromaticAberration.frag.glsl.ts\");\n\n\n\nclass ChromaticAberrationShader extends ts_postprocess_PostProcessShader__WEBPACK_IMPORTED_MODULE_0__[\"PostProcessShader\"] {\n    constructor() {\n        super();\n        this.fragmentShader = Object(_ChromaticAberration_frag_glsl__WEBPACK_IMPORTED_MODULE_2__[\"default\"])();\n    }\n    initUniform() {\n        super.initUniform();\n        this.uniforms = three__WEBPACK_IMPORTED_MODULE_1__[\"UniformsUtils\"].merge([\n            this.uniforms,\n            {\n                rate: { value: 1.0 },\n                radiusInner: { value: 0.25 },\n                radiusOuter: { value: Math.sqrt(2.0) }\n            }\n        ]);\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/chromaticAberration/ChromaticAberrationShader.ts?");
+eval("throw new Error(\"Module build failed (from ./node_modules/ts-loader/index.js):\\nError: ENOENT: no such file or directory, open '/Users/makinomasato/Documents/projects/threejs-lab/src/ts/chromaticAberration/ChromaticAberrationPass.ts'\");\n\n//# sourceURL=webpack:///./src/ts/chromaticAberration/ChromaticAberrationPass.ts?");
 
 /***/ }),
 
@@ -224,18 +199,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"PostProcessRenderer\", function() { return PostProcessRenderer; });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var three_examples_jsm_postprocessing_RenderPass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three/examples/jsm/postprocessing/RenderPass */ \"./node_modules/three/examples/jsm/postprocessing/RenderPass.js\");\n/* harmony import */ var three_examples_jsm_postprocessing_EffectComposer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three/examples/jsm/postprocessing/EffectComposer */ \"./node_modules/three/examples/jsm/postprocessing/EffectComposer.js\");\n\n\n\nclass PostProcessRenderer {\n    constructor(scene, camera, renderer) {\n        this.composers = [];\n        /**\n         * requestAnimationFrameハンドラ\n         * @param timestamp\n         */\n        this.onRequestAnimationFrame = (timestamp) => {\n            if (this.lastUpdateTimestamp == null) {\n                this.lastUpdateTimestamp = timestamp;\n            }\n            const delta = timestamp - this.lastUpdateTimestamp;\n            if (this.onBeforeRequestAnimationFrame) {\n                this.onBeforeRequestAnimationFrame(timestamp);\n            }\n            this.render(delta);\n            this.lastUpdateTimestamp = timestamp;\n            this.id = requestAnimationFrame(this.onRequestAnimationFrame);\n        };\n        this.renderer = renderer;\n        this.scene = scene;\n        this.camera = camera;\n    }\n    getRenderPass() {\n        return new three_examples_jsm_postprocessing_RenderPass__WEBPACK_IMPORTED_MODULE_1__[\"RenderPass\"](this.scene, this.camera, undefined, undefined, undefined);\n    }\n    /**\n     * シェーダーパスを挟んだEffectComposerを初期化する。\n     * @param renderer\n     */\n    initComposer(passes, renderer) {\n        const renderPass = this.getRenderPass();\n        const composer = new three_examples_jsm_postprocessing_EffectComposer__WEBPACK_IMPORTED_MODULE_2__[\"EffectComposer\"](renderer);\n        composer.addPass(renderPass);\n        passes.forEach(p => {\n            composer.addPass(p);\n        });\n        this.composers.push(composer);\n        return composer;\n    }\n    /**\n     * レンダリングを開始する。\n     */\n    start() {\n        if (this.id != null)\n            return;\n        this.id = requestAnimationFrame(this.onRequestAnimationFrame);\n    }\n    /**\n     * レンダリングを停止する。\n     */\n    stop() {\n        if (this.id == null)\n            return;\n        cancelAnimationFrame(this.id);\n        this.lastUpdateTimestamp = null;\n    }\n    setSize(w, h) {\n        this.camera.aspect = w / h;\n        this.camera.updateProjectionMatrix();\n        this.renderer.setPixelRatio(window.devicePixelRatio);\n        this.renderer.setSize(w, h);\n        this.composers.forEach(composer => {\n            composer.setSize(w, h);\n        });\n    }\n    getSize() {\n        return this.renderer.getSize(new three__WEBPACK_IMPORTED_MODULE_0__[\"Vector2\"]());\n    }\n    render(delta) {\n        this.composers.forEach(composer => {\n            composer.render(delta);\n        });\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/postprocess/PostProcessRenderer.ts?");
-
-/***/ }),
-
-/***/ "./src/ts/postprocess/PostProcessShader.ts":
-/*!*************************************************!*\
-  !*** ./src/ts/postprocess/PostProcessShader.ts ***!
-  \*************************************************/
-/*! exports provided: PostProcessShader */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"PostProcessShader\", function() { return PostProcessShader; });\n/**\n * EffectComposer用のShaderオブジェクトに必要な要素を定義したクラス。\n */\nclass PostProcessShader {\n    constructor() {\n        this.vertexShader = `\n    varying vec2 vUv;\n    void main() {\n      vUv = uv;\n      gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\n    }\n  `;\n        this.initUniform();\n    }\n    initUniform() {\n        this.uniforms = {\n            tDiffuse: { value: null }\n        };\n    }\n}\n\n\n//# sourceURL=webpack:///./src/ts/postprocess/PostProcessShader.ts?");
 
 /***/ })
 
