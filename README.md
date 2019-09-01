@@ -12,9 +12,9 @@ Studies for three.js.
 
 [Water Plane](https://masatomakino.github.io/threejs-lab/water)
 
-[Flame using particle engine](https://masatomakino.github.io/threejs-lab/nebulaFire.html)
+[Flame using particle engine](https://masatomakino.github.io/threejs-lab/nebula_fire)
 
-[Cloud using particle engine](https://masatomakino.github.io/threejs-lab/nebulasky)
+[Cloud using particle engine](https://masatomakino.github.io/threejs-lab/nebula_sky)
 
 [Loop animation using clipping plane](https://masatomakino.github.io/threejs-lab/loop)
 
