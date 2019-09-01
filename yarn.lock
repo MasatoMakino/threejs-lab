@@ -4757,10 +4757,6 @@ three@^0.107.0:
   resolved "https://registry.yarnpkg.com/three/-/three-0.107.0.tgz#0c862c348d61bd3f22058e01f5e771c1294315a1"
   integrity sha512-vqbKJRLBEviPVa7poEzXocobicwxzsctr5mnymA7n8fEzcVS49rYP0RrwqZ98JqujRoruK+/YzcchNpRP+kXsQ==
 
-"threejs-postprocess@https://github.com/MasatoMakino/threejs-postprocess.git":
-  version "0.1.0"
-  resolved "https://github.com/MasatoMakino/threejs-postprocess.git#9f8b0444d03754a632423508608b487a43fd59a3"
-
 "threejs-shader-materials@https://github.com/MasatoMakino/threejs-shader-materials.git":
   version "0.1.0"
   resolved "https://github.com/MasatoMakino/threejs-shader-materials.git#fd4724763d7791e00a67888998224a49c82ecee8"

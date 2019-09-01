@@ -4,10 +4,6 @@ Studies for three.js.
 
 ## Demo
 
-[PostEffect Anti-Aliasing](https://masatomakino.github.io/threejs-lab/aaSwitch)
-
-[Bloom](https://masatomakino.github.io/threejs-lab/bloom)
-
 [Depth setting test](https://masatomakino.github.io/threejs-lab/depthTest)
 
 [Streaming Video Texture](https://masatomakino.github.io/threejs-lab/streamVideoHLS)
@@ -21,3 +17,7 @@ Studies for three.js.
 [Cloud using particle engine](https://masatomakino.github.io/threejs-lab/nebulasky)
 
 [Loop animation using clipping plane](https://masatomakino.github.io/threejs-lab/loop)
+
+## License
+
+[MIT licensed](LICENSE).
