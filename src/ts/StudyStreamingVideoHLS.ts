@@ -1,10 +1,12 @@
 import { Scene, Mesh, Fog, PointLight, PointLightHelper } from "three";
 import { Common } from "ts/Common";
-import * as Hls from "hls.js";
-import { PlaneBufferGeometry } from "three";
-import { VideoTexture } from "three";
-import { MeshBasicMaterial } from "three";
-import { Texture } from "three";
+import Hls from "hls.js";
+import {
+  PlaneBufferGeometry,
+  VideoTexture,
+  MeshBasicMaterial,
+  Texture
+} from "three";
 
 /**
  * HLS形式のストリーミングビデオをVideoテクスチャにするサンプル。
