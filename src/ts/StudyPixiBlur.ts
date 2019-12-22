@@ -21,7 +21,12 @@ export class Study {
   }
 
   private initObject(scene: Scene): void {
-    const app = new Application({ width: 256, height: 256 });
+    const app = new Application({
+      width: 256,
+      height: 256,
+      preserveDrawingBuffer: true,
+      clearBeforeRender: false
+    });
     document.body.appendChild(app.view);
 
     app.ticker.add(() => {
@@ -35,7 +40,14 @@ export class Study {
       .drawRect(0, 0, 32, 32)
       .endFill();
 
+    const shade = new Graphics();
+    shade
+      .beginFill(app.renderer.backgroundColor, 0.05)
+      .drawRect(0, 0, 256, 256)
+      .endFill();
+
     app.stage.addChild(shape);
+    app.stage.addChild(shade);
 
     const tween = new TWEEN.Tween(shape)
       .to({ x: 256, y: 256 }, 3000)

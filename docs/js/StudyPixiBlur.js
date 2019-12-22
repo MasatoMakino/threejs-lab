@@ -57,7 +57,7 @@
 /******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 	// Promise = chunk loading, 0 = chunk loaded
 /******/ 	var installedChunks = {
-/******/ 		"StudyPixiTexture": 0
+/******/ 		"StudyPixiBlur": 0
 /******/ 	};
 /******/
 /******/ 	var deferredModules = [];
@@ -148,7 +148,7 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push(["./src/ts/StudyPixiTexture.ts","vendor"]);
+/******/ 	deferredModules.push(["./src/ts/StudyPixiBlur.ts","vendor"]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
@@ -167,15 +167,15 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
-/***/ "./src/ts/StudyPixiTexture.ts":
-/*!************************************!*\
-  !*** ./src/ts/StudyPixiTexture.ts ***!
-  \************************************/
+/***/ "./src/ts/StudyPixiBlur.ts":
+/*!*********************************!*\
+  !*** ./src/ts/StudyPixiBlur.ts ***!
+  \*********************************/
 /*! exports provided: Study */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Study\", function() { return Study; });\n/* harmony import */ var ts_Common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ts/Common */ \"./src/ts/Common.ts\");\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var pixi_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! pixi.js */ \"./node_modules/pixi.js/lib/pixi.es.js\");\n/* harmony import */ var _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @tweenjs/tween.js */ \"./node_modules/@tweenjs/tween.js/dist/tween.esm.js\");\n\n\n\n\n\nclass Study {\n    constructor() {\n        const scene = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initScene();\n        ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initLight(scene);\n        const camera = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initCamera(scene, Study.W, Study.H);\n        const renderer = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initRenderer(Study.W, Study.H);\n        const control = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initControl(camera, renderer);\n        ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initHelper(scene);\n        this.initObject(scene);\n        ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].render(control, renderer, scene, camera);\n    }\n    initObject(scene) {\n        const app = new pixi_js__WEBPACK_IMPORTED_MODULE_2__[\"Application\"]({ width: 256, height: 256 });\n        document.body.appendChild(app.view);\n        app.ticker.add(() => {\n            _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_3__[\"default\"].update(app.ticker.lastTime);\n            map.needsUpdate = true;\n        });\n        const shape = new pixi_js__WEBPACK_IMPORTED_MODULE_2__[\"Graphics\"]();\n        shape\n            .beginFill(0xff00ff)\n            .drawRect(0, 0, 32, 32)\n            .endFill();\n        app.stage.addChild(shape);\n        const tween = new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_3__[\"default\"].Tween(shape)\n            .to({ x: 256, y: 256 }, 3000)\n            .easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_3__[\"default\"].Easing.Cubic.InOut)\n            .repeat(Infinity)\n            .yoyo(true)\n            .start();\n        const geo = new three__WEBPACK_IMPORTED_MODULE_1__[\"PlaneGeometry\"](32, 32);\n        const map = new three__WEBPACK_IMPORTED_MODULE_1__[\"Texture\"](app.view);\n        const mat = new three__WEBPACK_IMPORTED_MODULE_1__[\"MeshBasicMaterial\"]({\n            map: map,\n            blending: three__WEBPACK_IMPORTED_MODULE_1__[\"AdditiveBlending\"]\n        });\n        const mesh = new three__WEBPACK_IMPORTED_MODULE_1__[\"Mesh\"](geo, mat);\n        scene.add(mesh);\n    }\n}\nStudy.W = 640;\nStudy.H = 480;\nwindow.onload = () => {\n    const study = new Study();\n};\n\n\n//# sourceURL=webpack:///./src/ts/StudyPixiTexture.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Study\", function() { return Study; });\n/* harmony import */ var ts_Common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ts/Common */ \"./src/ts/Common.ts\");\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var pixi_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! pixi.js */ \"./node_modules/pixi.js/lib/pixi.es.js\");\n/* harmony import */ var _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @tweenjs/tween.js */ \"./node_modules/@tweenjs/tween.js/dist/tween.esm.js\");\n\n\n\n\n\nclass Study {\n    constructor() {\n        const scene = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initScene();\n        ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initLight(scene);\n        const camera = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initCamera(scene, Study.W, Study.H);\n        const renderer = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initRenderer(Study.W, Study.H);\n        const control = ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initControl(camera, renderer);\n        ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].initHelper(scene);\n        this.initObject(scene);\n        ts_Common__WEBPACK_IMPORTED_MODULE_0__[\"Common\"].render(control, renderer, scene, camera);\n    }\n    initObject(scene) {\n        const app = new pixi_js__WEBPACK_IMPORTED_MODULE_2__[\"Application\"]({\n            width: 256,\n            height: 256,\n            preserveDrawingBuffer: true,\n            clearBeforeRender: false\n        });\n        document.body.appendChild(app.view);\n        app.ticker.add(() => {\n            _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_3__[\"default\"].update(app.ticker.lastTime);\n            map.needsUpdate = true;\n        });\n        const shape = new pixi_js__WEBPACK_IMPORTED_MODULE_2__[\"Graphics\"]();\n        shape\n            .beginFill(0xff00ff)\n            .drawRect(0, 0, 32, 32)\n            .endFill();\n        const shade = new pixi_js__WEBPACK_IMPORTED_MODULE_2__[\"Graphics\"]();\n        shade\n            .beginFill(app.renderer.backgroundColor, 0.05)\n            .drawRect(0, 0, 256, 256)\n            .endFill();\n        app.stage.addChild(shape);\n        app.stage.addChild(shade);\n        const tween = new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_3__[\"default\"].Tween(shape)\n            .to({ x: 256, y: 256 }, 3000)\n            .easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_3__[\"default\"].Easing.Cubic.InOut)\n            .repeat(Infinity)\n            .yoyo(true)\n            .start();\n        const geo = new three__WEBPACK_IMPORTED_MODULE_1__[\"PlaneGeometry\"](32, 32);\n        const map = new three__WEBPACK_IMPORTED_MODULE_1__[\"Texture\"](app.view);\n        const mat = new three__WEBPACK_IMPORTED_MODULE_1__[\"MeshBasicMaterial\"]({\n            map: map,\n            blending: three__WEBPACK_IMPORTED_MODULE_1__[\"AdditiveBlending\"]\n        });\n        const mesh = new three__WEBPACK_IMPORTED_MODULE_1__[\"Mesh\"](geo, mat);\n        scene.add(mesh);\n    }\n}\nStudy.W = 640;\nStudy.H = 480;\nwindow.onload = () => {\n    const study = new Study();\n};\n\n\n//# sourceURL=webpack:///./src/ts/StudyPixiBlur.ts?");
 
 /***/ })
 
