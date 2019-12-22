@@ -6,6 +6,7 @@
     "noImplicitAny": false,
     "lib": ["es2017", "dom"],
     "baseUrl": "./",
+    "allowSyntheticDefaultImports": true, // it needs to [import TWEEN from "@tweenjs/tween.js"]
     "paths": {
       "ts/*": ["src/ts/*"],
       "ts": ["src/ts"],
