@@ -18,6 +18,8 @@ Studies for three.js.
 
 [Loop animation using clipping plane](https://masatomakino.github.io/threejs-lab/loop)
 
+[Motion blur in WebGL Texture](https://masatomakino.github.io/threejs-lab/pixi_blur)
+
 ## License
 
 [MIT licensed](LICENSE).
