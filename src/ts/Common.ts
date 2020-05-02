@@ -1,13 +1,13 @@
 import {
   AmbientLight,
   AxesHelper,
+  Camera,
   Color,
   PerspectiveCamera,
   Scene,
-  WebGLRenderer
+  WebGLRenderer,
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { Camera } from "three";
 
 export class Common {
   public static initScene() {
@@ -35,7 +35,7 @@ export class Common {
     return camera;
   }
 
-  public static initControl(camera, render?: WebGLRenderer): OrbitControls {
+  public static initControl(camera, render: WebGLRenderer): OrbitControls {
     let domElement;
     if (render) {
       domElement = render.domElement;
@@ -54,7 +54,7 @@ export class Common {
   ) {
     const renderer = new WebGLRenderer({
       canvas: document.getElementById(id) as HTMLCanvasElement,
-      antialias: antialias
+      antialias: antialias,
     });
     renderer.setClearColor(new Color(color));
     renderer.setSize(W, H);

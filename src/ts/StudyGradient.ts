@@ -1,13 +1,9 @@
+import { BoxGeometry, Color, Mesh, Scene, ShaderMaterial } from "three";
 import { Common } from "ts/Common";
-import { Scene } from "three";
-import { ShaderMaterial } from "three";
-import { Mesh } from "three";
-import { Color } from "three";
-import { BoxGeometry } from "three";
-// @ts-ignore
-import vertexSource from "ts/gradient/shader.vert";
 // @ts-ignore
 import fragmentSource from "ts/gradient/shader.frag";
+// @ts-ignore
+import vertexSource from "ts/gradient/shader.vert";
 
 export class StudyGradient {
   public static readonly W = 640;
@@ -18,7 +14,7 @@ export class StudyGradient {
     Common.initLight(scene);
     const camera = Common.initCamera(scene, StudyGradient.W, StudyGradient.H);
     const renderer = Common.initRenderer(StudyGradient.W, StudyGradient.H);
-    const control = Common.initControl(camera);
+    const control = Common.initControl(camera, renderer);
     Common.initHelper(scene);
     this.initObject(scene);
     Common.render(control, renderer, scene, camera);
@@ -31,13 +27,13 @@ export class StudyGradient {
     const uniforms = {
       size: { type: "float", value: size },
       colorB: { type: "vec3", value: new Color(0x00ff00) },
-      colorA: { type: "vec3", value: new Color(0xff00ff) }
+      colorA: { type: "vec3", value: new Color(0xff00ff) },
     };
 
     const mat = new ShaderMaterial({
       uniforms: uniforms,
       vertexShader: vertexSource,
-      fragmentShader: fragmentSource
+      fragmentShader: fragmentSource,
     });
     const mesh = new Mesh(geo, mat);
 

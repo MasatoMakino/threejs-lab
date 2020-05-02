@@ -1,11 +1,11 @@
-import { Common } from "ts/Common";
 import {
-  Scene,
-  PlaneBufferGeometry,
   DirectionalLight,
-  DirectionalLightHelper
+  DirectionalLightHelper,
+  PlaneBufferGeometry,
+  Scene,
 } from "three";
 import { WaterOptions } from "three/examples/jsm/objects/Water";
+import { Common } from "ts/Common";
 import { WaterMesh } from "ts/water/WaterMesh";
 
 export class StudyWater {
@@ -20,7 +20,7 @@ export class StudyWater {
     const camera = Common.initCamera(scene, StudyWater.W, StudyWater.H);
     camera.position.set(0, 20, 100);
     const renderer = Common.initRenderer(StudyWater.W, StudyWater.H, 0x999999);
-    const control = Common.initControl(camera);
+    const control = Common.initControl(camera, renderer);
     Common.initHelper(scene);
     this.initObject(scene);
     Common.render(control, renderer, scene, camera);
@@ -40,7 +40,7 @@ export class StudyWater {
       // alpha: 1.0,
       // waterColor: 0x001e0f,
       // distortionScale: 3.7,
-      fog: scene.fog !== undefined
+      fog: scene.fog !== undefined,
     };
     WaterMesh.updateSunOption(option, light);
 

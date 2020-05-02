@@ -3,6 +3,7 @@ import {
   BackSide,
   BufferGeometry,
   DecrementWrapStencilOp,
+  Euler,
   FrontSide,
   Geometry,
   Group,
@@ -17,7 +18,6 @@ import {
   ReplaceStencilOp,
   Side,
   StencilOp,
-  Euler
 } from "three";
 
 /**
@@ -97,7 +97,7 @@ export class ClippingSurface extends Group {
       mat = new MeshStandardMaterial({
         color: 0xe91e63,
         metalness: 0.1,
-        roughness: 0.75
+        roughness: 0.75,
       });
     }
     ClippingSurfaceUtil.overrideStencilMaterial(
@@ -108,7 +108,7 @@ export class ClippingSurface extends Group {
 
     //プレーンジオメトリオブジェクトを生成。
     const po = new Mesh(planeGeom, mat);
-    po.onAfterRender = function(renderer) {
+    po.onAfterRender = function (renderer) {
       renderer.clearStencil();
     };
     po.renderOrder = index + 1.1;
@@ -132,7 +132,7 @@ export class ClippingSurface extends Group {
     return this.stencilGroup.rotation;
   }
   set rotation(val: Euler) {
-    this.stencilGroup.rotation = val;
+    this.stencilGroup.rotation.copy(val);
   }
 }
 
@@ -218,7 +218,7 @@ class ClippingSurfaceUtil {
     clippingPlane: Plane,
     otherPlanes: Plane[]
   ): void {
-    mat.clippingPlanes = otherPlanes.filter(p => p !== clippingPlane);
+    mat.clippingPlanes = otherPlanes.filter((p) => p !== clippingPlane);
     mat.stencilWrite = true;
     mat.stencilRef = 0;
     mat.stencilFunc = NotEqualStencilFunc;
@@ -241,7 +241,7 @@ class ClippingSurfaceUtil {
       mat = new MeshStandardMaterial({
         color: 0xffc107,
         metalness: 0.1,
-        roughness: 0.75
+        roughness: 0.75,
       });
     }
     this.overrideFrontFaceMaterial(mat, planes);

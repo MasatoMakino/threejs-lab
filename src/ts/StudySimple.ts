@@ -1,11 +1,9 @@
+import { Mesh, PlaneGeometry, Scene, ShaderMaterial } from "three";
 import { Common } from "ts/Common";
-import { Scene, PlaneGeometry, Mesh } from "three";
-
-import { ShaderMaterial } from "three";
-// @ts-ignore
-import vertexSource from "ts/simple/shader.vert";
 // @ts-ignore
 import fragmentSource from "ts/simple/shader.frag";
+// @ts-ignore
+import vertexSource from "ts/simple/shader.vert";
 
 export class StudySimple {
   public static readonly W = 640;
@@ -16,7 +14,7 @@ export class StudySimple {
     Common.initLight(scene);
     const camera = Common.initCamera(scene, StudySimple.W, StudySimple.H);
     const renderer = Common.initRenderer(StudySimple.W, StudySimple.H);
-    const control = Common.initControl(camera);
+    const control = Common.initControl(camera, renderer);
     Common.initHelper(scene);
     this.initObject(scene);
     Common.render(control, renderer, scene, camera);
@@ -26,7 +24,7 @@ export class StudySimple {
     const geo = new PlaneGeometry(10, 10);
     const mat = new ShaderMaterial({
       vertexShader: vertexSource,
-      fragmentShader: fragmentSource
+      fragmentShader: fragmentSource,
     });
     const mesh = new Mesh(geo, mat);
     scene.add(mesh);
