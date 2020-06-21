@@ -13,6 +13,7 @@
     "dat.gui": "^0.7.7",
     "glob": "^7.1.6",
     "gulp": "^4.0.2",
+    "gulptask-demo-page": "https://github.com/MasatoMakino/gulptask-demo-page.git",
     "gulptask-dev-server": "https://github.com/MasatoMakino/gulptask-dev-server.git",
     "gulptask-webpack": "https://github.com/MasatoMakino/gulptask-webpack.git",
     "hls.js": "^0.13.2",
