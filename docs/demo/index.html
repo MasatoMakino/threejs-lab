@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>demo</title>
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/purecss@1.0.1/build/pure-min.css"
+            integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47"
+            crossorigin="anonymous"
+    />
+    <style>
+        html, body, #layout{
+            height:100%;
+        }
+        #layout{
+            padding-left: 360px;
+        }
+
+        #menu {
+            width: 360px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 1000; /* so the menu or its navicon stays above all content */
+            background: #222;
+            overflow-y: auto;
+        }
+        #menu a {
+            color: #bbb;
+            border: none;
+            padding: 0.6em 0 0.6em 0.6em;
+        }
+        #menu a:hover,
+        #menu a:focus {
+            background: #444;
+        }
+        #menu .pure-menu-selected a{
+            color: #fff;
+            background: #18d;
+        }
+
+        iframe{
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(e) {
+
+            var menuItems = document.getElementsByClassName('pure-menu-item');
+
+            function init() {
+                for( var i = 0 ; i < menuItems.length; i++ ){
+                    var item = menuItems[i];
+                    item.addEventListener("click", function(e){
+                        selectMenu(e.currentTarget);
+                    })
+                }
+                selectMenu( menuItems[0] );
+            }
+
+            function selectMenu( item ){
+                removeAllClass(menuItems);
+                item.classList.add('pure-menu-selected');
+            }
+            function removeAllClass(items){
+                for( var i = 0 ; i < items.length; i++ ){
+                    var item = menuItems[i];
+                    item.classList.remove('pure-menu-selected');
+                }
+            }
+
+            init();
+
+        });
+    </script>
+
+</head>
+<body>
+<div id="layout">
+    <div id="menu">
+        <div class="pure-menu">
+        <ul class="pure-menu-list">
+            
+            <li class="pure-menu-item"><a class="pure-menu-link" href="StudyBufferGeometry.html" target="demo-frame">StudyBufferGeometry.html</a></li>
+            
+            <li class="pure-menu-item"><a class="pure-menu-link" href="StudyDepthTestAndDepthWrite.html" target="demo-frame">StudyDepthTestAndDepthWrite.html</a></li>
+            
+            <li class="pure-menu-item"><a class="pure-menu-link" href="StudyGradient.html" target="demo-frame">StudyGradient.html</a></li>
+            
+            <li class="pure-menu-item"><a class="pure-menu-link" href="StudyLoopAnimation.html" target="demo-frame">StudyLoopAnimation.html</a></li>
+            
+            <li class="pure-menu-item"><a class="pure-menu-link" href="StudyNebula.html" target="demo-frame">StudyNebula.html</a></li>
+            
+            <li class="pure-menu-item"><a class="pure-menu-link" href="StudyNebulaFire.html" target="demo-frame">StudyNebulaFire.html</a></li>
+            
+            <li class="pure-menu-item"><a class="pure-menu-link" href="StudyNebulaSky.html" target="demo-frame">StudyNebulaSky.html</a></li>
+            
+            <li class="pure-menu-item"><a class="pure-menu-link" href="StudyPixiBlur.html" target="demo-frame">StudyPixiBlur.html</a></li>
+            
+            <li class="pure-menu-item"><a class="pure-menu-link" href="StudyPixiTexture.html" target="demo-frame">StudyPixiTexture.html</a></li>
+            
+            <li class="pure-menu-item"><a class="pure-menu-link" href="StudySimple.html" target="demo-frame">StudySimple.html</a></li>
+            
+            <li class="pure-menu-item"><a class="pure-menu-link" href="StudyStencil.html" target="demo-frame">StudyStencil.html</a></li>
+            
+            <li class="pure-menu-item"><a class="pure-menu-link" href="StudyStreamingVideoHLS.html" target="demo-frame">StudyStreamingVideoHLS.html</a></li>
+            
+            <li class="pure-menu-item"><a class="pure-menu-link" href="StudyWater.html" target="demo-frame">StudyWater.html</a></li>
+            
+        </ul>
+        </div>
+    </div>
+    <iframe name="demo-frame" id="demo-frame" src="StudyBufferGeometry.html"></iframe>
+</div>
+</body>
+</html>
