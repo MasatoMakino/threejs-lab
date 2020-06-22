@@ -1,14 +1,14 @@
+import * as dat from "dat.gui";
 import {
-  Scene,
+  Color,
   Mesh,
+  MeshPhongMaterial,
   PointLight,
   PointLightHelper,
-  Color,
+  Scene,
   SphereGeometry,
-  MeshPhongMaterial
 } from "three";
-import { Common } from "ts/Common";
-import * as dat from "dat.gui";
+import { Common } from "./Common";
 
 export class StudyDepthTestAndDepthWrite {
   public static readonly W = 640;
@@ -78,7 +78,7 @@ export class StudyDepthTestAndDepthWrite {
       fog: scene.fog !== undefined,
       transparent: true,
       opacity: 0.5,
-      color: new Color(color)
+      color: new Color(color),
     });
     const mesh = new Mesh(geo, mat);
     scene.add(mesh);
@@ -87,13 +87,13 @@ export class StudyDepthTestAndDepthWrite {
 
   public switchDepthTest(val: boolean): void {
     const spheres = [this.outer, this.inner, this.satellite];
-    spheres.forEach(sphere => {
+    spheres.forEach((sphere) => {
       (<MeshPhongMaterial>sphere.material).depthTest = val;
     });
   }
   public switchDepthWrite(val: boolean): void {
     const spheres = [this.outer, this.inner, this.satellite];
-    spheres.forEach(sphere => {
+    spheres.forEach((sphere) => {
       (<MeshPhongMaterial>sphere.material).depthWrite = val;
     });
   }
@@ -120,41 +120,43 @@ export class StudyDepthTestAndDepthWrite {
       alpha: 0.5,
       satelliteShiftIsMeshPosition: false,
       depthTest: true,
-      depthWrite: true
+      depthWrite: true,
     };
 
     const gui = new dat.GUI();
 
     //外部ボールがメッシュポジションか、ジオメトリシフトかで結果が変わる。
     const meshFolder = gui.addFolder("Mesh");
-    meshFolder.add(prop, "alpha", 0.0, 1.0).onChange(val => {
+    meshFolder.add(prop, "alpha", 0.0, 1.0).onChange((val) => {
       const spheres = [this.outer, this.inner, this.satellite];
-      spheres.forEach(sphere => {
+      spheres.forEach((sphere) => {
         (<MeshPhongMaterial>sphere.material).opacity = val;
       });
     });
     meshFolder.open();
 
     const satelliteFolder = gui.addFolder("satellite");
-    satelliteFolder.add(prop, "satelliteShiftIsMeshPosition").onChange(val => {
-      this.switchSatelliteShift(val);
-    });
+    satelliteFolder
+      .add(prop, "satelliteShiftIsMeshPosition")
+      .onChange((val) => {
+        this.switchSatelliteShift(val);
+      });
     satelliteFolder.open();
 
     const depthFolder = gui.addFolder("depth");
-    depthFolder.add(prop, "depthTest").onChange(val => {
+    depthFolder.add(prop, "depthTest").onChange((val) => {
       this.switchDepthTest(val);
     });
-    depthFolder.add(prop, "depthWrite").onChange(val => {
+    depthFolder.add(prop, "depthWrite").onChange((val) => {
       this.switchDepthWrite(val);
     });
     depthFolder.open();
 
     const innerFolder = gui.addFolder("Inner Sphere");
     const innerParam = {
-      x: 0.0
+      x: 0.0,
     };
-    innerFolder.add(innerParam, "x", 0, 20).onChange(val => {
+    innerFolder.add(innerParam, "x", 0, 20).onChange((val) => {
       this.inner.position.x = val;
     });
     innerFolder.open();
@@ -163,7 +165,7 @@ export class StudyDepthTestAndDepthWrite {
     const orders = {
       inner: 0.0,
       outer: 0.0,
-      satellite: 0.0
+      satellite: 0.0,
     };
     const min = -3;
     const max = 3;
@@ -171,28 +173,28 @@ export class StudyDepthTestAndDepthWrite {
     renderOrderFolder
       .add(orders, "inner", min, max)
       .step(step)
-      .onChange(val => {
+      .onChange((val) => {
         this.inner.renderOrder = val;
       });
     renderOrderFolder
       .add(orders, "outer", min, max)
       .step(step)
-      .onChange(val => {
+      .onChange((val) => {
         this.outer.renderOrder = val;
       });
     renderOrderFolder
       .add(orders, "satellite", min, max)
       .step(step)
-      .onChange(val => {
+      .onChange((val) => {
         this.satellite.renderOrder = val;
       });
     renderOrderFolder.open();
 
     const sceneFolder = gui.addFolder("Scene");
     const sceneParam = {
-      SwapSphere: false
+      SwapSphere: false,
     };
-    sceneFolder.add(sceneParam, "SwapSphere").onChange(val => {
+    sceneFolder.add(sceneParam, "SwapSphere").onChange((val) => {
       this.swapSphere(val);
       this.inner.position.x = innerParam.x;
     });

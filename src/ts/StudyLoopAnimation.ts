@@ -1,18 +1,18 @@
-import { Common } from "ts/Common";
-import { CommonGUI } from "ts/CommonGUI";
+import * as dat from "dat.gui";
 import {
+  Color,
   Fog,
-  Scene,
+  MeshBasicMaterial,
+  Plane,
   PointLight,
   PointLightHelper,
+  Scene,
   TorusKnotBufferGeometry,
-  MeshBasicMaterial,
-  Color,
-  Plane,
-  Vector3
+  Vector3,
 } from "three";
-import { ClippingSurface } from "ts/clippingSurface/ClippingSurface";
-import * as dat from "dat.gui";
+import { ClippingSurface } from "./clippingSurface/ClippingSurface";
+import { Common } from "./Common";
+import { CommonGUI } from "./CommonGUI";
 
 export class Study {
   public static readonly W = 640;
@@ -48,8 +48,8 @@ export class Study {
     const plane = new Plane(new Vector3(0, 0, -1), 0);
     const surface = new ClippingSurface(plane, geo, {
       planeMaterial: new MeshBasicMaterial({
-        color: new Color(0xffffff)
-      })
+        color: new Color(0xffffff),
+      }),
     });
 
     scene.add(surface);

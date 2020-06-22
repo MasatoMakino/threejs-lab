@@ -31,7 +31,6 @@
   "scripts": {
     "start:dev": "gulp start_dev",
     "build": "gulp build",
-    "build:deploy": "gulp build_production",
     "checkout:docs": "git checkout HEAD ./docs/"
   },
   "husky": {

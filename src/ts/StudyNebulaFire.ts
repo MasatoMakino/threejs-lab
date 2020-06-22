@@ -1,11 +1,11 @@
-import { Common } from "ts/Common";
-import { Scene } from "three";
+import * as dat from "dat.gui";
 import * as THREE from "three";
+import { Scene } from "three";
 
 import System, { SpriteRenderer } from "three-nebula";
-import * as dat from "dat.gui";
-import { FireEmitter } from "ts/nebulaFire/FireEmitter";
-import { NebulaGUI } from "ts/NebulaGUI";
+import { Common } from "./Common";
+import { FireEmitter } from "./nebulaFire/FireEmitter";
+import { NebulaGUI } from "./NebulaGUI";
 
 /**
  * パーティクルエンジンを利用した炎の表現の作例。
@@ -42,8 +42,8 @@ export class Study {
         "./textures/fire01.png",
         "./textures/fire02.png",
         "./textures/fire03.png",
-        "./textures/fire04.png"
-      ]
+        "./textures/fire04.png",
+      ],
     });
     const renderer = new SpriteRenderer(scene, THREE);
 

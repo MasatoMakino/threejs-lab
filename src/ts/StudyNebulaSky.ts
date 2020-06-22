@@ -1,15 +1,14 @@
-import { Common } from "ts/Common";
-import { NebulaGUI } from "ts/NebulaGUI";
-
+import * as dat from "dat.gui";
+import * as THREE from "three";
 import {
   Color,
   CubeTextureLoader,
+  Fog,
   Scene,
   Sprite,
   SpriteMaterial,
-  TextureLoader
+  TextureLoader,
 } from "three";
-import * as THREE from "three";
 
 import System, {
   Alpha,
@@ -26,10 +25,10 @@ import System, {
   Span,
   SphereZone,
   SpriteRenderer,
-  Vector3D
+  Vector3D,
 } from "three-nebula";
-import * as dat from "dat.gui";
-import { Fog } from "three";
+import { Common } from "./Common";
+import { NebulaGUI } from "./NebulaGUI";
 
 /**
  * パーティクルエンジンによる雲表現の習作
@@ -79,7 +78,7 @@ export class Study {
       "py.jpg",
       "ny.jpg",
       "pz.jpg",
-      "nz.jpg"
+      "nz.jpg",
     ]);
     scene.background = cubeTexture;
   }
@@ -98,14 +97,14 @@ export class Study {
       "./textures/cloud/cloud01.png",
       "./textures/cloud/cloud02.png",
       "./textures/cloud/cloud03.png",
-      "./textures/cloud/cloud04.png"
+      "./textures/cloud/cloud04.png",
     ];
-    const sprites = urlArray.map(url => {
+    const sprites = urlArray.map((url) => {
       return new Sprite(
         new SpriteMaterial({
           map: loader.load(url),
           transparent: true,
-          fog: scene.fog !== undefined
+          fog: scene.fog !== undefined,
           // blending:THREE.AdditiveBlending
         })
       );
@@ -124,7 +123,7 @@ export class Study {
         this.radius,
         this.life,
         this.range,
-        body
+        body,
       ])
       .setBehaviours([this.alpha, this.scale, this.color])
       .emit();

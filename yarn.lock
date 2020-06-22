@@ -3353,7 +3353,7 @@ gulplog@^1.0.0:
 
 "gulptask-demo-page@https://github.com/MasatoMakino/gulptask-demo-page.git":
   version "0.1.4"
-  resolved "https://github.com/MasatoMakino/gulptask-demo-page.git#ff5d04a5fcd2edda379b07c17847fa75d5398bf1"
+  resolved "https://github.com/MasatoMakino/gulptask-demo-page.git#492ae2e1debf0fbe095f4a1867f1b3b8820c2bef"
   dependencies:
     "@babel/core" "^7.10.3"
     "@babel/preset-env" "^7.10.3"
@@ -3369,7 +3369,7 @@ gulplog@^1.0.0:
 
 "gulptask-dev-server@https://github.com/MasatoMakino/gulptask-dev-server.git":
   version "0.2.2"
-  resolved "https://github.com/MasatoMakino/gulptask-dev-server.git#7cfacd6d594be59b23d258fcdf6668167191e0f3"
+  resolved "https://github.com/MasatoMakino/gulptask-dev-server.git#078a090a7cd9eb7d334961d48ea6a3958a48f63f"
   dependencies:
     browser-sync "^2.26.7"
     compression "^1.7.4"

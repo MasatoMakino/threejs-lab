@@ -5,10 +5,10 @@ import {
   Scene,
   TorusKnotBufferGeometry,
   Vector3,
-  WebGLRenderer
+  WebGLRenderer,
 } from "three";
-import { Common } from "ts/Common";
-import { ClippingSurface } from "ts/clippingSurface/ClippingSurface";
+import { ClippingSurface } from "./clippingSurface/ClippingSurface";
+import { Common } from "./Common";
 
 export class Study {
   static readonly W: number = 640.0;
@@ -23,7 +23,7 @@ export class Study {
     return [
       new Plane(new Vector3(-1, 0, 0), 0),
       new Plane(new Vector3(0, -1, 0), 0),
-      new Plane(new Vector3(0, 0, -1), 0)
+      new Plane(new Vector3(0, 0, -1), 0),
     ];
   }
 
@@ -43,9 +43,9 @@ export class Study {
 
     const surfaces: ClippingSurface[] = [];
     //トーラスジオメトリをコピーしたグループを作る。
-    this.planes.forEach(plane => {
+    this.planes.forEach((plane) => {
       const group = new ClippingSurface(plane, geometry, {
-        allPlanes: this.planes
+        allPlanes: this.planes,
       });
       this.scene.add(group);
       surfaces.push(group);
@@ -56,7 +56,7 @@ export class Study {
 
     const controls = Common.initControl(this.camera, this.renderer);
     Common.render(controls, this.renderer, this.scene, this.camera, () => {
-      surfaces.forEach(surface => {
+      surfaces.forEach((surface) => {
         surface.rotation.x += 0.01;
         surface.updatePlane();
       });

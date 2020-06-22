@@ -1,9 +1,9 @@
 import { BoxGeometry, Color, Mesh, Scene, ShaderMaterial } from "three";
-import { Common } from "ts/Common";
+import { Common } from "./Common";
 // @ts-ignore
-import fragmentSource from "ts/gradient/shader.frag";
+import fragmentSource from "./gradient/shader.frag";
 // @ts-ignore
-import vertexSource from "ts/gradient/shader.vert";
+import vertexSource from "./gradient/shader.vert";
 
 export class StudyGradient {
   public static readonly W = 640;

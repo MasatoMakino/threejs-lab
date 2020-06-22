@@ -8,7 +8,7 @@ import {
   Scene,
   Texture,
 } from "three";
-import { Common } from "ts/Common";
+import { Common } from "./Common";
 
 export class Study {
   public static readonly W = 640;

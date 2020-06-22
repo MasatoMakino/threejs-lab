@@ -1,12 +1,16 @@
-import { Scene, Mesh, Fog, PointLight, PointLightHelper } from "three";
-import { Common } from "ts/Common";
 import Hls from "hls.js";
 import {
-  PlaneBufferGeometry,
-  VideoTexture,
+  Fog,
+  Mesh,
   MeshBasicMaterial,
-  Texture
+  PlaneBufferGeometry,
+  PointLight,
+  PointLightHelper,
+  Scene,
+  Texture,
+  VideoTexture,
 } from "three";
+import { Common } from "./Common";
 
 /**
  * HLS形式のストリーミングビデオをVideoテクスチャにするサンプル。
@@ -54,7 +58,7 @@ export class StudyStreamingVideoHLS {
       const hls = new Hls();
       hls.loadSource(src);
       hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, function() {
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
         video.play();
       });
     } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
@@ -77,7 +81,7 @@ export class StudyStreamingVideoHLS {
     const geo = new PlaneBufferGeometry(64, 36);
     const mat = new MeshBasicMaterial({
       map: new VideoTexture(video),
-      fog: scene.fog !== undefined
+      fog: scene.fog !== undefined,
     });
     const mesh = new Mesh(geo, mat);
     mat.map.needsUpdate = true;

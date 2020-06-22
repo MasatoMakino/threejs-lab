@@ -1,6 +1,6 @@
-import { Common } from "ts/Common";
-import { Color, Scene } from "three";
+import * as dat from "dat.gui";
 import * as THREE from "three";
+import { Color, Scene } from "three";
 
 import System, {
   Alpha,
@@ -16,10 +16,10 @@ import System, {
   Scale,
   Span,
   SpriteRenderer,
-  Vector3D
+  Vector3D,
 } from "three-nebula";
-import * as dat from "dat.gui";
-import { NebulaGUI } from "ts/NebulaGUI";
+import { Common } from "./Common";
+import { NebulaGUI } from "./NebulaGUI";
 
 export class Study {
   public static readonly W = 640;
@@ -71,7 +71,7 @@ export class Study {
         new Mass(1),
         this.radius,
         this.life,
-        this.range
+        this.range,
       ])
       .setBehaviours([this.alpha, this.scale, this.color])
       .emit();

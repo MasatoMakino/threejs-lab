@@ -5,8 +5,8 @@ import {
   Scene,
 } from "three";
 import { WaterOptions } from "three/examples/jsm/objects/Water";
-import { Common } from "ts/Common";
-import { WaterMesh } from "ts/water/WaterMesh";
+import { Common } from "./Common";
+import { WaterMesh } from "./water/WaterMesh";
 
 export class StudyWater {
   public static readonly W = 640;

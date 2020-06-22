@@ -1,9 +1,9 @@
 import { Mesh, PlaneGeometry, Scene, ShaderMaterial } from "three";
-import { Common } from "ts/Common";
+import { Common } from "./Common";
 // @ts-ignore
-import fragmentSource from "ts/simple/shader.frag";
+import fragmentSource from "./simple/shader.frag";
 // @ts-ignore
-import vertexSource from "ts/simple/shader.vert";
+import vertexSource from "./simple/shader.vert";
 
 export class StudySimple {
   public static readonly W = 640;

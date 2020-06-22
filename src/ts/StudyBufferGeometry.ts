@@ -1,13 +1,20 @@
-import { Scene, Mesh, Fog, PointLight, PointLightHelper, Color } from "three";
-import { Common } from "ts/Common";
-import { SphereGeometry } from "three";
-import { MeshLambertMaterial } from "three";
-import { SphereBufferGeometry } from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { WebGLRenderer } from "three";
-import { Camera } from "three";
-import Stats from "stats.js";
 import * as dat from "dat.gui";
+import Stats from "stats.js";
+import {
+  Camera,
+  Color,
+  Fog,
+  Mesh,
+  MeshLambertMaterial,
+  PointLight,
+  PointLightHelper,
+  Scene,
+  SphereBufferGeometry,
+  SphereGeometry,
+  WebGLRenderer,
+} from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { Common } from "./Common";
 
 /**
  * BufferGeometryとGeometryの生成処理時間の比較を行う
@@ -65,7 +72,7 @@ export class StudyBufferGeometry {
   private initGUI(): void {
     this.params = {
       isBufferGeometry: true,
-      updateGeometry: true
+      updateGeometry: true,
     };
     const gui = new dat.GUI();
     gui.add(this.params, "isBufferGeometry").onChange(() => {
