@@ -1,9 +1,14 @@
-import { Common } from "ts/Common";
-import { Scene, PlaneGeometry, Mesh, Texture, MeshBasicMaterial } from "three";
-import { Application, Graphics } from "pixi.js";
 import TWEEN from "@tweenjs/tween.js";
-import { Blending } from "three";
-import { AdditiveBlending } from "three";
+import { Application, Graphics } from "pixi.js";
+import {
+  AdditiveBlending,
+  Mesh,
+  MeshBasicMaterial,
+  PlaneGeometry,
+  Scene,
+  Texture,
+} from "three";
+import { Common } from "ts/Common";
 
 export class Study {
   public static readonly W = 640;
@@ -30,25 +35,22 @@ export class Study {
     });
 
     const shape = new Graphics();
-    shape
-      .beginFill(0xff00ff)
-      .drawRect(0, 0, 32, 32)
-      .endFill();
+    shape.beginFill(0xff00ff).drawRect(0, 0, 32, 32).endFill();
 
     app.stage.addChild(shape);
 
-    const tween = new TWEEN.Tween(shape)
+    const tween = new TWEEN.Tween(shape as any) //bug : tween.js v18.6.0
       .to({ x: 256, y: 256 }, 3000)
       .easing(TWEEN.Easing.Cubic.InOut)
       .repeat(Infinity)
       .yoyo(true)
-      .start();
+      .start(null); //bug : tween.js v18.6.0
 
     const geo = new PlaneGeometry(32, 32);
     const map = new Texture(app.view);
     const mat = new MeshBasicMaterial({
       map: map,
-      blending: AdditiveBlending
+      blending: AdditiveBlending,
     });
     const mesh = new Mesh(geo, mat);
     scene.add(mesh);
