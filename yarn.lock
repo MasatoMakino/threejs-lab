@@ -2612,9 +2612,9 @@ ejs@^3.1.3:
     jake "^10.6.1"
 
 electron-to-chromium@^1.3.483:
-  version "1.3.484"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.484.tgz#75f5a1eee5fe3168758b7c2cf375ae73c1ccf5e6"
-  integrity sha512-esh5mmjAGl6HhAaYgHlDZme+jCIc+XIrLrBTwxviE+pM64UBmdLUIHLlrPzJGbit7hQI1TR/oGDQWCvQZ5yrFA==
+  version "1.3.488"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.488.tgz#9226229f5fbc825959210e81e0bb3e63035d1c06"
+  integrity sha512-NReBdOugu1yl8ly+0VDtiQ6Yw/1sLjnvflWq0gvY1nfUXU2PbA+1XAVuEb7ModnwL/MfUPjby7e4pAFnSHiy6Q==
 
 elliptic@^6.0.0, elliptic@^6.5.2:
   version "6.5.3"
@@ -3350,8 +3350,8 @@ gulplog@^1.0.0:
     glogg "^1.0.0"
 
 "gulptask-demo-page@https://github.com/MasatoMakino/gulptask-demo-page.git":
-  version "0.1.6"
-  resolved "https://github.com/MasatoMakino/gulptask-demo-page.git#786a554332ed053eb153b12989d6f92df89ae990"
+  version "0.1.7"
+  resolved "https://github.com/MasatoMakino/gulptask-demo-page.git#07c34e22f2594bb856e8674c6f381c1106b38154"
   dependencies:
     "@babel/core" "^7.10.3"
     "@babel/preset-env" "^7.10.3"
