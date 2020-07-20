@@ -15,7 +15,7 @@
     "gulptask-demo-page": "https://github.com/MasatoMakino/gulptask-demo-page.git",
     "gulptask-dev-server": "https://github.com/MasatoMakino/gulptask-dev-server.git",
     "gulptask-webpack": "https://github.com/MasatoMakino/gulptask-webpack.git",
-    "hls.js": "^0.14.0",
+    "hls.js": "^0.14.3",
     "husky": "^4.2.5",
     "pixi.js": "^5.3.0",
     "prettier": "^2.0.5",
@@ -24,8 +24,8 @@
     "three": "^0.118.3",
     "three-nebula": "^5.1.1",
     "threejs-shader-materials": "https://github.com/MasatoMakino/threejs-shader-materials.git",
-    "ts-loader": "^7.0.5",
-    "typescript": "^3.9.6",
+    "ts-loader": "^8.0.1",
+    "typescript": "^3.9.7",
     "webpack-glsl-loader": "^1.0.1"
   },
   "scripts": {
