@@ -34,7 +34,6 @@ export class ClippingSurface extends Group {
   /**
    *コンストラクタ
    * @param clippingPlane 表示される切断面
-   * @param allPlanes このジオメトリに影響する全ての切断面。clippingPlaneをさらにクリップするのに使用する。
    * @param geometry クリップされるジオメトリ
    * @param option
    */
@@ -78,9 +77,11 @@ export class ClippingSurface extends Group {
 
   /**
    * 着色用のプレーンジオメトリを生成する。
+   * @param geo
    * @param clippingPlane
    * @param otherPlanes
    * @param index
+   * @param mat
    */
   public static createPlane(
     geo: Geometry | BufferGeometry,
@@ -128,9 +129,12 @@ export class ClippingSurface extends Group {
     );
   };
 
+  //@ts-ignore : TODO update
   get rotation(): Euler {
     return this.stencilGroup.rotation;
   }
+
+  //@ts-ignore : TODO update
   set rotation(val: Euler) {
     this.stencilGroup.rotation.copy(val);
   }
