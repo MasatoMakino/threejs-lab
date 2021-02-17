@@ -1,6 +1,6 @@
 /*
  * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is not neither made for production nor for readable output files.
+ * This devtool is neither made for production nor for readable output files.
  * It uses "eval()" calls to create a separate source file in the browser devtools.
  * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
  * or disable the default devtool with "devtool: false".
@@ -14,13 +14,9 @@
 /*!***********************!*\
   !*** ./src/Common.ts ***!
   \***********************/
-/*! namespace exports */
-/*! export Common [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Common\": () => /* binding */ Common\n/* harmony export */ });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var three_examples_jsm_controls_OrbitControls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three/examples/jsm/controls/OrbitControls */ \"./node_modules/three/examples/jsm/controls/OrbitControls.js\");\n\n\nvar Common = /** @class */ (function () {\n    function Common() {\n    }\n    Common.initScene = function () {\n        var scene = new three__WEBPACK_IMPORTED_MODULE_0__.Scene();\n        return scene;\n    };\n    Common.initLight = function (scene) {\n        var ambientLight = new three__WEBPACK_IMPORTED_MODULE_0__.AmbientLight(0xffffff, 1.0);\n        scene.add(ambientLight);\n        return ambientLight;\n    };\n    Common.initCamera = function (scene, W, H, near, far) {\n        if (near === void 0) { near = 1; }\n        if (far === void 0) { far = 400; }\n        var camera = new three__WEBPACK_IMPORTED_MODULE_0__.PerspectiveCamera(45, W / H, near, far);\n        camera.position.set(0, 0, 100);\n        camera.updateMatrixWorld(false);\n        scene.add(camera);\n        return camera;\n    };\n    Common.initControl = function (camera, render) {\n        var domElement;\n        if (render) {\n            domElement = render.domElement;\n        }\n        var control = new three_examples_jsm_controls_OrbitControls__WEBPACK_IMPORTED_MODULE_1__.OrbitControls(camera, domElement);\n        control.update();\n        return control;\n    };\n    Common.initRenderer = function (W, H, color, id, antialias) {\n        if (color === void 0) { color = 0x000000; }\n        if (id === void 0) { id = \"webgl-canvas\"; }\n        if (antialias === void 0) { antialias = true; }\n        var renderer = new three__WEBPACK_IMPORTED_MODULE_0__.WebGLRenderer({\n            canvas: document.getElementById(id),\n            antialias: antialias,\n        });\n        renderer.setClearColor(new three__WEBPACK_IMPORTED_MODULE_0__.Color(color));\n        renderer.setSize(W, H);\n        renderer.setPixelRatio(window.devicePixelRatio);\n        return renderer;\n    };\n    Common.initHelper = function (scene) {\n        var axesHelper = new three__WEBPACK_IMPORTED_MODULE_0__.AxesHelper(30);\n        scene.add(axesHelper);\n    };\n    Common.render = function (control, renderer, scene, camera, onBeforeRender) {\n        var rendering = function () {\n            if (onBeforeRender) {\n                onBeforeRender();\n            }\n            control.update();\n            renderer.render(scene, camera);\n            requestAnimationFrame(rendering);\n        };\n        rendering();\n    };\n    return Common;\n}());\n\n\n\n//# sourceURL=webpack://threejs-lab/./src/Common.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Common\": () => (/* binding */ Common)\n/* harmony export */ });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var three_examples_jsm_controls_OrbitControls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three/examples/jsm/controls/OrbitControls */ \"./node_modules/three/examples/jsm/controls/OrbitControls.js\");\n\n\nclass Common {\n    static initScene() {\n        const scene = new three__WEBPACK_IMPORTED_MODULE_0__.Scene();\n        return scene;\n    }\n    static initLight(scene) {\n        const ambientLight = new three__WEBPACK_IMPORTED_MODULE_0__.AmbientLight(0xffffff, 1.0);\n        scene.add(ambientLight);\n        return ambientLight;\n    }\n    static initCamera(scene, W, H, near = 1, far = 400) {\n        const camera = new three__WEBPACK_IMPORTED_MODULE_0__.PerspectiveCamera(45, W / H, near, far);\n        camera.position.set(0, 0, 100);\n        camera.updateMatrixWorld(false);\n        scene.add(camera);\n        return camera;\n    }\n    static initControl(camera, render) {\n        let domElement;\n        if (render) {\n            domElement = render.domElement;\n        }\n        const control = new three_examples_jsm_controls_OrbitControls__WEBPACK_IMPORTED_MODULE_1__.OrbitControls(camera, domElement);\n        control.update();\n        return control;\n    }\n    static initRenderer(W, H, color = 0x000000, id = \"webgl-canvas\", antialias = true) {\n        const renderer = new three__WEBPACK_IMPORTED_MODULE_0__.WebGLRenderer({\n            canvas: document.getElementById(id),\n            antialias: antialias,\n        });\n        renderer.setClearColor(new three__WEBPACK_IMPORTED_MODULE_0__.Color(color));\n        renderer.setSize(W, H);\n        renderer.setPixelRatio(window.devicePixelRatio);\n        return renderer;\n    }\n    static initHelper(scene) {\n        const axesHelper = new three__WEBPACK_IMPORTED_MODULE_0__.AxesHelper(30);\n        scene.add(axesHelper);\n    }\n    static render(control, renderer, scene, camera, onBeforeRender) {\n        const rendering = () => {\n            if (onBeforeRender) {\n                onBeforeRender();\n            }\n            control.update();\n            renderer.render(scene, camera);\n            requestAnimationFrame(rendering);\n        };\n        rendering();\n    }\n}\n\n\n//# sourceURL=webpack://threejs-lab/./src/Common.ts?");
 
 /***/ }),
 
@@ -28,13 +24,9 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /*!**************************!*\
   !*** ./src/CommonGUI.ts ***!
   \**************************/
-/*! namespace exports */
-/*! export CommonGUI [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"CommonGUI\": () => /* binding */ CommonGUI\n/* harmony export */ });\nvar CommonGUI = /** @class */ (function () {\n    function CommonGUI() {\n    }\n    CommonGUI.initColorGUI = function (folder, mat, propName) {\n        if (propName === void 0) { propName = \"color\"; }\n        var prop = {};\n        var targetColor = mat[propName];\n        prop[propName] = targetColor.getHex();\n        folder.addColor(prop, propName).onChange(function (val) {\n            targetColor.setHex(val);\n        });\n    };\n    CommonGUI.initMaterialGUI = function (gui, mat, folderName) {\n        if (folderName === void 0) { folderName = \"Material\"; }\n        var folder = gui.addFolder(folderName);\n        this.initMaterialFolder(folder, mat);\n        if (mat.hasOwnProperty(\"emissive\")) {\n            this.initColorGUI(folder, mat, \"emissive\");\n        }\n        folder.open();\n        return folder;\n    };\n    CommonGUI.initMaterialFolder = function (folder, mat) {\n        this.initColorGUI(folder, mat);\n        folder.add(mat, \"transparent\");\n        folder.add(mat, \"opacity\", 0.0, 1.0);\n    };\n    return CommonGUI;\n}());\n\n\n\n//# sourceURL=webpack://threejs-lab/./src/CommonGUI.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"CommonGUI\": () => (/* binding */ CommonGUI)\n/* harmony export */ });\nclass CommonGUI {\n    static initColorGUI(folder, mat, propName = \"color\") {\n        const prop = {};\n        const targetColor = mat[propName];\n        prop[propName] = targetColor.getHex();\n        folder.addColor(prop, propName).onChange((val) => {\n            targetColor.setHex(val);\n        });\n    }\n    static initMaterialGUI(gui, mat, folderName = \"Material\") {\n        const folder = gui.addFolder(folderName);\n        this.initMaterialFolder(folder, mat);\n        if (mat.hasOwnProperty(\"emissive\")) {\n            this.initColorGUI(folder, mat, \"emissive\");\n        }\n        folder.open();\n        return folder;\n    }\n    static initMaterialFolder(folder, mat) {\n        this.initColorGUI(folder, mat);\n        folder.add(mat, \"transparent\");\n        folder.add(mat, \"opacity\", 0.0, 1.0);\n    }\n}\n\n\n//# sourceURL=webpack://threejs-lab/./src/CommonGUI.ts?");
 
 /***/ }),
 
@@ -42,13 +34,9 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /*!***********************************!*\
   !*** ./src/StudyLoopAnimation.ts ***!
   \***********************************/
-/*! namespace exports */
-/*! export Study [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Study\": () => /* binding */ Study\n/* harmony export */ });\n/* harmony import */ var dat_gui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dat.gui */ \"./node_modules/dat.gui/build/dat.gui.module.js\");\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var _clippingSurface_ClippingSurface__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./clippingSurface/ClippingSurface */ \"./src/clippingSurface/ClippingSurface.ts\");\n/* harmony import */ var _Common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Common */ \"./src/Common.ts\");\n/* harmony import */ var _CommonGUI__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CommonGUI */ \"./src/CommonGUI.ts\");\n\n\n\n\n\nvar Study = /** @class */ (function () {\n    function Study() {\n        var scene = _Common__WEBPACK_IMPORTED_MODULE_3__.Common.initScene();\n        scene.fog = new three__WEBPACK_IMPORTED_MODULE_1__.Fog(0x000000, 160, 320);\n        _Common__WEBPACK_IMPORTED_MODULE_3__.Common.initLight(scene);\n        var camera = _Common__WEBPACK_IMPORTED_MODULE_3__.Common.initCamera(scene, Study.W, Study.H);\n        var renderer = _Common__WEBPACK_IMPORTED_MODULE_3__.Common.initRenderer(Study.W, Study.H);\n        renderer.localClippingEnabled = true;\n        var control = _Common__WEBPACK_IMPORTED_MODULE_3__.Common.initControl(camera, renderer);\n        var surface = this.initObject(scene);\n        this.initGUI(surface);\n        _Common__WEBPACK_IMPORTED_MODULE_3__.Common.render(control, renderer, scene, camera, function () {\n            surface.rotation.x += 0.03;\n            surface.updatePlane();\n        });\n    }\n    Study.prototype.initObject = function (scene) {\n        var spot = new three__WEBPACK_IMPORTED_MODULE_1__.PointLight(0xffffff, 3, 0, 2);\n        spot.position.set(10, 20, 30);\n        scene.add(spot);\n        var helper = new three__WEBPACK_IMPORTED_MODULE_1__.PointLightHelper(spot);\n        scene.add(helper);\n        var geo = new three__WEBPACK_IMPORTED_MODULE_1__.TorusKnotBufferGeometry(10, 3, 64, 32);\n        var plane = new three__WEBPACK_IMPORTED_MODULE_1__.Plane(new three__WEBPACK_IMPORTED_MODULE_1__.Vector3(0, 0, -1), 0);\n        var surface = new _clippingSurface_ClippingSurface__WEBPACK_IMPORTED_MODULE_2__.ClippingSurface(plane, geo, {\n            planeMaterial: new three__WEBPACK_IMPORTED_MODULE_1__.MeshBasicMaterial({\n                color: new three__WEBPACK_IMPORTED_MODULE_1__.Color(0xffffff),\n            }),\n        });\n        scene.add(surface);\n        return surface;\n    };\n    Study.prototype.initGUI = function (surface) {\n        var gui = new dat_gui__WEBPACK_IMPORTED_MODULE_0__.GUI();\n        _CommonGUI__WEBPACK_IMPORTED_MODULE_4__.CommonGUI.initMaterialGUI(gui, surface.planeObject.material, \"Clipping Surface\");\n        var frontFaceFolder = _CommonGUI__WEBPACK_IMPORTED_MODULE_4__.CommonGUI.initMaterialGUI(gui, surface.frontFace.material, \"FrontFace\");\n        frontFaceFolder.add(surface.frontFace, \"visible\");\n    };\n    Study.W = 640;\n    Study.H = 480;\n    return Study;\n}());\n\nwindow.onload = function () {\n    var study = new Study();\n};\n\n\n//# sourceURL=webpack://threejs-lab/./src/StudyLoopAnimation.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Study\": () => (/* binding */ Study)\n/* harmony export */ });\n/* harmony import */ var dat_gui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dat.gui */ \"./node_modules/dat.gui/build/dat.gui.module.js\");\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var _clippingSurface_ClippingSurface__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./clippingSurface/ClippingSurface */ \"./src/clippingSurface/ClippingSurface.ts\");\n/* harmony import */ var _Common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Common */ \"./src/Common.ts\");\n/* harmony import */ var _CommonGUI__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CommonGUI */ \"./src/CommonGUI.ts\");\n\n\n\n\n\nclass Study {\n    constructor() {\n        const scene = _Common__WEBPACK_IMPORTED_MODULE_3__.Common.initScene();\n        scene.fog = new three__WEBPACK_IMPORTED_MODULE_1__.Fog(0x000000, 160, 320);\n        _Common__WEBPACK_IMPORTED_MODULE_3__.Common.initLight(scene);\n        const camera = _Common__WEBPACK_IMPORTED_MODULE_3__.Common.initCamera(scene, Study.W, Study.H);\n        const renderer = _Common__WEBPACK_IMPORTED_MODULE_3__.Common.initRenderer(Study.W, Study.H);\n        renderer.localClippingEnabled = true;\n        const control = _Common__WEBPACK_IMPORTED_MODULE_3__.Common.initControl(camera, renderer);\n        const surface = this.initObject(scene);\n        this.initGUI(surface);\n        _Common__WEBPACK_IMPORTED_MODULE_3__.Common.render(control, renderer, scene, camera, () => {\n            surface.rotation.x += 0.03;\n            surface.updatePlane();\n        });\n    }\n    initObject(scene) {\n        const spot = new three__WEBPACK_IMPORTED_MODULE_1__.PointLight(0xffffff, 3, 0, 2);\n        spot.position.set(10, 20, 30);\n        scene.add(spot);\n        const helper = new three__WEBPACK_IMPORTED_MODULE_1__.PointLightHelper(spot);\n        scene.add(helper);\n        const geo = new three__WEBPACK_IMPORTED_MODULE_1__.TorusKnotBufferGeometry(10, 3, 64, 32);\n        const plane = new three__WEBPACK_IMPORTED_MODULE_1__.Plane(new three__WEBPACK_IMPORTED_MODULE_1__.Vector3(0, 0, -1), 0);\n        const surface = new _clippingSurface_ClippingSurface__WEBPACK_IMPORTED_MODULE_2__.ClippingSurface(plane, geo, {\n            planeMaterial: new three__WEBPACK_IMPORTED_MODULE_1__.MeshBasicMaterial({\n                color: new three__WEBPACK_IMPORTED_MODULE_1__.Color(0xffffff),\n            }),\n        });\n        scene.add(surface);\n        return surface;\n    }\n    initGUI(surface) {\n        const gui = new dat_gui__WEBPACK_IMPORTED_MODULE_0__.GUI();\n        _CommonGUI__WEBPACK_IMPORTED_MODULE_4__.CommonGUI.initMaterialGUI(gui, surface.planeObject.material, \"Clipping Surface\");\n        const frontFaceFolder = _CommonGUI__WEBPACK_IMPORTED_MODULE_4__.CommonGUI.initMaterialGUI(gui, surface.frontFace.material, \"FrontFace\");\n        frontFaceFolder.add(surface.frontFace, \"visible\");\n    }\n}\nStudy.W = 640;\nStudy.H = 480;\nwindow.onload = () => {\n    const study = new Study();\n};\n\n\n//# sourceURL=webpack://threejs-lab/./src/StudyLoopAnimation.ts?");
 
 /***/ }),
 
@@ -56,13 +44,9 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /*!************************************************!*\
   !*** ./src/clippingSurface/ClippingSurface.ts ***!
   \************************************************/
-/*! namespace exports */
-/*! export ClippingSurface [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"ClippingSurface\": () => /* binding */ ClippingSurface\n/* harmony export */ });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\nvar __extends = (undefined && undefined.__extends) || (function () {\n    var extendStatics = function (d, b) {\n        extendStatics = Object.setPrototypeOf ||\n            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||\n            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };\n        return extendStatics(d, b);\n    };\n    return function (d, b) {\n        extendStatics(d, b);\n        function __() { this.constructor = d; }\n        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\n    };\n})();\n\n/**\n * ClippingPlaneにより切断したジオメトリの、切断面を描画するためのクラスです。\n *\n * 注意 : onBeforeRender関数やRenderループ内でstencilGroupの座標、スケール、回転を変更した場合、変更後にupdatePlane関数を明示的に呼び出してください。planeObjectの更新が行われず、表示が崩れます。\n */\nvar ClippingSurface = /** @class */ (function (_super) {\n    __extends(ClippingSurface, _super);\n    /**\n     *コンストラクタ\n     * @param clippingPlane 表示される切断面\n     * @param geometry クリップされるジオメトリ\n     * @param option\n     */\n    function ClippingSurface(clippingPlane, geometry, option) {\n        var _this = _super.call(this) || this;\n        /**\n         * planeObjectにplaneの座標をコピーする\n         */\n        _this.updatePlane = function () {\n            _this.plane.coplanarPoint(_this.planeObject.position);\n            _this.planeObject.lookAt(_this.planeObject.position.x - _this.plane.normal.x, _this.planeObject.position.y - _this.plane.normal.y, _this.planeObject.position.z - _this.plane.normal.z);\n        };\n        option = ClippingSurfaceOption.init(option, clippingPlane);\n        _this.plane = clippingPlane;\n        var i = option.allPlanes.indexOf(clippingPlane);\n        _this.stencilGroup = ClippingSurfaceUtil.createPlaneStencilGroup(geometry, clippingPlane, i + 1);\n        _this.add(_this.stencilGroup);\n        _this.planeObject = ClippingSurface.createPlane(geometry, clippingPlane, option.allPlanes, i, option.planeMaterial);\n        _this.planeObject.onBeforeRender = _this.updatePlane;\n        _this.add(_this.planeObject);\n        _this.frontFace = ClippingSurfaceUtil.initFrontFaceMesh(option.allPlanes, geometry, option.frontFaceMaterial);\n        _this.stencilGroup.add(_this.frontFace);\n        _this.frontFace.visible = option.visibleSurface;\n        return _this;\n    }\n    /**\n     * 着色用のプレーンジオメトリを生成する。\n     * @param geo\n     * @param clippingPlane\n     * @param otherPlanes\n     * @param index\n     * @param mat\n     */\n    ClippingSurface.createPlane = function (geo, clippingPlane, otherPlanes, index, mat) {\n        geo.computeBoundingSphere();\n        var rad = geo.boundingSphere.radius;\n        var planeGeom = new three__WEBPACK_IMPORTED_MODULE_0__.PlaneBufferGeometry(rad * 2, rad * 2);\n        if (mat == null) {\n            mat = new three__WEBPACK_IMPORTED_MODULE_0__.MeshStandardMaterial({\n                color: 0xe91e63,\n                metalness: 0.1,\n                roughness: 0.75,\n            });\n        }\n        ClippingSurfaceUtil.overrideStencilMaterial(mat, clippingPlane, otherPlanes);\n        //プレーンジオメトリオブジェクトを生成。\n        var po = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(planeGeom, mat);\n        po.onAfterRender = function (renderer) {\n            renderer.clearStencil();\n        };\n        po.renderOrder = index + 1.1;\n        return po;\n    };\n    Object.defineProperty(ClippingSurface.prototype, \"rotation\", {\n        //@ts-ignore : TODO update\n        get: function () {\n            return this.stencilGroup.rotation;\n        },\n        //@ts-ignore : TODO update\n        set: function (val) {\n            this.stencilGroup.rotation.copy(val);\n        },\n        enumerable: false,\n        configurable: true\n    });\n    return ClippingSurface;\n}(three__WEBPACK_IMPORTED_MODULE_0__.Group));\n\nvar ClippingSurfaceUtil = /** @class */ (function () {\n    function ClippingSurfaceUtil() {\n    }\n    /**\n     * ステンシル設定がされたFrontFace, BackFaceのグループを生成する。\n     * @param geometry\n     * @param plane\n     * @param renderOrder\n     */\n    ClippingSurfaceUtil.createPlaneStencilGroup = function (geometry, plane, renderOrder) {\n        var group = new three__WEBPACK_IMPORTED_MODULE_0__.Group();\n        var base = new three__WEBPACK_IMPORTED_MODULE_0__.MeshBasicMaterial();\n        base.depthWrite = false;\n        base.depthTest = false;\n        base.colorWrite = false;\n        base.stencilWrite = true;\n        base.stencilFunc = three__WEBPACK_IMPORTED_MODULE_0__.AlwaysStencilFunc;\n        // back faces\n        var backMesh = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(geometry, this.getStencilMat(base, three__WEBPACK_IMPORTED_MODULE_0__.BackSide, plane, three__WEBPACK_IMPORTED_MODULE_0__.IncrementWrapStencilOp));\n        backMesh.renderOrder = renderOrder;\n        group.add(backMesh);\n        // front faces\n        var frontMesh = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(geometry, this.getStencilMat(base, three__WEBPACK_IMPORTED_MODULE_0__.FrontSide, plane, three__WEBPACK_IMPORTED_MODULE_0__.DecrementWrapStencilOp));\n        frontMesh.renderOrder = renderOrder;\n        group.add(frontMesh);\n        return group;\n    };\n    /**\n     * マテリアルにstencilFail時の処理を一括で指定する。\n     * @param mat\n     * @param val\n     */\n    ClippingSurfaceUtil.setStencilOp = function (mat, val) {\n        mat.stencilFail = val;\n        mat.stencilZFail = val;\n        mat.stencilZPass = val;\n    };\n    /**\n     * ステンシルグループ用のマテリアルを生成する。\n     * @param base\n     * @param side\n     * @param plane\n     * @param stencilOp\n     */\n    ClippingSurfaceUtil.getStencilMat = function (base, side, plane, stencilOp) {\n        var mat = base.clone();\n        mat.side = side;\n        mat.clippingPlanes = [plane];\n        ClippingSurfaceUtil.setStencilOp(mat, stencilOp);\n        return mat;\n    };\n    /**\n     * planeObject用マテリアルに必須となる設定を、既存のマテリアルに対して上書きする。\n     * @param mat\n     * @param clippingPlane\n     * @param otherPlanes\n     */\n    ClippingSurfaceUtil.overrideStencilMaterial = function (mat, clippingPlane, otherPlanes) {\n        mat.clippingPlanes = otherPlanes.filter(function (p) { return p !== clippingPlane; });\n        mat.stencilWrite = true;\n        mat.stencilRef = 0;\n        mat.stencilFunc = three__WEBPACK_IMPORTED_MODULE_0__.NotEqualStencilFunc;\n        ClippingSurfaceUtil.setStencilOp(mat, three__WEBPACK_IMPORTED_MODULE_0__.ReplaceStencilOp);\n    };\n    /**\n     * 切り取られたジオメトリの表面を生成する\n     * @param planes\n     * @param geometry\n     * @param mat\n     */\n    ClippingSurfaceUtil.initFrontFaceMesh = function (planes, geometry, mat) {\n        if (mat == null) {\n            mat = new three__WEBPACK_IMPORTED_MODULE_0__.MeshStandardMaterial({\n                color: 0xffc107,\n                metalness: 0.1,\n                roughness: 0.75,\n            });\n        }\n        this.overrideFrontFaceMaterial(mat, planes);\n        var clippedColorFront = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(geometry, mat);\n        clippedColorFront.renderOrder = planes.length * 2;\n        return clippedColorFront;\n    };\n    ClippingSurfaceUtil.overrideFrontFaceMaterial = function (mat, planes) {\n        mat.clippingPlanes = planes;\n    };\n    return ClippingSurfaceUtil;\n}());\nvar ClippingSurfaceOption = /** @class */ (function () {\n    function ClippingSurfaceOption() {\n    }\n    ClippingSurfaceOption.init = function (option, plane) {\n        if (option == null)\n            option = {};\n        if (option.allPlanes == null || option.allPlanes.length === 0) {\n            option.allPlanes = [plane];\n        }\n        if (option.visibleSurface == null) {\n            option.visibleSurface = false;\n        }\n        return option;\n    };\n    return ClippingSurfaceOption;\n}());\n\n\n//# sourceURL=webpack://threejs-lab/./src/clippingSurface/ClippingSurface.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"ClippingSurface\": () => (/* binding */ ClippingSurface)\n/* harmony export */ });\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n\n/**\n * ClippingPlaneにより切断したジオメトリの、切断面を描画するためのクラスです。\n *\n * 注意 : onBeforeRender関数やRenderループ内でstencilGroupの座標、スケール、回転を変更した場合、変更後にupdatePlane関数を明示的に呼び出してください。planeObjectの更新が行われず、表示が崩れます。\n */\nclass ClippingSurface extends three__WEBPACK_IMPORTED_MODULE_0__.Group {\n    /**\n     *コンストラクタ\n     * @param clippingPlane 表示される切断面\n     * @param geometry クリップされるジオメトリ\n     * @param option\n     */\n    constructor(clippingPlane, geometry, option) {\n        super();\n        /**\n         * planeObjectにplaneの座標をコピーする\n         */\n        this.updatePlane = () => {\n            this.plane.coplanarPoint(this.planeObject.position);\n            this.planeObject.lookAt(this.planeObject.position.x - this.plane.normal.x, this.planeObject.position.y - this.plane.normal.y, this.planeObject.position.z - this.plane.normal.z);\n        };\n        option = ClippingSurfaceOption.init(option, clippingPlane);\n        this.plane = clippingPlane;\n        const i = option.allPlanes.indexOf(clippingPlane);\n        this.stencilGroup = ClippingSurfaceUtil.createPlaneStencilGroup(geometry, clippingPlane, i + 1);\n        this.add(this.stencilGroup);\n        this.planeObject = ClippingSurface.createPlane(geometry, clippingPlane, option.allPlanes, i, option.planeMaterial);\n        this.planeObject.onBeforeRender = this.updatePlane;\n        this.add(this.planeObject);\n        this.frontFace = ClippingSurfaceUtil.initFrontFaceMesh(option.allPlanes, geometry, option.frontFaceMaterial);\n        this.stencilGroup.add(this.frontFace);\n        this.frontFace.visible = option.visibleSurface;\n    }\n    /**\n     * 着色用のプレーンジオメトリを生成する。\n     * @param geo\n     * @param clippingPlane\n     * @param otherPlanes\n     * @param index\n     * @param mat\n     */\n    static createPlane(geo, clippingPlane, otherPlanes, index, mat) {\n        geo.computeBoundingSphere();\n        const rad = geo.boundingSphere.radius;\n        const planeGeom = new three__WEBPACK_IMPORTED_MODULE_0__.PlaneBufferGeometry(rad * 2, rad * 2);\n        if (mat == null) {\n            mat = new three__WEBPACK_IMPORTED_MODULE_0__.MeshStandardMaterial({\n                color: 0xe91e63,\n                metalness: 0.1,\n                roughness: 0.75,\n            });\n        }\n        ClippingSurfaceUtil.overrideStencilMaterial(mat, clippingPlane, otherPlanes);\n        //プレーンジオメトリオブジェクトを生成。\n        const po = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(planeGeom, mat);\n        po.onAfterRender = function (renderer) {\n            renderer.clearStencil();\n        };\n        po.renderOrder = index + 1.1;\n        return po;\n    }\n    //@ts-ignore : TODO update\n    get rotation() {\n        return this.stencilGroup.rotation;\n    }\n    //@ts-ignore : TODO update\n    set rotation(val) {\n        this.stencilGroup.rotation.copy(val);\n    }\n}\nclass ClippingSurfaceUtil {\n    /**\n     * ステンシル設定がされたFrontFace, BackFaceのグループを生成する。\n     * @param geometry\n     * @param plane\n     * @param renderOrder\n     */\n    static createPlaneStencilGroup(geometry, plane, renderOrder) {\n        const group = new three__WEBPACK_IMPORTED_MODULE_0__.Group();\n        const base = new three__WEBPACK_IMPORTED_MODULE_0__.MeshBasicMaterial();\n        base.depthWrite = false;\n        base.depthTest = false;\n        base.colorWrite = false;\n        base.stencilWrite = true;\n        base.stencilFunc = three__WEBPACK_IMPORTED_MODULE_0__.AlwaysStencilFunc;\n        // back faces\n        const backMesh = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(geometry, this.getStencilMat(base, three__WEBPACK_IMPORTED_MODULE_0__.BackSide, plane, three__WEBPACK_IMPORTED_MODULE_0__.IncrementWrapStencilOp));\n        backMesh.renderOrder = renderOrder;\n        group.add(backMesh);\n        // front faces\n        const frontMesh = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(geometry, this.getStencilMat(base, three__WEBPACK_IMPORTED_MODULE_0__.FrontSide, plane, three__WEBPACK_IMPORTED_MODULE_0__.DecrementWrapStencilOp));\n        frontMesh.renderOrder = renderOrder;\n        group.add(frontMesh);\n        return group;\n    }\n    /**\n     * マテリアルにstencilFail時の処理を一括で指定する。\n     * @param mat\n     * @param val\n     */\n    static setStencilOp(mat, val) {\n        mat.stencilFail = val;\n        mat.stencilZFail = val;\n        mat.stencilZPass = val;\n    }\n    /**\n     * ステンシルグループ用のマテリアルを生成する。\n     * @param base\n     * @param side\n     * @param plane\n     * @param stencilOp\n     */\n    static getStencilMat(base, side, plane, stencilOp) {\n        const mat = base.clone();\n        mat.side = side;\n        mat.clippingPlanes = [plane];\n        ClippingSurfaceUtil.setStencilOp(mat, stencilOp);\n        return mat;\n    }\n    /**\n     * planeObject用マテリアルに必須となる設定を、既存のマテリアルに対して上書きする。\n     * @param mat\n     * @param clippingPlane\n     * @param otherPlanes\n     */\n    static overrideStencilMaterial(mat, clippingPlane, otherPlanes) {\n        mat.clippingPlanes = otherPlanes.filter((p) => p !== clippingPlane);\n        mat.stencilWrite = true;\n        mat.stencilRef = 0;\n        mat.stencilFunc = three__WEBPACK_IMPORTED_MODULE_0__.NotEqualStencilFunc;\n        ClippingSurfaceUtil.setStencilOp(mat, three__WEBPACK_IMPORTED_MODULE_0__.ReplaceStencilOp);\n    }\n    /**\n     * 切り取られたジオメトリの表面を生成する\n     * @param planes\n     * @param geometry\n     * @param mat\n     */\n    static initFrontFaceMesh(planes, geometry, mat) {\n        if (mat == null) {\n            mat = new three__WEBPACK_IMPORTED_MODULE_0__.MeshStandardMaterial({\n                color: 0xffc107,\n                metalness: 0.1,\n                roughness: 0.75,\n            });\n        }\n        this.overrideFrontFaceMaterial(mat, planes);\n        const clippedColorFront = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(geometry, mat);\n        clippedColorFront.renderOrder = planes.length * 2;\n        return clippedColorFront;\n    }\n    static overrideFrontFaceMaterial(mat, planes) {\n        mat.clippingPlanes = planes;\n    }\n}\nclass ClippingSurfaceOption {\n    static init(option, plane) {\n        if (option == null)\n            option = {};\n        if (option.allPlanes == null || option.allPlanes.length === 0) {\n            option.allPlanes = [plane];\n        }\n        if (option.visibleSurface == null) {\n            option.visibleSurface = false;\n        }\n        return option;\n    }\n}\n\n\n//# sourceURL=webpack://threejs-lab/./src/clippingSurface/ClippingSurface.ts?");
 
 /***/ })
 
@@ -97,14 +81,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = __webpack_modules__;
 /******/ 	
+/******/ 	// the startup function
+/******/ 	// It's empty as some runtime module handles the default behavior
+/******/ 	__webpack_require__.x = x => {};
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
 /******/ 		__webpack_require__.n = (module) => {
 /******/ 			var getter = module && module.__esModule ?
-/******/ 				() => module['default'] :
-/******/ 				() => module;
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
@@ -136,7 +123,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
@@ -183,43 +170,10 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 		
 /******/ 		// no HMR manifest
 /******/ 		
-/******/ 		var checkDeferredModules = () => {
-/******/ 		
-/******/ 		};
-/******/ 		function checkDeferredModulesImpl() {
-/******/ 			var result;
-/******/ 			for(var i = 0; i < deferredModules.length; i++) {
-/******/ 				var deferredModule = deferredModules[i];
-/******/ 				var fulfilled = true;
-/******/ 				for(var j = 1; j < deferredModule.length; j++) {
-/******/ 					var depId = deferredModule[j];
-/******/ 					if(installedChunks[depId] !== 0) fulfilled = false;
-/******/ 				}
-/******/ 				if(fulfilled) {
-/******/ 					deferredModules.splice(i--, 1);
-/******/ 					result = __webpack_require__(__webpack_require__.s = deferredModule[0]);
-/******/ 				}
-/******/ 			}
-/******/ 			if(deferredModules.length === 0) {
-/******/ 				__webpack_require__.x();
-/******/ 				__webpack_require__.x = () => {
-/******/ 		
-/******/ 				}
-/******/ 			}
-/******/ 			return result;
-/******/ 		}
-/******/ 		__webpack_require__.x = () => {
-/******/ 			// reset startup function so it can be called again when more startup code is added
-/******/ 			__webpack_require__.x = () => {
-/******/ 		
-/******/ 			}
-/******/ 			chunkLoadingGlobal = chunkLoadingGlobal.slice();
-/******/ 			for(var i = 0; i < chunkLoadingGlobal.length; i++) webpackJsonpCallback(chunkLoadingGlobal[i]);
-/******/ 			return (checkDeferredModules = checkDeferredModulesImpl)();
-/******/ 		};
+/******/ 		var checkDeferredModules = x => {};
 /******/ 		
 /******/ 		// install a JSONP callback for chunk loading
-/******/ 		var webpackJsonpCallback = (data) => {
+/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
 /******/ 			var [chunkIds, moreModules, runtime, executeModules] = data;
 /******/ 			// add "moreModules" to the modules object,
 /******/ 			// then flag all "chunkIds" as loaded and fire callback
@@ -237,7 +191,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 				}
 /******/ 			}
 /******/ 			if(runtime) runtime(__webpack_require__);
-/******/ 			parentChunkLoadingFunction(data);
+/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
 /******/ 			while(resolves.length) {
 /******/ 				resolves.shift()();
 /******/ 			}
@@ -250,12 +204,41 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 		}
 /******/ 		
 /******/ 		var chunkLoadingGlobal = self["webpackChunkthreejs_lab"] = self["webpackChunkthreejs_lab"] || [];
-/******/ 		var parentChunkLoadingFunction = chunkLoadingGlobal.push.bind(chunkLoadingGlobal);
-/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback;
+/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
+/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
+/******/ 		
+/******/ 		function checkDeferredModulesImpl() {
+/******/ 			var result;
+/******/ 			for(var i = 0; i < deferredModules.length; i++) {
+/******/ 				var deferredModule = deferredModules[i];
+/******/ 				var fulfilled = true;
+/******/ 				for(var j = 1; j < deferredModule.length; j++) {
+/******/ 					var depId = deferredModule[j];
+/******/ 					if(installedChunks[depId] !== 0) fulfilled = false;
+/******/ 				}
+/******/ 				if(fulfilled) {
+/******/ 					deferredModules.splice(i--, 1);
+/******/ 					result = __webpack_require__(__webpack_require__.s = deferredModule[0]);
+/******/ 				}
+/******/ 			}
+/******/ 			if(deferredModules.length === 0) {
+/******/ 				__webpack_require__.x();
+/******/ 				__webpack_require__.x = x => {};
+/******/ 			}
+/******/ 			return result;
+/******/ 		}
+/******/ 		var startup = __webpack_require__.x;
+/******/ 		__webpack_require__.x = () => {
+/******/ 			// reset startup function so it can be called again when more startup code is added
+/******/ 			__webpack_require__.x = startup || (x => {});
+/******/ 			return (checkDeferredModules = checkDeferredModulesImpl)();
+/******/ 		};
 /******/ 	})();
 /******/ 	
 /************************************************************************/
+/******/ 	
 /******/ 	// run startup
-/******/ 	return __webpack_require__.x();
+/******/ 	var __webpack_exports__ = __webpack_require__.x();
+/******/ 	
 /******/ })()
 ;
