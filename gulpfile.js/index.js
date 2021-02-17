@@ -16,6 +16,7 @@ const { bundleDemo, watchDemo } = require("gulptask-demo-page").generateTasks({
       loader: "webpack-glsl-loader",
     },
   ],
+  compileTarget:"es6"
 });
 
 const watchTasks = (cb) => {
