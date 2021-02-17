@@ -5,7 +5,6 @@ import {
   DecrementWrapStencilOp,
   Euler,
   FrontSide,
-  Geometry,
   Group,
   IncrementWrapStencilOp,
   Material,
@@ -39,7 +38,7 @@ export class ClippingSurface extends Group {
    */
   constructor(
     clippingPlane: Plane,
-    geometry: Geometry | BufferGeometry,
+    geometry: BufferGeometry,
     option?: ClippingSurfaceOption
   ) {
     super();
@@ -84,7 +83,7 @@ export class ClippingSurface extends Group {
    * @param mat
    */
   public static createPlane(
-    geo: Geometry | BufferGeometry,
+    geo:  BufferGeometry,
     clippingPlane: Plane,
     otherPlanes: Plane[],
     index: number,
@@ -148,7 +147,7 @@ class ClippingSurfaceUtil {
    * @param renderOrder
    */
   public static createPlaneStencilGroup(
-    geometry: Geometry | BufferGeometry,
+    geometry: BufferGeometry,
     plane: Plane,
     renderOrder: number
   ): Group {
@@ -204,7 +203,7 @@ class ClippingSurfaceUtil {
     plane: Plane,
     stencilOp: StencilOp
   ): MeshBasicMaterial {
-    const mat = base.clone();
+    const mat = base.clone() as MeshBasicMaterial;
     mat.side = side;
     mat.clippingPlanes = [plane];
     ClippingSurfaceUtil.setStencilOp(mat, stencilOp);
@@ -238,7 +237,7 @@ class ClippingSurfaceUtil {
    */
   static initFrontFaceMesh(
     planes: Plane[],
-    geometry: Geometry | BufferGeometry,
+    geometry: BufferGeometry,
     mat?: Material
   ): Mesh {
     if (mat == null) {

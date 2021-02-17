@@ -1,6 +1,5 @@
 import {
   BufferGeometry,
-  Geometry,
   Light,
   RepeatWrapping,
   ShaderMaterial,
@@ -15,7 +14,7 @@ export class WaterMesh extends Water {
   private currentTimeStamp;
   private requestID;
 
-  constructor(geometry: Geometry | BufferGeometry, options: WaterOptions) {
+  constructor(geometry: BufferGeometry, options: WaterOptions) {
     super(geometry, options);
     this.option = options;
     this.rotation.x = -Math.PI / 2;
