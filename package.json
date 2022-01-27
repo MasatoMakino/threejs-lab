@@ -20,7 +20,7 @@
     "prettier": "^2.4.1",
     "pretty-quick": "^3.1.1",
     "stats.js": "https://github.com/mrdoob/stats.js.git",
-    "three": "^0.133.1",
+    "three": "^0.137.0",
     "three-nebula": "^10.0.2",
     "threejs-shader-materials": "https://github.com/MasatoMakino/threejs-shader-materials.git",
     "ts-loader": "^9.2.6",
