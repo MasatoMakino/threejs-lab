@@ -84,4 +84,14 @@ export class Common {
     };
     rendering();
   }
+
+  public static addRendererInfo(): HTMLDivElement {
+    const info = document.createElement("div");
+    document.body.appendChild(info);
+    return info;
+  }
+
+  public static updateRendererInfo(div: HTMLDivElement, info: any): void {
+    div.innerText = JSON.stringify(info);
+  }
 }
