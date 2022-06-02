@@ -30,7 +30,7 @@
   "scripts": {
     "start:dev": "gulp start_dev",
     "build": "gulp build",
-    "checkout:docs": "git checkout HEAD ./docs/"
+    "demo": "gulp build"
   },
   "simple-git-hooks": {
     "pre-commit": "npx pretty-quick --staged"
