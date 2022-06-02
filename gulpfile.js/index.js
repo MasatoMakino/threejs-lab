@@ -16,7 +16,7 @@ const { bundleDemo, watchDemo } = require("gulptask-demo-page").generateTasks({
       loader: "webpack-glsl-loader",
     },
   ],
-  compileTarget:"es6"
+  compileTarget: "es6",
 });
 
 const watchTasks = (cb) => {
@@ -25,5 +25,5 @@ const watchTasks = (cb) => {
 };
 exports.watchTasks = watchTasks;
 
-exports.start_dev = series( watchTasks, server);
+exports.start_dev = series(watchTasks, server);
 exports.build = bundleDemo;
