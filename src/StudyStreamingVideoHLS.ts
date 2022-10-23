@@ -3,7 +3,7 @@ import {
   Fog,
   Mesh,
   MeshBasicMaterial,
-  PlaneBufferGeometry,
+  PlaneGeometry,
   PointLight,
   PointLightHelper,
   Scene,
@@ -78,7 +78,7 @@ export class StudyStreamingVideoHLS {
     const helper = new PointLightHelper(spot);
     scene.add(helper);
 
-    const geo = new PlaneBufferGeometry(64, 36);
+    const geo = new PlaneGeometry(64, 36);
     const mat = new MeshBasicMaterial({
       map: new VideoTexture(video),
       fog: scene.fog !== undefined,

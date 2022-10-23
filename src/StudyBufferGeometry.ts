@@ -9,7 +9,6 @@ import {
   PointLight,
   PointLightHelper,
   Scene,
-  SphereBufferGeometry,
   SphereGeometry,
   WebGLRenderer,
 } from "three";
@@ -105,7 +104,7 @@ export class StudyBufferGeometry {
     const seg = Math.pow(2, 8);
     let geo;
     if (this.params.isBufferGeometry) {
-      geo = new SphereBufferGeometry(10, seg, seg);
+      geo = new SphereGeometry(10, seg, seg);
     } else {
       geo = new SphereGeometry(10, seg, seg);
     }

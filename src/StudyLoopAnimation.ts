@@ -7,7 +7,7 @@ import {
   PointLight,
   PointLightHelper,
   Scene,
-  TorusKnotBufferGeometry,
+  TorusKnotGeometry,
   Vector3,
 } from "three";
 import { ClippingSurface } from "./clippingSurface/ClippingSurface";
@@ -43,7 +43,7 @@ export class Study {
     const helper = new PointLightHelper(spot);
     scene.add(helper);
 
-    const geo = new TorusKnotBufferGeometry(10, 3, 64, 32);
+    const geo = new TorusKnotGeometry(10, 3, 64, 32);
 
     const plane = new Plane(new Vector3(0, 0, -1), 0);
     const surface = new ClippingSurface(plane, geo, {
