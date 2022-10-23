@@ -3,7 +3,7 @@ import {
   PerspectiveCamera,
   Plane,
   Scene,
-  TorusKnotBufferGeometry,
+  TorusKnotGeometry,
   Vector3,
   WebGLRenderer,
 } from "three";
@@ -39,7 +39,7 @@ export class Study {
 
     this.planes = Study.initPlanes();
 
-    const geometry = new TorusKnotBufferGeometry(0.4, 0.15, 220, 60);
+    const geometry = new TorusKnotGeometry(0.4, 0.15, 220, 60);
 
     const surfaces: ClippingSurface[] = [];
     //トーラスジオメトリをコピーしたグループを作る。

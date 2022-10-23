@@ -13,7 +13,7 @@ import {
   MeshStandardMaterial,
   NotEqualStencilFunc,
   Plane,
-  PlaneBufferGeometry,
+  PlaneGeometry,
   ReplaceStencilOp,
   Side,
   StencilOp,
@@ -83,7 +83,7 @@ export class ClippingSurface extends Group {
    * @param mat
    */
   public static createPlane(
-    geo:  BufferGeometry,
+    geo: BufferGeometry,
     clippingPlane: Plane,
     otherPlanes: Plane[],
     index: number,
@@ -91,7 +91,7 @@ export class ClippingSurface extends Group {
   ): Mesh {
     geo.computeBoundingSphere();
     const rad = geo.boundingSphere.radius;
-    const planeGeom = new PlaneBufferGeometry(rad * 2, rad * 2);
+    const planeGeom = new PlaneGeometry(rad * 2, rad * 2);
 
     if (mat == null) {
       mat = new MeshStandardMaterial({

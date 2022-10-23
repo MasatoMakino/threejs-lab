@@ -1,7 +1,7 @@
 import {
   DirectionalLight,
   DirectionalLightHelper,
-  PlaneBufferGeometry,
+  PlaneGeometry,
   Scene,
 } from "three";
 import { WaterOptions } from "three/examples/jsm/objects/Water";
@@ -33,7 +33,7 @@ export class StudyWater {
     const helper = new DirectionalLightHelper(light, 15);
     scene.add(helper);
 
-    const waterGeometry = new PlaneBufferGeometry(10000, 10000);
+    const waterGeometry = new PlaneGeometry(10000, 10000);
 
     const option: WaterOptions = {
       waterNormals: WaterMesh.loadNormalSampler("textures/waternormals.jpg"),
