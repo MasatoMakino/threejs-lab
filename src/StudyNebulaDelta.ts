@@ -1,4 +1,4 @@
-import * as dat from "dat.gui";
+import { GUI } from "lil-gui";
 import * as THREE from "three";
 import { Color, Scene } from "three";
 
@@ -28,7 +28,7 @@ export class Study {
   private system: System;
   private emitter: Emitter;
 
-  private delta:number = Study.DEFAULT_SYSTEM_DELTA;
+  private delta: number = Study.DEFAULT_SYSTEM_DELTA;
   private static readonly DEFAULT_SYSTEM_DELTA = 0.0167;
 
   constructor() {
@@ -67,7 +67,7 @@ export class Study {
   }
 
   public initGUI(): void {
-    const gui = new dat.GUI();
+    const gui = new GUI();
 
     const folder = gui.addFolder("Emitter");
     folder.open();

@@ -1,4 +1,4 @@
-import * as dat from "dat.gui";
+import { GUI } from "lil-gui";
 import Stats from "stats.js";
 import {
   Camera,
@@ -73,7 +73,7 @@ export class StudyBufferGeometry {
       isBufferGeometry: true,
       updateGeometry: true,
     };
-    const gui = new dat.GUI();
+    const gui = new GUI();
     gui.add(this.params, "isBufferGeometry").onChange(() => {
       this.refreshGeometry();
     });
