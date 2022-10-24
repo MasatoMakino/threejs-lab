@@ -1,24 +1,19 @@
-import { Common } from "./Common";
 import {
   BoxGeometry,
   BufferAttribute,
+  BufferGeometry,
+  Camera,
+  Intersection,
   Mesh,
   MeshBasicMaterial,
-  Scene,
-  Raycaster,
   Object3D,
-  WebGLRenderer,
-  Camera,
+  Raycaster,
+  Scene,
   Vector2,
-  Intersection,
-  BufferGeometryUtils,
-  BufferGeometry,
-  PerspectiveCamera,
-  TorusGeometry,
-  CylinderGeometry,
-  PlaneGeometry,
+  WebGLRenderer,
 } from "three";
 import { mergeBufferGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
+import { Common } from "./Common";
 import { MergedGeometryStudy } from "./MergedGeometryStudy";
 
 export class StudyMergedGeometryInteractive extends MergedGeometryStudy {
