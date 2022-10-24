@@ -1,4 +1,4 @@
-import { GUI } from "dat.gui";
+import { GUI } from "lil-gui";
 import { Material } from "three";
 
 export class CommonGUI {

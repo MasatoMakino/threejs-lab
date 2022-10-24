@@ -1,4 +1,4 @@
-import * as dat from "dat.gui";
+import { GUI } from "lil-gui";
 import {
   Color,
   Mesh,
@@ -123,7 +123,7 @@ export class StudyDepthTestAndDepthWrite {
       depthWrite: true,
     };
 
-    const gui = new dat.GUI();
+    const gui = new GUI();
 
     //外部ボールがメッシュポジションか、ジオメトリシフトかで結果が変わる。
     const meshFolder = gui.addFolder("Mesh");

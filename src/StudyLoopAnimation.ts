@@ -1,4 +1,4 @@
-import * as dat from "dat.gui";
+import { GUI } from "lil-gui";
 import {
   Color,
   Fog,
@@ -57,7 +57,7 @@ export class Study {
   }
 
   public initGUI(surface: ClippingSurface): void {
-    const gui = new dat.GUI();
+    const gui = new GUI();
     CommonGUI.initMaterialGUI(
       gui,
       surface.planeObject.material,

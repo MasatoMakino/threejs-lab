@@ -1,4 +1,4 @@
-import * as dat from "dat.gui";
+import { GUI } from "lil-gui";
 import * as THREE from "three";
 import { Scene } from "three";
 
@@ -52,7 +52,7 @@ export class Study {
   }
 
   public initGUI(): void {
-    const gui = new dat.GUI();
+    const gui = new GUI();
 
     const folder = gui.addFolder("Emitter");
     folder.open();
