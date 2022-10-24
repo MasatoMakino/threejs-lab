@@ -1,5 +1,4 @@
 import { GUI } from "lil-gui";
-import Stats from "three/examples/jsm/libs/stats.module";
 import {
   Camera,
   Color,
@@ -13,6 +12,7 @@ import {
   WebGLRenderer,
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import Stats from "three/examples/jsm/libs/stats.module";
 import { Common } from "./Common";
 
 /**

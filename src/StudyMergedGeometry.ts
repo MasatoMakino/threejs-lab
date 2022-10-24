@@ -1,14 +1,9 @@
-import { Common } from "./Common";
 import {
   BoxGeometry,
   BufferAttribute,
   Mesh,
   MeshBasicMaterial,
   Scene,
-  Raycaster,
-  Object3D,
-  WebGLRenderer,
-  Camera,
 } from "three";
 import { mergeBufferGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { MergedGeometryStudy } from "./MergedGeometryStudy";

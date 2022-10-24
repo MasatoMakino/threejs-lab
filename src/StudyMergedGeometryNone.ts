@@ -1,7 +1,5 @@
-import { MergedGeometryStudy } from "./MergedGeometryStudy";
 import {
   BoxGeometry,
-  Camera,
   Color,
   Group,
   Mesh,
@@ -9,6 +7,7 @@ import {
   Object3D,
   Scene,
 } from "three";
+import { MergedGeometryStudy } from "./MergedGeometryStudy";
 
 export class StudyMergedGeometryNone extends MergedGeometryStudy {
   protected initMesh(scene: Scene): Object3D {

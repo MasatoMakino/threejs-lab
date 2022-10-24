@@ -1,5 +1,5 @@
-import { MergedGeometryStudy } from "./MergedGeometryStudy";
 import { BoxGeometry, Group, Mesh, MeshBasicMaterial, Scene } from "three";
+import { MergedGeometryStudy } from "./MergedGeometryStudy";
 
 export class StudyMergedGeometryShared extends MergedGeometryStudy {
   protected initMesh(scene: Scene): Group {

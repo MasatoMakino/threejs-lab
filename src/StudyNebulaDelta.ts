@@ -1,25 +1,18 @@
 import { GUI } from "lil-gui";
 import * as THREE from "three";
-import { Color, Scene } from "three";
+import { Scene } from "three";
 
 import System, {
-  Alpha,
-  Color as NebulaColor,
   Emitter,
   Life,
-  Mass,
-  PointZone,
-  Position,
   RadialVelocity,
   Radius,
   Rate,
-  Scale,
   Span,
   SpriteRenderer,
   Vector3D,
 } from "three-nebula";
 import { Common } from "./Common";
-import { NebulaGUI } from "./NebulaGUI";
 
 export class Study {
   public static readonly W = 640;
