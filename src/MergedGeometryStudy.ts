@@ -1,6 +1,6 @@
 import { Common } from "./Common";
 import { Camera, Group, Object3D, Scene, WebGLRenderer } from "three";
-import Stats from "stats.js";
+import Stats from "three/examples/jsm/libs/stats.module";
 
 export class MergedGeometryStudy {
   public static readonly W = 1280;
@@ -29,7 +29,7 @@ export class MergedGeometryStudy {
   }
 
   private initStats(): void {
-    this.stats = new Stats();
+    this.stats = Stats();
     this.stats.showPanel(0);
     document.body.appendChild(this.stats.dom);
   }

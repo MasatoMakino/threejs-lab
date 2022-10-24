@@ -1,5 +1,5 @@
 import { GUI } from "lil-gui";
-import Stats from "stats.js";
+import Stats from "three/examples/jsm/libs/stats.module";
 import {
   Camera,
   Color,
@@ -60,11 +60,12 @@ export class StudyBufferGeometry {
   }
 
   private initStats(): void {
-    this.stats = new Stats();
+    this.stats = Stats();
     this.stats.showPanel(1);
     document.body.appendChild(this.stats.dom);
+
     this.geoStats = this.stats.addPanel(
-      new Stats.Panel("ms, geo init", "#ff8", "#221")
+      Stats.Panel("ms, geo init", "#ff8", "#221")
     );
   }
 
