@@ -7,10 +7,9 @@
   "license": "MIT",
   "devDependencies": {
     "@masatomakino/gulptask-demo-page": "0.5.2",
-    "@masatomakino/gulptask-dev-server": "0.4.2",
     "@tweenjs/tween.js": "^18.6.4",
-    "@types/dat.gui": "^0.7.7",
     "@types/three": "^0.144.0",
+    "browser-sync": "^2.27.12",
     "hls.js": "^1.2.4",
     "lil-gui": "^0.17.0",
     "pixi.js": "^6.5.7",
@@ -28,7 +27,7 @@
     "start:dev": "npm run server & npm run watch:demo",
     "demo": "npx @masatomakino/gulptask-demo-page --srcDir './src' --prefix 'Study' --body '<canvas id=\"webgl-canvas\" width=\"640\" height=\"480\"></canvas>' --rule 'rule.js' --compileTarget 'es6'",
     "watch:demo": "npm run demo -- -W",
-    "server": "npx @masatomakino/gulptask-dev-server -b ./docs/demo"
+    "server": "browser-sync ./docs/demo -w"
   },
   "simple-git-hooks": {
     "pre-commit": "npx pretty-quick --staged"
