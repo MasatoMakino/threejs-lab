@@ -3,6 +3,7 @@ import {
   BufferAttribute,
   BufferGeometry,
   Camera,
+  Face,
   Intersection,
   Mesh,
   MeshBasicMaterial,
@@ -12,7 +13,7 @@ import {
   Vector2,
   WebGLRenderer,
 } from "three";
-import { mergeBufferGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
+import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { Common } from "./Common";
 import { MergedGeometryStudy } from "./MergedGeometryStudy";
 
@@ -36,7 +37,7 @@ export class StudyMergedGeometryInteractive extends MergedGeometryStudy {
   };
 
   protected initMesh(scene: Scene): Mesh {
-    const geometryArray = [];
+    const geometryArray: BoxGeometry[] = [];
 
     const size = 1;
     const margin = 0.3;
@@ -90,7 +91,7 @@ export class StudyMergedGeometryInteractive extends MergedGeometryStudy {
     }
 
     const mergedMesh = new Mesh(
-      mergeBufferGeometries(geometryArray),
+      mergeGeometries(geometryArray),
       new MeshBasicMaterial({ transparent: true, vertexColors: true })
     );
 
@@ -132,17 +133,17 @@ export class StudyMergedGeometryInteractive extends MergedGeometryStudy {
 
   private updateIntersect(intersect: Intersection, geo: BufferGeometry): void {
     const idAttribute = geo.getAttribute("mesh_id");
-    const meshID = idAttribute.getX(intersect.face.a);
+    const face = intersect.face as Face;
+    const meshID = idAttribute.getX(face.a);
 
     if (
-      idAttribute.getX(intersect.face.a) !==
-        idAttribute.getX(intersect.face.b) ||
-      idAttribute.getX(intersect.face.a) !== idAttribute.getX(intersect.face.c)
+      idAttribute.getX(face.a) !== idAttribute.getX(face.b) ||
+      idAttribute.getX(face.a) !== idAttribute.getX(face.c)
     ) {
       console.log(
-        idAttribute.getX(intersect.face.a),
-        idAttribute.getX(intersect.face.b),
-        idAttribute.getX(intersect.face.c)
+        idAttribute.getX(face.a),
+        idAttribute.getX(face.b),
+        idAttribute.getX(face.c)
       );
     }
 

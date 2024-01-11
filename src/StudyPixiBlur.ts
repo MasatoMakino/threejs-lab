@@ -32,7 +32,7 @@ export class Study {
       preserveDrawingBuffer: true,
       clearBeforeRender: false,
     });
-    document.body.appendChild(app.view);
+    document.body.appendChild(app.view as HTMLCanvasElement);
 
     app.ticker.add(() => {
       TWEEN.update(app.ticker.lastTime);
@@ -44,22 +44,22 @@ export class Study {
 
     const shade = new Graphics();
     shade
-      .beginFill(app.renderer.backgroundColor, 0.05)
+      .beginFill(app.renderer.background.color, 0.05)
       .drawRect(0, 0, 256, 256)
       .endFill();
 
     app.stage.addChild(shape);
     app.stage.addChild(shade);
 
-    const tween = new TWEEN.Tween(shape as any) //bug : tween.js v18.5.0
+    const tween = new TWEEN.Tween(shape)
       .to({ x: 256, y: 256 }, 3000)
       .easing(TWEEN.Easing.Cubic.InOut)
       .repeat(Infinity)
       .yoyo(true)
-      .start(null); //bug : tween.js v18.5.0
+      .start();
 
     const geo = new PlaneGeometry(32, 32);
-    const map = new Texture(app.view);
+    const map = new Texture(app.view as HTMLCanvasElement);
     const mat = new MeshBasicMaterial({
       map: map,
       blending: AdditiveBlending,

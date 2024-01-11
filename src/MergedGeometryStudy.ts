@@ -29,7 +29,7 @@ export class MergedGeometryStudy {
   }
 
   private initStats(): void {
-    this.stats = Stats();
+    this.stats = new Stats();
     this.stats.showPanel(0);
     document.body.appendChild(this.stats.dom);
   }

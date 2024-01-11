@@ -27,7 +27,7 @@ export class Study {
 
   private initObject(scene: Scene): void {
     const app = new Application({ width: 256, height: 256 });
-    document.body.appendChild(app.view);
+    document.body.appendChild(app.view as HTMLCanvasElement);
 
     app.ticker.add(() => {
       TWEEN.update(app.ticker.lastTime);
@@ -39,15 +39,15 @@ export class Study {
 
     app.stage.addChild(shape);
 
-    const tween = new TWEEN.Tween(shape as any) //bug : tween.js v18.6.0
+    const tween = new TWEEN.Tween(shape)
       .to({ x: 256, y: 256 }, 3000)
       .easing(TWEEN.Easing.Cubic.InOut)
       .repeat(Infinity)
       .yoyo(true)
-      .start(null); //bug : tween.js v18.6.0
+      .start();
 
     const geo = new PlaneGeometry(32, 32);
-    const map = new Texture(app.view);
+    const map = new Texture(app.view as HTMLCanvasElement);
     const mat = new MeshBasicMaterial({
       map: map,
       blending: AdditiveBlending,

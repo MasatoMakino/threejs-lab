@@ -14,9 +14,9 @@ export class StudyDepthTestAndDepthWrite {
   public static readonly W = 640;
   public static readonly H = 480;
 
-  private inner: Mesh;
-  private outer: Mesh;
-  private satellite: Mesh;
+  private inner?: Mesh;
+  private outer?: Mesh;
+  private satellite?: Mesh;
   private scene: Scene;
 
   constructor() {
@@ -40,7 +40,7 @@ export class StudyDepthTestAndDepthWrite {
   }
 
   private initObject(scene: Scene): void {
-    const spot = new PointLight(0xffffff, 3, 0, 2);
+    const spot = new PointLight(0xffffff, 10_000);
     spot.position.set(10, 20, 30);
     scene.add(spot);
     const helper = new PointLightHelper(spot);
@@ -56,10 +56,10 @@ export class StudyDepthTestAndDepthWrite {
    */
   public swapSphere(isSwap: boolean): void {
     if (this.inner) {
-      this.inner.parent.remove(this.inner);
-      this.outer.parent.remove(this.outer);
-      this.inner = null;
-      this.outer = null;
+      this.inner?.parent?.remove(this.inner);
+      this.outer?.parent?.remove(this.outer);
+      this.inner = undefined;
+      this.outer = undefined;
     }
 
     const self = StudyDepthTestAndDepthWrite;
@@ -88,20 +88,20 @@ export class StudyDepthTestAndDepthWrite {
   public switchDepthTest(val: boolean): void {
     const spheres = [this.outer, this.inner, this.satellite];
     spheres.forEach((sphere) => {
-      (<MeshPhongMaterial>sphere.material).depthTest = val;
+      (<MeshPhongMaterial>sphere?.material).depthTest = val;
     });
   }
   public switchDepthWrite(val: boolean): void {
     const spheres = [this.outer, this.inner, this.satellite];
     spheres.forEach((sphere) => {
-      (<MeshPhongMaterial>sphere.material).depthWrite = val;
+      (<MeshPhongMaterial>sphere?.material).depthWrite = val;
     });
   }
 
   public switchSatelliteShift(isMeshPosition: boolean) {
     if (this.satellite) {
-      this.satellite.parent.remove(this.satellite);
-      this.satellite = null;
+      this.satellite.parent?.remove(this.satellite);
+      this.satellite = undefined;
     }
 
     const self = StudyDepthTestAndDepthWrite;
@@ -130,7 +130,7 @@ export class StudyDepthTestAndDepthWrite {
     meshFolder.add(prop, "alpha", 0.0, 1.0).onChange((val) => {
       const spheres = [this.outer, this.inner, this.satellite];
       spheres.forEach((sphere) => {
-        (<MeshPhongMaterial>sphere.material).opacity = val;
+        (<MeshPhongMaterial>sphere?.material).opacity = val;
       });
     });
     meshFolder.open();
@@ -157,7 +157,9 @@ export class StudyDepthTestAndDepthWrite {
       x: 0.0,
     };
     innerFolder.add(innerParam, "x", 0, 20).onChange((val) => {
-      this.inner.position.x = val;
+      if (this.inner) {
+        this.inner.position.x = val;
+      }
     });
     innerFolder.open();
 
@@ -174,19 +176,23 @@ export class StudyDepthTestAndDepthWrite {
       .add(orders, "inner", min, max)
       .step(step)
       .onChange((val) => {
-        this.inner.renderOrder = val;
+        if (this.inner) {
+          this.inner.renderOrder = val;
+        }
       });
     renderOrderFolder
       .add(orders, "outer", min, max)
       .step(step)
       .onChange((val) => {
-        this.outer.renderOrder = val;
+        if (this.outer) {
+          this.outer.renderOrder = val;
+        }
       });
     renderOrderFolder
       .add(orders, "satellite", min, max)
       .step(step)
       .onChange((val) => {
-        this.satellite.renderOrder = val;
+        if (this.satellite) this.satellite.renderOrder = val;
       });
     renderOrderFolder.open();
 
@@ -196,7 +202,7 @@ export class StudyDepthTestAndDepthWrite {
     };
     sceneFolder.add(sceneParam, "SwapSphere").onChange((val) => {
       this.swapSphere(val);
-      this.inner.position.x = innerParam.x;
+      if (this.inner) this.inner.position.x = innerParam.x;
     });
 
     sceneFolder.open();
