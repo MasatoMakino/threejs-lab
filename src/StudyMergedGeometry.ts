@@ -5,7 +5,10 @@ import {
   MeshBasicMaterial,
   Scene,
 } from "three";
-import { mergeBufferGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
+import {
+  mergeBufferGeometries,
+  mergeGeometries,
+} from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { MergedGeometryStudy } from "./MergedGeometryStudy";
 
 export class StudyMergedGeometry extends MergedGeometryStudy {
@@ -14,7 +17,7 @@ export class StudyMergedGeometry extends MergedGeometryStudy {
   protected stats;
 
   protected initMesh(scene: Scene): Mesh {
-    const geometryArray = [];
+    const geometryArray: BoxGeometry[] = [];
 
     const size = 1;
     const margin = 0.3;
@@ -53,7 +56,7 @@ export class StudyMergedGeometry extends MergedGeometryStudy {
     }
 
     const mergedMesh = new Mesh(
-      mergeBufferGeometries(geometryArray),
+      mergeGeometries(geometryArray),
       new MeshBasicMaterial({
         transparent: true,
         vertexColors: true,

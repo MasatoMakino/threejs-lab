@@ -84,10 +84,10 @@ export class StudyStreamingVideoHLS {
       fog: scene.fog !== undefined,
     });
     const mesh = new Mesh(geo, mat);
-    mat.map.needsUpdate = true;
+    mat.map!.needsUpdate = true;
 
     scene.add(mesh);
-    return mat.map;
+    return mat.map!;
   }
 }
 

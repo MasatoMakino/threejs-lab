@@ -60,12 +60,12 @@ export class StudyBufferGeometry {
   }
 
   private initStats(): void {
-    this.stats = Stats();
+    this.stats = new Stats();
     this.stats.showPanel(1);
     document.body.appendChild(this.stats.dom);
 
     this.geoStats = this.stats.addPanel(
-      Stats.Panel("ms, geo init", "#ff8", "#221")
+      new Stats.Panel("ms, geo init", "#ff8", "#221")
     );
   }
 
@@ -84,7 +84,7 @@ export class StudyBufferGeometry {
   }
 
   private initPointLight(scene: Scene): void {
-    const spot = new PointLight(0xffffff, 3, 0, 2);
+    const spot = new PointLight(0xffffff, 15_000);
     spot.position.set(10, 20, 30);
     scene.add(spot);
     const helper = new PointLightHelper(spot);
