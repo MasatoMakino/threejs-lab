@@ -1,12 +1,6 @@
-import {
-  Mesh,
-  MeshBasicMaterial,
-  PlaneGeometry,
-  Scene,
-  TextureLoader,
-} from "three";
-import { Common } from "./Common";
 import GUI from "lil-gui";
+import { Scene, Sprite, SpriteMaterial, TextureLoader } from "three";
+import { Common } from "./Common";
 import { CommonGUI } from "./CommonGUI";
 
 export class Study {
@@ -25,15 +19,16 @@ export class Study {
   }
 
   private initObject(scene: Scene): void {
-    const geo = new PlaneGeometry(10, 10);
     const loader = new TextureLoader();
     const texture = loader.load("./textures/uv_grid_opengl.jpg");
-    const mat = new MeshBasicMaterial({ map: texture });
-    const mesh = new Mesh(geo, mat);
-    scene.add(mesh);
+    const mat = new SpriteMaterial({ map: texture });
+
+    const sprite = new Sprite(mat);
+    sprite.scale.set(10, 10, 1);
+    scene.add(sprite);
 
     const gui = new GUI();
-    CommonGUI.initPlaneUVGUI(gui, geo);
+    CommonGUI.initSpriteUVGUI(gui, sprite.geometry);
   }
 }
 
