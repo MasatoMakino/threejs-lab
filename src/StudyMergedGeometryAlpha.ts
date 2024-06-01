@@ -6,10 +6,7 @@ import {
   Scene,
   Vector3,
 } from "three";
-import {
-  mergeBufferGeometries,
-  mergeGeometries,
-} from "three/examples/jsm/utils/BufferGeometryUtils.js";
+import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { MergedGeometryStudy } from "./MergedGeometryStudy";
 
 export class StudyMergedGeometryAlpha extends MergedGeometryStudy {

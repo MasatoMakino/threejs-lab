@@ -6,8 +6,9 @@ import {
   PerspectiveCamera,
   Scene,
   WebGLRenderer,
+  REVISION,
 } from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 export class Common {
   public static initScene() {
@@ -59,6 +60,7 @@ export class Common {
     renderer.setClearColor(new Color(color));
     renderer.setSize(W, H);
     renderer.setPixelRatio(window.devicePixelRatio);
+    console.log("three.js revision: ", REVISION);
     return renderer;
   }
 
