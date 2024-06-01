@@ -8,7 +8,7 @@
   "devDependencies": {
     "@masatomakino/gulptask-demo-page": "^0.8.0",
     "@tweenjs/tween.js": "^21.0.0",
-    "@types/three": "^0.160.0",
+    "@types/three": "^0.165.0",
     "browser-sync": "^3.0.2",
     "hls.js": "^1.5.1",
     "lil-gui": "^0.19.1",
@@ -16,7 +16,7 @@
     "prettier": "^2.7.1",
     "pretty-quick": "^3.1.3",
     "simple-git-hooks": "^2.8.1",
-    "three": "^0.160.0",
+    "three": "^0.165.0",
     "three-nebula": "^10.0.3",
     "threejs-shader-materials": "git+https://github.com/MasatoMakino/threejs-shader-materials.git",
     "ts-loader": "^9.5.1",
