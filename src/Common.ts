@@ -8,6 +8,7 @@ import {
   WebGLRenderer,
   REVISION,
 } from "three";
+import WebGPURenderer from "three/examples/jsm/renderers/webgpu/WebGPURenderer.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 export class Common {
@@ -23,9 +24,9 @@ export class Common {
   }
 
   public static initCamera(
-    scene,
-    W,
-    H,
+    scene: Scene,
+    W: number,
+    H: number,
     near = 1,
     far = 400
   ): PerspectiveCamera {
@@ -36,7 +37,10 @@ export class Common {
     return camera;
   }
 
-  public static initControl(camera, render: WebGLRenderer): OrbitControls {
+  public static initControl(
+    camera: Camera,
+    render: WebGLRenderer | WebGPURenderer
+  ): OrbitControls {
     let domElement;
     if (render) {
       domElement = render.domElement;
@@ -71,7 +75,7 @@ export class Common {
 
   public static render(
     control: OrbitControls,
-    renderer: WebGLRenderer,
+    renderer: WebGLRenderer | WebGPURenderer,
     scene: Scene,
     camera: Camera,
     onBeforeRender?: () => void
@@ -81,7 +85,11 @@ export class Common {
         onBeforeRender();
       }
       control.update();
-      renderer.render(scene, camera);
+      if (renderer instanceof WebGPURenderer) {
+        renderer.renderAsync(scene, camera);
+      } else {
+        renderer.render(scene, camera);
+      }
       requestAnimationFrame(rendering);
     };
     rendering();
