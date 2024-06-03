@@ -3,7 +3,6 @@ import {
   MeshBasicNodeMaterial,
   color,
 } from "three/examples/jsm/nodes/Nodes.js";
-import WebGPURenderer from "three/examples/jsm/renderers/webgpu/WebGPURenderer.js";
 import { Common } from "./Common";
 
 export class StudyNodeBasic {
@@ -15,12 +14,10 @@ export class StudyNodeBasic {
     Common.initLight(scene);
     const camera = Common.initCamera(scene, StudyNodeBasic.W, StudyNodeBasic.H);
 
-    const renderer = new WebGPURenderer({
-      canvas: document.getElementById("webgl-canvas") as HTMLCanvasElement,
-      antialias: true,
-    });
-    renderer.setClearColor(new Color(0x000000));
-
+    const renderer = Common.initWebGPURenderer(
+      StudyNodeBasic.W,
+      StudyNodeBasic.H
+    );
     const control = Common.initControl(camera, renderer);
     Common.initHelper(scene);
     this.initObject(scene);
