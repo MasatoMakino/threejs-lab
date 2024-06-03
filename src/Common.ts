@@ -61,11 +61,35 @@ export class Common {
       canvas: document.getElementById(id) as HTMLCanvasElement,
       antialias: antialias,
     });
+    this.initRendererSettings(renderer, color, W, H);
+    return renderer;
+  }
+
+  public static initWebGPURenderer(
+    W: number,
+    H: number,
+    color: number = 0x000000,
+    id: string = "webgl-canvas",
+    antialias: boolean = true
+  ) {
+    const renderer = new WebGPURenderer({
+      canvas: document.getElementById(id) as HTMLCanvasElement,
+      antialias: antialias,
+    });
+    this.initRendererSettings(renderer, color, W, H);
+    return renderer;
+  }
+
+  private static initRendererSettings(
+    renderer: WebGLRenderer | WebGPURenderer,
+    color: number,
+    W: number,
+    H: number
+  ) {
     renderer.setClearColor(new Color(color));
     renderer.setSize(W, H);
     renderer.setPixelRatio(window.devicePixelRatio);
     console.log("three.js revision: ", REVISION);
-    return renderer;
   }
 
   public static initHelper(scene: Scene): void {
