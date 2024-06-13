@@ -1,5 +1,5 @@
 import { Camera, Group, Object3D, Scene, WebGLRenderer } from "three";
-import Stats from "three/examples/jsm/libs/stats.module";
+import Stats from "three/examples/jsm/libs/stats.module.js";
 import { Common } from "./Common";
 
 export class MergedGeometryStudy {
