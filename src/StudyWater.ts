@@ -4,7 +4,7 @@ import {
   PlaneGeometry,
   Scene,
 } from "three";
-import { WaterOptions } from "three/examples/jsm/objects/Water";
+import { WaterOptions } from "three/examples/jsm/objects/Water.js";
 import { Common } from "./Common";
 import { WaterMesh } from "./water/WaterMesh";
 

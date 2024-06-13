@@ -6,7 +6,7 @@ import {
   Texture,
   TextureLoader,
 } from "three";
-import { Water, WaterOptions } from "three/examples/jsm/objects/Water";
+import { Water, WaterOptions } from "three/examples/jsm/objects/Water.js";
 
 export class WaterMesh extends Water {
   private option: WaterOptions;
