@@ -1,9 +1,5 @@
-import { Mesh, PlaneGeometry, Scene, Color } from "three";
-import {
-  MeshBasicNodeMaterial,
-  color,
-  // } from "three/examples/jsm/nodes/Nodes.js";
-} from "three/nodes";
+import { Mesh, PlaneGeometry, Scene } from "three";
+import { MeshBasicNodeMaterial, color } from "three/nodes";
 
 import { Common } from "./Common";
 
@@ -24,8 +20,6 @@ export class StudyNodeBasic {
     Common.initHelper(scene);
     this.initObject(scene);
     Common.render(control, renderer, scene, camera);
-
-    console.log("StudyNodeBasicbundler");
   }
 
   private initObject(scene: Scene): void {
