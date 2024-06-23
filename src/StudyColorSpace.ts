@@ -59,14 +59,15 @@ export class Study {
     scene.add(meshNodeMulti);
     meshNodeMulti.position.set(0, 20, 0);
 
-    this.initGUI(mat, matHex, matNode, multiColor);
+    this.initGUI(mat, matHex, matNode, multiColor, matNodeMulti);
   }
 
   initGUI = (
     materialBasic: MeshBasicMaterial,
     materialHex: MeshBasicMaterial,
     materialNode: MeshBasicNodeMaterial,
-    multiColor: Vector3 | Color
+    multiColor: Vector3 | Color,
+    multiMaterial: MeshBasicNodeMaterial
   ): void => {
     const gui = new GUI();
     const materialColor = {
@@ -92,10 +93,15 @@ export class Study {
       materialNode.color.setRGB(
         materialColor.r,
         materialColor.g,
-        materialColor.b
+        materialColor.b,
+        "srgb"
       );
 
-      multiColor.set(materialColor.r, materialColor.g, materialColor.b);
+      multiColor.set(
+        materialNode.color.r,
+        materialNode.color.g,
+        materialNode.color.b
+      );
     };
 
     gui.add(materialColor, "r", 0, 1).onChange(onChangeColor);
@@ -106,6 +112,7 @@ export class Study {
       materialBasic.opacity = materialAlpha.a;
       materialHex.opacity = materialAlpha.a;
       materialNode.opacity = materialAlpha.a;
+      multiMaterial.opacity = materialAlpha.a;
     };
     gui.add(materialAlpha, "a", 0, 1).onChange(updateAlpha);
 
