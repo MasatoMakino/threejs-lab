@@ -31,6 +31,7 @@ export class Study {
     const canvasGL = document.createElement("canvas");
     canvasGL.id = "webGPU-canvas";
     document.body.appendChild(canvasGL);
+    document.body.style.display = "flex"; // bodyの子要素を横並びにする
 
     const renderer = Common.initRenderer(Study.W, Study.H, 0x000000);
     const rendererGPU = Common.initWebGPURenderer(
@@ -39,10 +40,11 @@ export class Study {
       0x000000,
       "webGPU-canvas"
     );
-    [renderer, rendererGPU].forEach((r) => {
-      // r.outputColorSpace = "srgb-linear";
-    });
     const mat = this.initObject(scene);
+
+    this.addFigure(renderer.domElement, "WebGL");
+    this.addFigure(rendererGPU.domElement, "WebGPU");
+
     this.initGUI(mat, renderer, rendererGPU);
 
     const rendering = () => {
@@ -52,6 +54,20 @@ export class Study {
     };
     rendering();
   }
+
+  /**
+   * CanvasElementを、そのCanvasElementを内包したfigure要素に置き換える。figure要素にはfigcaption要素が追加される。
+   * @param canvas
+   * @param figure
+   */
+  private addFigure = (canvas: HTMLCanvasElement, figure: string) => {
+    const figureElement = document.createElement("figure");
+    const figCaption = document.createElement("figcaption");
+    figCaption.textContent = figure;
+    figureElement.appendChild(canvas);
+    figureElement.appendChild(figCaption);
+    document.body.appendChild(figureElement);
+  };
 
   private initObject(scene: Scene) {
     const geo = new PlaneGeometry(30, 30);
