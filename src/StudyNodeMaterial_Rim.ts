@@ -1,14 +1,14 @@
-import { Mesh, Scene, Color, TorusGeometry, Uniform } from "three";
+import GUI from "lil-gui";
+import { Color, Mesh, Scene, TorusGeometry, Vector3 } from "three";
 import {
   MeshBasicNodeMaterial,
-  color,
-  uniform,
   ShaderNodeObject,
   UniformNode,
+  materialColor,
+  uniform,
 } from "three/examples/jsm/nodes/Nodes.js";
 import { Common } from "./Common";
 import { rimEffect } from "./tsl/RimFunction.js";
-import GUI from "lil-gui";
 
 type UniformType<T> = ShaderNodeObject<UniformNode<T>>;
 
@@ -33,40 +33,52 @@ export class Study {
     const mat = new MeshBasicNodeMaterial();
     mat.color.setHex(0x000000);
 
-    const colorUniform = uniform(mat.color);
-    const rimColor = uniform(new Color(0xff0000));
-    const rimStrength = uniform(1);
-    const rimPow = uniform(2.0);
-    const rimInnerColor = uniform(new Color(0x0000ff));
-    const rimInnerStrength = uniform(0.1);
-    const rimInnerPow = uniform(1.0);
-
-    mat.colorNode = color(colorUniform).add(
-      rimEffect(
+    const generateRimEffectSetting = () => {
+      const rimColor = uniform(new Color(0xff0000));
+      const rimStrength = uniform(1);
+      const rimPow = uniform(2.0);
+      const rimInnerColor = uniform(new Color(0x0000ff));
+      const rimInnerStrength = uniform(0.1);
+      const rimInnerPow = uniform(1.0);
+      const angle = uniform(new Vector3(0, 0, 1));
+      return {
         rimColor,
-        rimPow,
         rimStrength,
+        rimPow,
         rimInnerColor,
+        rimInnerStrength,
         rimInnerPow,
-        rimInnerStrength
+        angle,
+      };
+    };
+    const rim01 = generateRimEffectSetting();
+
+    mat.colorNode = materialColor.add(
+      rimEffect(
+        rim01.rimColor,
+        rim01.rimPow,
+        rim01.rimStrength,
+        rim01.rimInnerColor,
+        rim01.rimInnerPow,
+        rim01.rimInnerStrength
       )
     );
     const mesh = new Mesh(geo, mat);
     scene.add(mesh);
 
     this.initGUI(
-      colorUniform,
-      rimColor,
-      rimStrength,
-      rimPow,
-      rimInnerColor,
-      rimInnerStrength,
-      rimInnerPow
+      mat.color,
+      rim01.rimColor,
+      rim01.rimStrength,
+      rim01.rimPow,
+      rim01.rimInnerColor,
+      rim01.rimInnerStrength,
+      rim01.rimInnerPow
     );
   }
 
   initGUI = (
-    color: UniformType<Color>,
+    color: Color,
     rimColor: UniformType<Color>,
     rimStrength: UniformType<number>,
     rimPow: UniformType<number>,
@@ -76,7 +88,7 @@ export class Study {
   ): void => {
     const gui = new GUI();
     const options = {
-      color: color.value.getHex(),
+      color: color.getHex(),
       rimColor: rimColor.value.getHex(),
       rimStrength: rimStrength.value,
       rimPow: rimPow.value,
@@ -85,8 +97,9 @@ export class Study {
       rimInnerPow: rimInnerPow.value,
     };
     gui.addColor(options, "color").onChange((v) => {
-      color.value.setHex(v);
+      color.setHex(v);
     });
+
     const rimFolder = gui.addFolder("Rim");
     rimFolder.addColor(options, "rimColor").onChange((v) => {
       rimColor.value.setHex(v);
