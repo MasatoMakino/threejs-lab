@@ -25,7 +25,7 @@
   },
   "scripts": {
     "start:dev": "npm run server & npm run watch:demo",
-    "demo": "npx @masatomakino/gulptask-demo-page --srcDir './src' --prefix 'Study' --body '<canvas id=\"webgl-canvas\" width=\"640\" height=\"480\"></canvas>' --rule 'rule.js' --compileModuleResolution bundler",
+    "demo": "npx @masatomakino/gulptask-demo-page --srcDir './src' --prefix 'Study' --body '<canvas id=\"webgl-canvas\" width=\"640\" height=\"480\"></canvas>' --rule 'rule.js' --compileTarget 'es2021' --compileModuleResolution 'bundler'",
     "watch:demo": "npm run demo -- -W",
     "server": "browser-sync ./docs/demo -w"
   },
