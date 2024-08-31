@@ -1,5 +1,3 @@
-// Three.js Transpiler r165
-
 import { Color, Vector3 } from "three";
 import {
   ShaderNodeObject,
@@ -8,13 +6,13 @@ import {
   pow,
   sub,
   transformedNormalView,
-  tslFn,
+  Fn,
   vec3,
-} from "three/examples/jsm/nodes/Nodes.js";
+} from "three/webgpu";
 
 type UniformType<T> = ShaderNodeObject<UniformNode<T>>;
 
-export const rimEffect = tslFn(
+export const rimEffect = Fn(
   ([rimColor, rimPow, rimStrength, insideColor, insidePow, insideStrength]: [
     UniformType<Color>,
     UniformType<number>,
@@ -35,7 +33,7 @@ export const rimEffect = tslFn(
   }
 );
 
-export const rimAngleEffect = tslFn(
+export const rimAngleEffect = Fn(
   ([
     rimColor,
     rimPow,

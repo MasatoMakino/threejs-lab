@@ -1,9 +1,5 @@
-import { Mesh, PlaneGeometry, Scene, BufferAttribute, Color } from "three";
-import {
-  MeshBasicNodeMaterial,
-  color,
-  attribute,
-} from "three/examples/jsm/nodes/Nodes.js";
+import { Mesh, PlaneGeometry, Scene, BufferAttribute } from "three";
+import { MeshBasicNodeMaterial, color, attribute } from "three/webgpu";
 import { Common } from "./Common";
 
 /**

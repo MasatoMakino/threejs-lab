@@ -1,6 +1,3 @@
-// Three.js Transpiler r165
-
-import { Vec2 } from "three";
 import {
   float,
   vec2,
@@ -10,16 +7,16 @@ import {
   abs,
   add,
   fract,
-  tslFn,
+  Fn,
   sub,
   floor,
   mix,
   ShaderNodeObject,
   AttributeNode,
   UniformNode,
-} from "three/examples/jsm/nodes/Nodes.js";
+} from "three/webgpu";
 
-const hash = tslFn(([p_immutable, hashLoop_immutable]: [any, any]) => {
+const hash = Fn(([p_immutable, hashLoop_immutable]: [any, any]) => {
   const hashLoop = float(hashLoop_immutable).toVar();
   const p = vec2(p_immutable).toVar();
   p.assign(mod(p, hashLoop));
@@ -34,7 +31,7 @@ const hash = tslFn(([p_immutable, hashLoop_immutable]: [any, any]) => {
   );
 });
 
-const noise = tslFn(([p_immutable, hashLoop_immutable]) => {
+const noise = Fn(([p_immutable, hashLoop_immutable]) => {
   const hashLoop = float(hashLoop_immutable).toVar();
   const p = vec2(p_immutable).toVar();
   p.mulAssign(hashLoop);
@@ -54,9 +51,9 @@ const noise = tslFn(([p_immutable, hashLoop_immutable]) => {
   );
 });
 
-const fbm = tslFn(
+const fbm = Fn(
   ([p_immutable, hashLoop_immutable, amp_immutable]: [
-    ShaderNodeObject<AttributeNode> | Vec2,
+    ShaderNodeObject<AttributeNode>,
     ShaderNodeObject<UniformNode<number>> | number,
     ShaderNodeObject<UniformNode<number>> | number
   ]) => {

@@ -6,9 +6,8 @@ import {
   PlaneGeometry,
   Scene,
   WebGLRenderer,
-  WorkingColorSpace,
 } from "three";
-import WebGPURenderer from "three/examples/jsm/renderers/webgpu/WebGPURenderer.js";
+import { WebGPURenderer } from "three/webgpu";
 import { Common } from "./Common";
 
 /**

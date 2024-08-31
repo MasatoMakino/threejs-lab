@@ -1,5 +1,5 @@
 import { Mesh, PlaneGeometry, Scene } from "three";
-import { MeshBasicNodeMaterial, color } from "three/nodes";
+import { MeshBasicNodeMaterial, color } from "three/webgpu";
 
 import { Common } from "./Common";
 

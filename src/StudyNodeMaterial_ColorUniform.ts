@@ -4,7 +4,7 @@ import {
   ShaderNodeObject,
   UniformNode,
   uniform,
-} from "three/examples/jsm/nodes/Nodes.js";
+} from "three/webgpu";
 import { Common } from "./Common";
 import { GUI } from "lil-gui";
 

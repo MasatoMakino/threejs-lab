@@ -6,7 +6,7 @@ import {
   Color,
   Vector3,
 } from "three";
-import { MeshBasicNodeMaterial, materialColor, uniform } from "three/nodes";
+import { MeshBasicNodeMaterial, materialColor, uniform } from "three/webgpu";
 import { GUI } from "lil-gui";
 
 import { Common } from "./Common";

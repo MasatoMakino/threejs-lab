@@ -6,7 +6,7 @@ import {
   UniformNode,
   materialColor,
   uniform,
-} from "three/examples/jsm/nodes/Nodes.js";
+} from "three/webgpu";
 import { Common } from "./Common";
 import { rimAngleEffect } from "./tsl/RimFunction.js";
 

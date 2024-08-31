@@ -8,7 +8,7 @@ import {
   WebGLRenderer,
   REVISION,
 } from "three";
-import WebGPURenderer from "three/examples/jsm/renderers/webgpu/WebGPURenderer.js";
+import { WebGPURenderer } from "three/webgpu";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 export class Common {
