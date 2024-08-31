@@ -1,11 +1,14 @@
-import { Mesh, PlaneGeometry, Scene, Color } from "three";
 import {
+  Mesh,
+  PlaneGeometry,
+  Scene,
+  Color,
   MeshBasicNodeMaterial,
   ShaderNodeObject,
   UniformNode,
   uniform,
-} from "three/examples/jsm/nodes/Nodes.js";
-import { Common } from "./Common";
+} from "three/webgpu";
+import { Common } from "./CommonWebGPU.js";
 import { GUI } from "lil-gui";
 
 export class Study {

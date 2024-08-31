@@ -1,11 +1,13 @@
-import { Mesh, PlaneGeometry, Scene } from "three";
 import {
+  Mesh,
+  PlaneGeometry,
+  Scene,
   MeshBasicNodeMaterial,
   uniform,
   uv,
-} from "three/examples/jsm/nodes/Nodes.js";
-import { Common } from "./Common";
-import { fbm, hash, noise } from "./tsl/FMBFunction";
+} from "three/webgpu";
+import { Common } from "./CommonWebGPU.js";
+import { fbm } from "./tsl/FMBFunction";
 import { GUI } from "lil-gui";
 
 export class StudyNodeBasic {

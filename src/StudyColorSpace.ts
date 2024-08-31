@@ -5,11 +5,13 @@ import {
   Scene,
   Color,
   Vector3,
-} from "three";
-import { MeshBasicNodeMaterial, materialColor, uniform } from "three/nodes";
+  MeshBasicNodeMaterial,
+  materialColor,
+  uniform,
+} from "three/webgpu";
 import { GUI } from "lil-gui";
 
-import { Common } from "./Common";
+import { Common } from "./CommonWebGPU";
 
 export class Study {
   public static readonly W = 640;

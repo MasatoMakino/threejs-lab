@@ -1,10 +1,14 @@
-import { Mesh, PlaneGeometry, Scene, BufferAttribute, Color } from "three";
+import {} from "three";
 import {
+  Mesh,
+  PlaneGeometry,
+  Scene,
+  BufferAttribute,
   MeshBasicNodeMaterial,
   color,
   attribute,
-} from "three/examples/jsm/nodes/Nodes.js";
-import { Common } from "./Common";
+} from "three/webgpu";
+import { Common } from "./CommonWebGPU";
 
 /**
  * アトリビュートの設定と取り出しのサンプル

@@ -1,13 +1,13 @@
 import {
+  WebGPURenderer,
   AmbientLight,
   AxesHelper,
   Camera,
   Color,
   PerspectiveCamera,
   Scene,
-  WebGLRenderer,
   REVISION,
-} from "three";
+} from "three/webgpu";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 export class Common {
@@ -38,7 +38,7 @@ export class Common {
 
   public static initControl(
     camera: Camera,
-    render: WebGLRenderer
+    render: WebGPURenderer
   ): OrbitControls {
     let domElement;
     if (render) {
@@ -49,14 +49,14 @@ export class Common {
     return control;
   }
 
-  public static initRenderer(
+  public static initWebGPURenderer(
     W: number,
     H: number,
     color: number = 0x000000,
     id: string = "webgl-canvas",
     antialias: boolean = true
   ) {
-    const renderer = new WebGLRenderer({
+    const renderer = new WebGPURenderer({
       canvas: document.getElementById(id) as HTMLCanvasElement,
       antialias: antialias,
     });
@@ -65,7 +65,7 @@ export class Common {
   }
 
   private static initRendererSettings(
-    renderer: WebGLRenderer,
+    renderer: WebGPURenderer,
     color: number,
     W: number,
     H: number
@@ -83,7 +83,7 @@ export class Common {
 
   public static render(
     control: OrbitControls,
-    renderer: WebGLRenderer,
+    renderer: WebGPURenderer,
     scene: Scene,
     camera: Camera,
     onBeforeRender?: () => void
@@ -93,7 +93,7 @@ export class Common {
         onBeforeRender();
       }
       control.update();
-      renderer.render(scene, camera);
+      renderer.renderAsync(scene, camera);
       requestAnimationFrame(rendering);
     };
     rendering();

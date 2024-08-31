@@ -1,13 +1,17 @@
 import GUI from "lil-gui";
-import { Color, Mesh, Scene, TorusGeometry, Vector3 } from "three";
 import {
+  Color,
+  Mesh,
+  Scene,
+  TorusGeometry,
+  Vector3,
   MeshBasicNodeMaterial,
   ShaderNodeObject,
   UniformNode,
   materialColor,
   uniform,
-} from "three/examples/jsm/nodes/Nodes.js";
-import { Common } from "./Common";
+} from "three/webgpu";
+import { Common } from "./CommonWebGPU.js";
 import { rimEffect } from "./tsl/RimFunction.js";
 
 type UniformType<T> = ShaderNodeObject<UniformNode<T>>;
