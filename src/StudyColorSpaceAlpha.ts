@@ -1,14 +1,15 @@
 import { GUI } from "lil-gui";
+import { WebGLRenderer } from "three";
 import {
   ColorManagement,
   Mesh,
   MeshBasicMaterial,
   PlaneGeometry,
   Scene,
-  WebGLRenderer,
-} from "three";
-import { WebGPURenderer } from "three/webgpu";
-import { Common } from "./Common";
+  WebGPURenderer,
+} from "three/webgpu";
+import { Common } from "./Common.js";
+import { Common as CommonWebGPU } from "./CommonWebGPU.js";
 
 /**
  * WebGLとWebGPUでのopacity値の設定の違いを確認するためのサンプルコード
@@ -22,10 +23,26 @@ export class Study {
   public static readonly W = 640;
   public static readonly H = 480;
 
-  constructor() {
+  static initWebGLScene() {
     const scene = Common.initScene();
     Common.initLight(scene);
     const camera = Common.initCamera(scene, Study.W, Study.H);
+    return { scene, camera };
+  }
+
+  static initWebGPUScene() {
+    const scene = CommonWebGPU.initScene();
+    CommonWebGPU.initLight(scene);
+    const camera = CommonWebGPU.initCamera(scene, Study.W, Study.H);
+    return { scene, camera };
+  }
+
+  constructor() {
+    // const scene = Common.initScene();
+    // Common.initLight(scene);
+    // const camera = Common.initCamera(scene, Study.W, Study.H);
+    const glScnene = Study.initWebGLScene();
+    const wgpuScene = Study.initWebGPUScene();
 
     const canvasGL = document.createElement("canvas");
     canvasGL.id = "webGPU-canvas";
@@ -33,22 +50,23 @@ export class Study {
     document.body.style.display = "flex"; // bodyの子要素を横並びにする
 
     const renderer = Common.initRenderer(Study.W, Study.H, 0x000000);
-    const rendererGPU = Common.initWebGPURenderer(
+    const rendererGPU = CommonWebGPU.initWebGPURenderer(
       Study.W,
       Study.H,
       0x000000,
       "webGPU-canvas"
     );
-    const mat = this.initObject(scene);
+    const matGL = this.initObject(glScnene.scene);
+    const matGPU = this.initObject(wgpuScene.scene);
 
     this.addFigure(renderer.domElement, "WebGL");
     this.addFigure(rendererGPU.domElement, "WebGPU");
 
-    this.initGUI(mat, renderer, rendererGPU);
+    this.initGUI(matGL, matGPU, renderer, rendererGPU);
 
     const rendering = () => {
-      renderer.render(scene, camera);
-      rendererGPU.renderAsync(scene, camera);
+      renderer.render(glScnene.scene, glScnene.camera);
+      rendererGPU.renderAsync(wgpuScene.scene, wgpuScene.camera);
       requestAnimationFrame(rendering);
     };
     rendering();
@@ -82,9 +100,12 @@ export class Study {
 
   initGUI = (
     materialBasic: MeshBasicMaterial,
+    materialBasicWebGPU: MeshBasicMaterial,
     rendererGL: WebGLRenderer,
     rendererWebGPU: WebGPURenderer
   ): void => {
+    const materials = [materialBasic, materialBasicWebGPU];
+
     const gui = new GUI();
     const materialColor = {
       r: 0.5,
@@ -101,11 +122,9 @@ export class Study {
     };
 
     const onChangeColor = () => {
-      materialBasic.color.setRGB(
-        materialColor.r,
-        materialColor.g,
-        materialColor.b
-      );
+      materials.forEach((m) => {
+        m.color.setRGB(materialColor.r, materialColor.g, materialColor.b);
+      });
     };
 
     gui.add(materialColor, "r", 0, 1).onChange(onChangeColor);
@@ -113,7 +132,9 @@ export class Study {
     gui.add(materialColor, "b", 0, 1).onChange(onChangeColor);
 
     const updateAlpha = () => {
-      materialBasic.opacity = materialAlpha.a;
+      materials.forEach((m) => {
+        m.opacity = materialAlpha.a;
+      });
     };
     gui.add(materialAlpha, "a", 0, 1).onChange(updateAlpha);
 

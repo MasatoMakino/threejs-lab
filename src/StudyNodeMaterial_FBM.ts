@@ -1,6 +1,12 @@
-import { Mesh, PlaneGeometry, Scene } from "three";
-import { MeshBasicNodeMaterial, uniform, uv } from "three/webgpu";
-import { Common } from "./Common";
+import {
+  Mesh,
+  PlaneGeometry,
+  Scene,
+  MeshBasicNodeMaterial,
+  uniform,
+  uv,
+} from "three/webgpu";
+import { Common } from "./CommonWebGPU.js";
 import { fbm } from "./tsl/FMBFunction";
 import { GUI } from "lil-gui";
 

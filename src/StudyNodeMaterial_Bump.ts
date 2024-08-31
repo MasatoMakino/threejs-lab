@@ -1,5 +1,7 @@
-import { Mesh, Scene, TorusGeometry } from "three";
 import {
+  Mesh,
+  Scene,
+  TorusGeometry,
   MeshBasicNodeMaterial,
   normalLocal,
   positionLocal,
@@ -8,7 +10,7 @@ import {
   ShaderNodeObject,
   UniformNode,
 } from "three/webgpu";
-import { Common } from "./Common";
+import { Common } from "./CommonWebGPU";
 import { GUI } from "lil-gui";
 
 export class Study {

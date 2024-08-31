@@ -1,7 +1,12 @@
-import { Mesh, PlaneGeometry, Scene } from "three";
-import { MeshBasicNodeMaterial, color } from "three/webgpu";
+import {
+  Mesh,
+  PlaneGeometry,
+  Scene,
+  MeshBasicNodeMaterial,
+  color,
+} from "three/webgpu";
 
-import { Common } from "./Common";
+import { Common } from "./CommonWebGPU";
 
 export class StudyNodeBasic {
   public static readonly W = 640;
